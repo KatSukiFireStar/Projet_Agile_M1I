@@ -1,0 +1,25 @@
+{
+   "nom_projet":"...",
+   "liste_tache":[
+      {
+         "nom_tache":"...1",
+         "details":"...2"
+      },
+      {
+         "nom_tache":"...2",
+         "details":"...2"
+      },
+      {
+         "nom_tache":"...3",
+         "details":"...3"
+      }, 
+      {
+         "nom_tache":"...4",
+         "details":"...4"
+      },
+      {
+         "nom_tache":"...5",
+         "details":"...5"
+      }
+   ]
+}
