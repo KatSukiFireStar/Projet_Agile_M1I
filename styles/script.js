@@ -1,10 +1,15 @@
 const NomCarte = ["0", "1", "2", "3", "5", "8", "13", "20", "40", "100", "cafe", "interro"];
 
+const listeTaches = []
+
 function chargerFichierJson(evt) {
     console.log("chargerFichierJson");
 
     const fichierJson = JSON.parse(evt.target.result);
     console.log(fichierJson);
+    for(let l of fichierJson.liste_tache){
+        listeTaches.push(l);
+    }
 }
 
 function selectionnerFichierJson() {
