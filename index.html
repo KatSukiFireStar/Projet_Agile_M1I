@@ -22,14 +22,37 @@
 
         <div id="partie">
             <h2>Lancer une partie : </h2>
-            <label for="jsonFile">Sélectionner un fichier JSON :</label>
+            <label for="jsonFile"><h4>Sélectionner un fichier JSON :</h4></label>
             <input type="file" id="jsonFile" accept=".json">
             <button onclick="selectionnerFichierJson()">Charger le fichier</button>
+
+            <h4>Selectionner un mode de jeu:</h4>
+            <input type="radio" id="m1" name="mode" value="strict" checked>
+            <label for="m1">Strict</label><br>
+            <input type="radio" id="m2" name="mode" value="moyenne">
+            <label for="m2">Moyenne</label><br>
+            <!--ToDo: ajouter plus de modes-->
+
+            <h4>Selectionner un nombre de joueur:</h4>
+            <form>
+                <label for="nbJoueurs">Nombre de joueurs: </label>
+                <select id="nbJoueurs" name="joueurs" onchange="loadPseudo(this.value)">
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                </select>
+            </form>
+            <div id="pseudo">
+                <label for="n1">Pseudo joueur 1: </label>
+                <input id="n1" type="text" name="n1"/><br>
+                <label for="n2">Pseudo joueur 2: </label>
+                <input id="n2" type="text" name="n2"/><br>
+            </div>
         </div>
         
         <div>
             <h2>Reprendre une partie :</h2>
-            <p>TODO</p>
+            <p>ToDo</p>
         </div>
 
     </body>

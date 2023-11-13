@@ -1,6 +1,15 @@
 const NomCarte = ["0", "1", "2", "3", "5", "8", "13", "20", "40", "100", "cafe", "interro"];
 
 const listeTaches = []
+const NomJoueur = []
+
+function _(sel){
+    return document.querySelector(sel);
+}
+
+function get(id){
+    return document.getElementById(id);
+}
 
 function chargerFichierJson(evt) {
     console.log("chargerFichierJson");
@@ -33,6 +42,42 @@ function selectionnerFichierJson() {
         }
     } else {
         alert('Veuillez sélectionner un fichier.');
+    }
+}
+
+function loadPseudo(nb){
+    let div = get("pseudo");
+
+    const listeName = []
+    for(let inp of div.children){
+        if(inp.type=="text")
+            listeName.push(inp.value);
+    }
+    console.log(listeName);
+
+    while (div.firstChild) {
+        div.removeChild(div.firstChild);
+    }
+
+    for(let i = 0; i < nb; i++){
+        let input = document.createElement('input');
+        input.type = "text";
+        input.name = "n"+i
+        input.id = input.name;
+        let label = document.createElement('label');
+        label.for = input.id;
+        label.innerHTML = "Pseudo joueur " + (i+1) + ": ";
+        div.appendChild(label);
+        div.appendChild(input);
+        div.appendChild(document.createElement('br'));
+    }
+
+    let index = 0;
+    for(let i = 0; i < listeName.length; i++){
+        if(index < div.childElementCount && div.childNodes[i].type=="text"){
+            div.childNodes[i].value = listeName[index];
+            index++;
+        }
     }
 }
 
