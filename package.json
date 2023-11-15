@@ -1,0 +1,15 @@
+{
+  "name": "Projet_Agile_M1I",
+  "version": "1.0.0",
+  "dependencies": {
+    "@jest/globals": "^29.7.0"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "jest": {
+    "globals": {
+      "window": {}
+    }
+  }
+}

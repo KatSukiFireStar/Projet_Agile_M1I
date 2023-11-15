@@ -1,6 +1,6 @@
 const NomCarte = ["0", "1", "2", "3", "5", "8", "13", "20", "40", "100", "cafe", "interro"];
 
-const listeTaches = []
+let fichierJson = "";
 const NomJoueur = []
 
 function _(sel){
@@ -14,12 +14,25 @@ function get(id){
 function chargerFichierJson(evt) {
     console.log("chargerFichierJson");
 
-    const fichierJson = JSON.parse(evt.target.result);
+    fichierJson = JSON.parse(evt.target.result);
     console.log(fichierJson);
-    for(let l of fichierJson.liste_tache){
-        listeTaches.push(l);
-    }
 }
+
+function* listeTaches(){
+    let indexTache = 0;
+    return {
+        next: function () {
+            let tache;
+            if (indexTache < fichierJson.length - 1) {
+                tache = {value: fichierJson.liste_tache[indexTache], done: false};
+                indexTache++;
+                return tache;
+            }
+            return {value: fichierJson.liste_tache[indexTache], done: true};
+        }
+    };
+}
+
 
 function selectionnerFichierJson() {
     console.log("chargerFichier");
@@ -53,7 +66,6 @@ function loadPseudo(nb){
         if(inp.type=="text")
             listeName.push(inp.value);
     }
-    console.log(listeName);
 
     while (div.firstChild) {
         div.removeChild(div.firstChild);
@@ -62,7 +74,7 @@ function loadPseudo(nb){
     for(let i = 0; i < nb; i++){
         let input = document.createElement('input');
         input.type = "text";
-        input.name = "n"+i
+        input.name = "n"+(i+1);
         input.id = input.name;
         let label = document.createElement('label');
         label.for = input.id;
@@ -73,12 +85,18 @@ function loadPseudo(nb){
     }
 
     let index = 0;
-    for(let i = 0; i < listeName.length; i++){
-        if(index < div.childElementCount && div.childNodes[i].type=="text"){
+    for(let i = 0; i < div.childElementCount; i++){
+        if(div.childNodes[i].type == "text" && index < listeName.length){
             div.childNodes[i].value = listeName[index];
             index++;
         }
     }
 }
 
-window.onload;
+function fInit(){
+    let select = get("nbJoueurs");
+    loadPseudo(select.value);
+}
+
+window.onload = fInit;
+
