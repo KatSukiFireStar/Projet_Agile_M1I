@@ -15,6 +15,13 @@ function chargerFichierJson(evt) {
     console.log("chargerFichierJson");
 
     fichierJson = JSON.parse(evt.target.result);
+
+    if(fichierJson["liste_tache"][0]["difficulte"])
+        alert("Attention! Le fichier que vous charger a déjà des difficultés établies! " +
+            "Lancer une partie avec ce fichier reinitialisera les difficultés de celui-ci!");
+
+    _("h1").innerHTML = "Planning Poker - " + fichierJson["nom_projet"];
+
     console.log(fichierJson);
 }
 
@@ -48,7 +55,6 @@ function selectionnerFichierJson() {
             const lecteur = new FileReader();
 
             lecteur.onload = chargerFichierJson;
-
             lecteur.readAsText(fichier);
         } else {
             alert('Veuillez sélectionner un fichier JSON valide.');
@@ -96,6 +102,9 @@ function loadPseudo(nb){
 function fInit(){
     let select = get("nbJoueurs");
     loadPseudo(select.value);
+    if(fichierJson == ""){
+        _("h1").innerHTML = "Planning Poker - Pas de projet chargé"
+    }
 }
 
 if (typeof window == 'object') {
