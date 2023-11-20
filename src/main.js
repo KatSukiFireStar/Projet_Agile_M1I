@@ -98,5 +98,6 @@ function fInit(){
     loadPseudo(select.value);
 }
 
-window.onload = fInit;
-
+if (typeof window == 'object') {
+    window.onload = fInit;
+}

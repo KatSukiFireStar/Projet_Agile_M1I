@@ -1,11 +1,12 @@
-## Conception agile de projets informatiques
+# Documentation de Mon Projet Web
 
-### Description
+Ce document contient la documentation pour Mon Projet Web.
 
-Université Lumière Lyon 2 - Campus "Portes des Alpes"
-
-Cours de M1 Informatique - Enseignant : M. Valentin Lachand-Pascal
-
-### Utilisation
+## Introduction
 
 ...
+
+## Comment l'utiliser
+
+Ouvrez simplement `index.html` dans un navigateur web.
+
