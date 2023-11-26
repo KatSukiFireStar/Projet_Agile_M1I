@@ -1,7 +1,12 @@
-const NomCarte = ["0", "1", "2", "3", "5", "8", "13", "20", "40", "100", "cafe", "interro"];
-
-let fichierJson = "";
-const NomJoueur = []
+class Partie {
+    constructor(mode, nbJoueur, listeJoueurs, nomProjet, listeTaches) {
+        this.mode = mode;
+        this.nbJoueur = nbJoueur;
+        this.listeJoueurs = listeJoueurs;
+        this.nomProjet = nomProjet;
+        this.listeTaches = listeTaches;
+    }
+}
 
 function _(sel){
     return document.querySelector(sel);
@@ -12,20 +17,29 @@ function get(id){
 }
 
 function chargerFichierJson(evt) {
-    console.log("chargerFichierJson");
+    //console.log("APPEL chargerFichierJson()");
+    let contenu = JSON.parse(evt.target.result);
+        
+    let nomProjet = contenu["nom_projet"];
 
-    fichierJson = JSON.parse(evt.target.result);
+    let listeTaches = [];
+    for(let i=0; i<contenu['liste_tache'].length; i++) {
+        listeTaches.push([contenu['liste_tache'][i]['nom_tache'], contenu['liste_tache'][i]['details']]);
+    }
 
-    if(fichierJson["liste_tache"][0]["difficulte"])
-        alert("Attention! Le fichier que vous charger a déjà des difficultés établies! " +
-            "Lancer une partie avec ce fichier reinitialisera les difficultés de celui-ci!");
+    //listeTaches = traitement(contenu["liste_tache"]);
 
-    _("h1").innerHTML = "Planning Poker - " + fichierJson["nom_projet"];
-
-    console.log(fichierJson);
+    if(contenu["liste_tache"][0]["difficulte"]) {
+        alert("Attention !! Le fichier n'a pas le bon format ! " +
+            "Lancer une partie avec ce fichier réinitialisera les difficultées de celui-ci !");
+    }
+    _("h1").innerHTML = "Planning Poker - Projet " + nomProjet + " chargé";
+    return [nomProjet, listeTaches];
 }
 
+/* On ne s'en sert jamais !?
 function* listeTaches(){
+    //console.log("APPEL listeTaches()");
     let indexTache = 0;
     return {
         next: function () {
@@ -38,33 +52,10 @@ function* listeTaches(){
             return {value: fichierJson.liste_tache[indexTache], done: true};
         }
     };
-}
+}*/
 
-
-function selectionnerFichierJson() {
-    console.log("chargerFichier");
-    const saisie = document.getElementById('jsonFile');
-    
-    // Vérifie si un fichier a été sélectionné
-    if (saisie.files.length > 0) {
-        const fichier = saisie.files[0];
-
-        // Vérifie si le fichier est au format JSON
-        if (fichier.type === 'application/json') {
-            // Lecture du fichier JSON
-            const lecteur = new FileReader();
-
-            lecteur.onload = chargerFichierJson;
-            lecteur.readAsText(fichier);
-        } else {
-            alert('Veuillez sélectionner un fichier JSON valide.');
-        }
-    } else {
-        alert('Veuillez sélectionner un fichier.');
-    }
-}
-
-function loadPseudo(nb){
+function loadJoueur(nbJoueur){
+    //console.log("APPEL loadJoueur()");
     let div = get("pseudo");
 
     const listeName = []
@@ -77,7 +68,7 @@ function loadPseudo(nb){
         div.removeChild(div.firstChild);
     }
 
-    for(let i = 0; i < nb; i++){
+    for(let i = 0; i < nbJoueur; i++){
         let input = document.createElement('input');
         input.type = "text";
         input.name = "n"+(i+1);
@@ -99,14 +90,57 @@ function loadPseudo(nb){
     }
 }
 
-function fInit(){
-    let select = get("nbJoueurs");
-    loadPseudo(select.value);
-    if(fichierJson == ""){
-        _("h1").innerHTML = "Planning Poker - Pas de projet chargé"
+function loadFichierJson() {
+    //console.log("APPEL loadFichierJson()");
+    let objet = get('jsonFile');
+
+    if (objet.files.length > 0) {
+        const fichierJson = objet.files[0];
+        const lecteur = new FileReader();
+        lecteur.onload = function (evt) {
+            const [nomProjet, listeTaches] = chargerFichierJson(evt);
+
+            // Stockez ces informations dans une variable locale
+            objet.informations = { nomProjet, listeTaches };
+        };
+        //lecteur.onload = chargerFichierJson;
+        lecteur.readAsText(fichierJson);
+    } else {
+        _("h1").innerHTML = "Planning Poker - Pas de projet chargé";
     }
+}
+
+function validerFormulaire() {
+    //console.log("APPEL validerFormulaire()");
+    // On récupère toutes les informations nécessaires pour lancer la partie
+    const selectMode = _('input[name="mode"]:checked').value;
+    const selectNbJoueur = get('nbJoueurs').value;
+    
+    let selectListeJoueurs = []
+    for(let i=1; i<=selectNbJoueur; i++) {
+        selectListeJoueurs.push(get('n'+i).value);
+    }
+    // Utilisez les informations stockées dans la variable locale
+    let { nomProjet, listeTaches } = get('jsonFile').informations;
+   
+    let maPartie = new Partie(selectMode, selectNbJoueur, selectListeJoueurs, nomProjet, listeTaches);
+    const envoie = JSON.stringify(maPartie);
+    window.location.href = "./jeux.html?data=" + encodeURIComponent(envoie);;
+}
+
+function fInit(){
+    //console.log("APPEL fInit()");
+    let nbJoueur = get("nbJoueurs").value;
+
+    loadJoueur(nbJoueur);
+    loadFichierJson();
 }
 
 if (typeof window == 'object') {
     window.onload = fInit;
 }
+
+// pas trouvé le "soucis" ici
+module.exports = {
+    chargerFichierJson,
+};

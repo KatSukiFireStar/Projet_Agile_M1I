@@ -6,24 +6,29 @@
         <meta name="author" content="Guillaume Hostache, Flavien Gonin">
         <meta name="description" content="M1 Informatique - Conception agile de projets informatiques">
 
-        <script type="text/javascript" src=/src/main.js"></script>
-        <link rel="stylesheet" href="/src/style.css">
+        <script type="text/javascript" src="./partie.js"></script>
+        <link rel="stylesheet" href="./style-jeux.css">
 
         <title>Planning Poker - Partie</title>
     </head>
 
     <body>
-        <h1>Planning Poker </h1>
+        <div id="info">
+
+        </div>
+
         <div id="apercu">
-
+            <!-- Il y aura toutes les cartes que les joueurs auront choisi-->
         </div>
 
-        <div id="cartes">
-           
-        </div>
+        <div id="joueur">
+            <div id="cartes">
 
-        <div id="bouton">
-            
+            </div>
+            <div id="bouton">
+                <button id="validerBouton" onclick="validerChoix()">Valider le choix</button>
+            </div>
         </div>
+       
     </body>
 </html>

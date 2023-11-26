@@ -1,15 +1,56 @@
 const assert = require('assert');
 const { describe, it } = require('mocha');
 const { JSDOM } = require('jsdom');
-//const { addition, soustraction, multiplication } = require('../src/main');
+const {chargerFichierJson, validerFormulaire} = require('../src/main');
 
+const dom = new JSDOM('<!DOCTYPE html><html><head></head><body><h1></h1><input type="file" id="jsonFile" accept=".json"></body></html>');
 
-describe('Test bidon', function () {
-  it('devrait échouer délibérément', function () {
-    // Créez une condition qui est toujours fausse
-    const conditionFausse = false;
+global.window = dom.window;
+global.document = dom.window.document;
 
-    // Utilisez une assertion qui échoue si la condition est vraie
-    assert.notEqual(conditionFausse, true);
+describe('Test Bidon', function () {
+  it('devrait fonctionner sans aucun problème particulier', function () {
+    const conditionTrue = true;
+
+    // assertions bidon
+    assert.notEqual(conditionTrue, 0==1);
+    assert.equal(conditionTrue, true);
+  });
+});
+
+const evtValideMock = {
+  target: {
+    result: '{"nom_projet": "TestProjet", "liste_tache": [{"nom_tache": "Tâche1", "details": "Détails1"}]}',
+  },
+};
+const evtInvalideMock = {
+  target: {
+    result: '{"nom_projet": "TestProjet", "liste_tache": [{"nom_tache": "Tâche1", "details": "Détails1", "difficulte": 5}]}',
+  },
+};
+
+describe('Tests unitaires - chargerFichierJson()', function () {
+  it('devrait fonctionner sans problème', function () {
+    const resultat = chargerFichierJson(evtValideMock);
+    
+    assert.equal(resultat.length, 2);
+    assert.equal(resultat[0], 'TestProjet');
+    assert.deepEqual(resultat[1], [['Tâche1', 'Détails1']]);
+    
+    const h1Content = document.querySelector('h1').innerHTML;
+    assert.strictEqual(h1Content, 'Planning Poker - Projet TestProjet chargé');
+  });
+  
+  it('devrait afficher une alerte', function () {
+    let alertMessage;  
+    // Redéfinition de la fonction alert pour capturer le message
+    global.alert = function (message) {
+      alertMessage = message;
+    };
+    
+    chargerFichierJson(evtInvalideMock); // pas besoin de récupérer les infos ici ...
+
+    assert.strictEqual(alertMessage, "Attention !! Le fichier n'a pas le bon format ! " +
+      "Lancer une partie avec ce fichier réinitialisera les difficultées de celui-ci !");
   });
 });

@@ -7,47 +7,55 @@
         <meta name="description" content="M1 Informatique - Conception agile de projets informatiques">
 
         <script type="text/javascript" src="./main.js"></script>
-        <link rel="stylesheet" href="./style.css">
+        <link rel="stylesheet" href="./style-index.css">
 
         <title>Planning Poker</title>
     </head>
 
     <body>
-        <h1>Planning Poker </h1>
+        <h1>Planning Poker</h1>
 
         <div id="regles">
             <h2>Règles du jeu : </h2>
-            <p>TODO ...</p>
+            <p>Comment lancer une partie ? </p>
+            <p>Vous devez d'abord remplir les informations demandées, à savoir le nombre de joueur, le nom de chaque joueur, 
+                le mode de jeu ainsi ensuite qu'un fichier au format.json qui contiendra les informations de votre projet</p>
+
+            <p>Principe du jeu :</p>
+            <p>Une fois la partie lancée, vous allez voir apparaitre chaque tache de votre liste. 
+                Tour à tour, les joueurs vont pouvoir choisir une carte qui représente la difficulté de la tâche selon eux. 
+                Une fois que tout les joueurs auront mis une carte. Les cartes seront retournées et le système assignera
+                une difficulté en fonction du mode de jeu qui aura été choisi aupréalable. Si aucun accord n'a été trouvée
+                on ne change pas de tâche et chaque joueur décide de reposer une carte.</p>
+            <p>TODO : finir ça</p>
         </div>
 
         <div id="partie">
             <h2>Lancer une partie : </h2>
-            <label for="jsonFile"><h4>Sélectionner un fichier JSON :</h4></label>
-            <input type="file" id="jsonFile" accept=".json">
-            <button onclick="selectionnerFichierJson()">Charger le fichier</button>
-
             <h4>Selectionner un mode de jeu:</h4>
             <input type="radio" id="m1" name="mode" value="strict" checked>
             <label for="m1">Strict</label><br>
             <input type="radio" id="m2" name="mode" value="moyenne">
             <label for="m2">Moyenne</label><br>
-            <!--ToDo: ajouter plus de modes-->
+            <!-- TODO: ajouter plus de mode de jeu (médiane, majorité absolue, majorité relative) -->
 
             <h4>Selectionner un nombre de joueur:</h4>
             <form>
                 <label for="nbJoueurs">Nombre de joueurs: </label>
-                <select id="nbJoueurs" name="joueurs" onchange="loadPseudo(this.value)">
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
+                <select id="nbJoueurs" name="joueurs" onchange="loadJoueur(this.value)">
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
                 </select>
             </form>
             <div id="pseudo">
-                <label for="n1">Pseudo joueur 1: </label>
-                <input id="n1" type="text" name="n1"/><br>
-                <label for="n2">Pseudo joueur 2: </label>
-                <input id="n2" type="text" name="n2"/><br>
+
             </div>
+
+            <label for="jsonFile"><h4>Sélectionner un fichier JSON :</h4></label>
+            <input type="file" id="jsonFile" accept=".json" onchange="loadFichierJson()"> <br>
+
+            <button id="validerBouton" onclick="validerFormulaire()">Valider le formulaire</button>
         </div>
         
         <div>

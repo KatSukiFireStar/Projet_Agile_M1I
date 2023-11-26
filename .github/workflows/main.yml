@@ -1,4 +1,4 @@
-name: CI
+name: CI - Planning Poker
 
 on:
   push:
@@ -26,3 +26,5 @@ jobs:
 
     - name: Generate Documentation
       run: npm run docs
+    
+   
