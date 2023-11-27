@@ -1,8 +1,7 @@
 const assert = require('assert');
 const { describe, it } = require('mocha');
 const { JSDOM } = require('jsdom');
-const {chargerFichierJson, listeTaches} = require('../src/main');
-let {fichierJson} = require('../src/main');
+const {chargerFichierJson, listeTaches, setFichierJson} = require('../src/main');
 const fs = require("fs");
 
 const dom = new JSDOM('<!DOCTYPE html><html><head></head><body><h1></h1><input type="file" id="jsonFile" accept=".json"></body></html>');
@@ -61,16 +60,16 @@ describe('Tests unitaires - iterateur listeTaches', function (){
   let err, data;
   it('Devrait avoir le meme nombre d\'objet', function () {
     fs.readFile("src/ressources/backlog_1.json", (err, data) => {
-      fichierJson = JSON.parse(data.toString());
+      let fichierJson = JSON.parse(data.toString());
       assert.equal(fichierJson['liste_tache'].length, 5);
     });
   });
 
-  let iterator = listeTaches();
-
   it('Devrait avoir les memes noms et details de taches', function () {
     fs.readFile("src/ressources/backlog_1.json", (err, data) => {
-      fichierJson = JSON.parse(data.toString());
+      let fichierJson = JSON.parse(data.toString());
+      setFichierJson(fichierJson);
+      let iterator = listeTaches();
       for(let i = 0; i < fichierJson['liste_tache'].length; i++){
         let resultat = iterator.next();
         if(i < fichierJson['liste_tache'].length - 1){

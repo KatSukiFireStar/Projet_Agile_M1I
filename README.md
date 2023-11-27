@@ -1,4 +1,4 @@
-## Planning Poker
+## Projet - Planning Poker
 *M1 Informatique - Conception agile de projets informatiques*
 
 *Auteur :*
@@ -15,28 +15,35 @@ tâches du projet.*
 
 ### Utilisation de l'application
 
-*Tout d'abord, il faut vérifier que Node.js est bien présent 
+*Tout d'abord, il faut vérifier que node.js est bien présent 
 sur votre machine.*
 
-Installation de node.js : [lien](https://nodejs.org/en)
+*Installation de node.js : [lien](https://nodejs.org/en)*
 
-Une fois node.js installé, vérifier que tout est bien place avec la commande :
-```
-#Version de node.js
+*Afin d'être bien sûr, on peut vérifier les versions du logiciel*
+```php
+//Version de node.js
 node -v 
 
-#Version de Node Package Manager, installé en même temps que node.js
+//Version de Node Package Manager, installé en même temps que node.js
 npm -v 
 ```
-Ensuite, il faut faire un clone du projet sur son poste de travail avec la commande suivante :
-```
-// (clone en https)
-git clone https://github.com/KatSukiFireStar/Projet_Agile_M1I.git
+*Ensuite, il faut faire un clone du projet sur 
+son poste de travail avec la commande suivante :*
+```php
+// clone en https, les autres méthodes fonctionnent aussi
+git clone [NomProjetGit]
 ```
 
-Enfin, ouvrez simplement `index.html` dans un navigateur web.
+*Dans le répertoire du projet, il vous faut installer les dépendances avec la commande :*
+```php
+npm install
+```
 
-### Utilisation générale de git
+*Enfin, ouvrez simplement `index.html` dans un navigateur web.*
+
+
+### Commandes utiles
 
 Pour apporter des modifications au projet, travailler en local.
 Ensuite, pour ajouter votre travail au projet :

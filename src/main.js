@@ -18,9 +18,13 @@ function get(id){
     return document.getElementById(id);
 }
 
+function setFichierJson(fichier){
+    fichierJson = fichier;
+}
+
 function chargerFichierJson(evt) {
     //console.log("APPEL chargerFichierJson()");
-    let fichierJson = JSON.parse(evt.target.result);
+    setFichierJson(JSON.parse(evt.target.result));
         
     let nomProjet = fichierJson["nom_projet"];
 
@@ -47,11 +51,11 @@ function* listeTaches(){
         next: function () {
             let tache;
             if (indexTache < fichierJson.length - 1) {
-                tache = {value: fichierJson.liste_tache[indexTache], done: false};
+                tache = {value: fichierJson['liste_tache'][indexTache], done: false};
                 indexTache++;
                 return tache;
             }
-            return {value: fichierJson.liste_tache[indexTache], done: true};
+            return {value: fichierJson['liste_tache'][indexTache], done: true};
         }
     };
 }
@@ -145,6 +149,6 @@ if (typeof window == 'object') {
 // pas trouvé le "soucis" ici
 module.exports = {
     chargerFichierJson,
-    fichierJson,
+    setFichierJson,
     listeTaches
 };
