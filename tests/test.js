@@ -71,15 +71,15 @@ describe('Tests unitaires - iterateur listeTaches', function (){
   it('Devrait avoir les memes noms et details de taches', function () {
     fs.readFile("src/ressources/backlog_1.json", (err, data) => {
       fichierJson = JSON.parse(data.toString());
-      for(let i = 1; i < fichierJson['liste_tache'].length + 1; i++){
+      for(let i = 0; i < fichierJson['liste_tache'].length; i++){
         let resultat = iterator.next();
-        if(i < fichierJson['liste_tache'].length){
+        if(i < fichierJson['liste_tache'].length - 1){
           assert.equal(resultat.done, false);
         }else{
           assert.equal(resultat.done, true);
         }
-        assert.equal(resultat.value[i]['nom_tache'], "tache n°"+i);
-        assert.equal(resultat.value[i]['details'], "..."+i)
+        assert.equal(resultat.value[i]['nom_tache'], "tache n°"+(i+1));
+        assert.equal(resultat.value[i]['details'], "..."+(i+1))
       }
     });
   });
