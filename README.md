@@ -1,16 +1,67 @@
-# Planning Poker
-Conception agile de projets informatiques ...
+## Planning Poker
+*M1 Informatique - Conception agile de projets informatiques*
 
-## Introduction
+*Auteur :*
+- *Flavien Gonin* 
+- *Guillaume Hostache*
 
-présenter le projet en 1,2 ligne
+### Présentation
 
-## Comment l'utiliser
+Application Web qui permet à une équipe en charge du développement d'un logiciel
+de faire une partie de Planning Poker pour déterminer la difficulté des différentes 
+tâches du projet.
 
-Ouvrez simplement `index.html` dans un navigateur web.
 
-explications git
-(clone, add ., commit, push)
+
+
+### Utilisation de l'application
+
+Tout d'abord, il faut vérifier que Node.js est bien présent sur votre machine.
+
+Installation de node.js : [lien](https://nodejs.org/en)
+
+Une fois node.js installé, vérifier que tout est bien place avec la commande :
+```
+#Version de node.js
+node -v 
+
+#Version de Node Package Manager, installé en même temps que node.js
+npm -v 
+```
+Ensuite, il faut faire un clone du projet sur son poste de travail avec la commande suivante :
+```
+// (clone en https)
+git clone https://github.com/KatSukiFireStar/Projet_Agile_M1I.git
+```
+
+Enfin, ouvrez simplement `index.html` dans un navigateur web.
+
+### Utilisation générale de git
+
+Pour apporter des modifications au projet, travailler en local.
+Ensuite, pour ajouter votre travail au projet :
+```
+git checkout [NomNouvelleBranche]
+```
+Cette commande va créer une nouvelle branche et vous allez basculer vers celle-ci.
+Ensuite :
+```
+git add .
+git status # pour vérifier que la commande précédente a bien marcher
+
+git commit -m "Explications des changements apportés"
+git log # pour vérifier que le commit est bien présent
+```
+et enfin, pour envoyer l'ensemble :
+```
+git push origin [NomNouvelleBranche]
+```
+Une fois que votre travail est définitivement terminé, vous pouvez réalisé une demande de merge avec la 
+branche principale ``main``
+
+### Node.js : commandes utiles
+
+Si vous souhaitez ajouter une dépen
 
 explications npm
 npm install

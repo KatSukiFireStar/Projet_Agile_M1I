@@ -8,6 +8,8 @@ class Partie {
     }
 }
 
+let fichierJson;
+
 function _(sel){
     return document.querySelector(sel);
 }
@@ -18,18 +20,18 @@ function get(id){
 
 function chargerFichierJson(evt) {
     //console.log("APPEL chargerFichierJson()");
-    let contenu = JSON.parse(evt.target.result);
+    let fichierJson = JSON.parse(evt.target.result);
         
-    let nomProjet = contenu["nom_projet"];
+    let nomProjet = fichierJson["nom_projet"];
 
     let listeTaches = [];
-    for(let i=0; i<contenu['liste_tache'].length; i++) {
-        listeTaches.push([contenu['liste_tache'][i]['nom_tache'], contenu['liste_tache'][i]['details']]);
+    for(let i=0; i<fichierJson['liste_tache'].length; i++) {
+        listeTaches.push([fichierJson['liste_tache'][i]['nom_tache'], fichierJson['liste_tache'][i]['details']]);
     }
 
     //listeTaches = traitement(contenu["liste_tache"]);
 
-    if(contenu["liste_tache"][0]["difficulte"]) {
+    if(fichierJson["liste_tache"][0]["difficulte"]) {
         alert("Attention !! Le fichier n'a pas le bon format ! " +
             "Lancer une partie avec ce fichier réinitialisera les difficultées de celui-ci !");
     }
@@ -37,7 +39,7 @@ function chargerFichierJson(evt) {
     return [nomProjet, listeTaches];
 }
 
-/* On ne s'en sert jamais !?
+
 function* listeTaches(){
     //console.log("APPEL listeTaches()");
     let indexTache = 0;
@@ -52,7 +54,7 @@ function* listeTaches(){
             return {value: fichierJson.liste_tache[indexTache], done: true};
         }
     };
-}*/
+}
 
 function loadJoueur(nbJoueur){
     //console.log("APPEL loadJoueur()");
@@ -95,7 +97,7 @@ function loadFichierJson() {
     let objet = get('jsonFile');
 
     if (objet.files.length > 0) {
-        const fichierJson = objet.files[0];
+        const fichier = objet.files[0];
         const lecteur = new FileReader();
         lecteur.onload = function (evt) {
             const [nomProjet, listeTaches] = chargerFichierJson(evt);
@@ -104,7 +106,7 @@ function loadFichierJson() {
             objet.informations = { nomProjet, listeTaches };
         };
         //lecteur.onload = chargerFichierJson;
-        lecteur.readAsText(fichierJson);
+        lecteur.readAsText(fichier);
     } else {
         _("h1").innerHTML = "Planning Poker - Pas de projet chargé";
     }
@@ -143,4 +145,6 @@ if (typeof window == 'object') {
 // pas trouvé le "soucis" ici
 module.exports = {
     chargerFichierJson,
+    fichierJson,
+    listeTaches
 };
