@@ -8,7 +8,8 @@ class Partie {
     }
 }
 
-let fichierJson;
+let fichierJson = "";
+let maPartie;
 
 function _(sel){
     return document.querySelector(sel);
@@ -22,18 +23,30 @@ function setFichierJson(fichier){
     fichierJson = fichier;
 }
 
-function chargerFichierJson(evt) {
+function chargerFichierJson(evt, reprendre = false) {
     //console.log("APPEL chargerFichierJson()");
     setFichierJson(JSON.parse(evt.target.result));
         
     let nomProjet = fichierJson["nom_projet"];
+    let nombre_joueur;
+    let nom_joueur;
+    let mode_jeu;
 
-    if(fichierJson["liste_tache"][0]["difficulte"]) {
+    if(reprendre){
+        nombre_joueur = fichierJson['nombre_joueur'];
+        nom_joueur = fichierJson['nom_joueur'];
+        mode_jeu = fichierJson['mode_jeu'];
+    }
+
+    if(!reprendre && fichierJson["liste_tache"][0]["difficulte"]) {
         alert("Attention !! Le fichier n'a pas le bon format ! " +
             "Lancer une partie avec ce fichier réinitialisera les difficultées de celui-ci !");
     }
     _("h1").innerHTML = "Planning Poker - Projet " + nomProjet + " chargé";
-    return [nomProjet, listeTaches()];
+    if(!reprendre)
+        return [nomProjet, listeTaches()];
+    else
+        return [nomProjet, listeTaches(), nombre_joueur, nom_joueur, mode_jeu];
 }
 
 
@@ -89,18 +102,27 @@ function loadJoueur(nbJoueur){
     }
 }
 
-function loadFichierJson() {
+function loadFichierJson(reprendre = false) {
     //console.log("APPEL loadFichierJson()");
-    let objet = get('jsonFile');
+    let objet;
+    if(!reprendre)
+        objet = get('jsonFile');
+    else
+        objet = get('jsonFileReprendre')
 
     if (objet.files.length > 0) {
         const fichier = objet.files[0];
         const lecteur = new FileReader();
         lecteur.onload = function (evt) {
-            const [nomProjet, listeTaches] = chargerFichierJson(evt);
+            if(!reprendre){
+                const [nomProjet, listeTaches] = chargerFichierJson(evt);
 
-            // Stockez ces informations dans une variable locale
-            objet.informations = { nomProjet, listeTaches };
+                // Stockez ces informations dans une variable locale
+                objet.informations = { nomProjet, listeTaches };
+            }else{
+                const [nomProjet, listeTaches, nombre_joueur, nom_joueur, mode_jeu] = chargerFichierJson(evt, true);
+                objet.informations = { nomProjet, listeTaches, nombre_joueur, nom_joueur, mode_jeu };
+            }
         };
         //lecteur.onload = chargerFichierJson;
         lecteur.readAsText(fichier);
@@ -109,22 +131,55 @@ function loadFichierJson() {
     }
 }
 
-function validerFormulaire() {
+function validerFormulaire(reprendre = false) {
     //console.log("APPEL validerFormulaire()");
     // On récupère toutes les informations nécessaires pour lancer la partie
-    const selectMode = _('input[name="mode"]:checked').value;
-    const selectNbJoueur = get('nbJoueurs').value;
-    
-    let selectListeJoueurs = []
-    for(let i=1; i<=selectNbJoueur; i++) {
-        selectListeJoueurs.push(get('n'+i).value);
+    let selectMode, selectNbJoueur, selectListeJoueurs, nomProjet, listeTaches;
+
+    if(!reprendre){
+        selectMode = _('input[name="mode"]:checked').value;
+        selectNbJoueur = get('nbJoueurs').value;
+
+        selectListeJoueurs = []
+        for(let i=1; i<=selectNbJoueur; i++) {
+            selectListeJoueurs.push(get('n'+i).value);
+        }
+        // Utilisez les informations stockées dans la variable locale
+        nomProjet = get('jsonFile').informations.nomProjet;
+        listeTaches = get('jsonFile').informations.listeTaches;
+    }else{
+        selectMode = get('jsonFileReprendre').informations.mode_jeu;
+        selectNbJoueur = get('jsonFileReprendre').informations.nombre_joueur;
+        selectListeJoueurs =get('jsonFileReprendre').informations.nom_joueur;
     }
-    // Utilisez les informations stockées dans la variable locale
-    let { nomProjet, listeTaches } = get('jsonFile').informations;
-   
-    let maPartie = new Partie(selectMode, selectNbJoueur, selectListeJoueurs, nomProjet, listeTaches);
-    const envoie = JSON.stringify(maPartie);
-    //window.location.href = "./jeux.html?data=" + encodeURIComponent(envoie);;
+
+    maPartie = new Partie(selectMode, selectNbJoueur, selectListeJoueurs, nomProjet, listeTaches);
+}
+
+function chargerJeu(){
+    if(fichierJson == ""){
+        alert("Vous n'avez pas entrer de fichier de partie!");
+        return;
+    }
+
+    let load = true;
+
+    if(!(fichierJson['nombre_joueur'] && fichierJson['nom_joueur'])){
+        let div = get("pseudo");
+        const listeName = []
+        for(let inp of div.children){
+            if(inp.type=="text" && inp.value == "")
+                load = false;
+        }
+    }
+
+    if(!load)
+        alert("La partie ne peux pas commencer les noms des joueurs n'ont pas été renseigné!")
+    else{
+        const envoie = JSON.stringify(maPartie);
+        window.location.href = "./jeux.html?data=" + encodeURIComponent(envoie);;
+
+    }
 }
 
 function fInit(){

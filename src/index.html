@@ -60,8 +60,13 @@
         
         <div>
             <h2>Reprendre une partie :</h2>
-            <p>ToDo</p>
+            <label for="jsonFileReprendre"><h4>Sélectionner un fichier JSON :</h4></label>
+            <input type="file" id="jsonFileReprendre" accept=".json" onchange="loadFichierJson(true)"> <br>
+            <button id="validerBoutonReprendre" onclick="validerFormulaire(true)">Valider le formulaire</button>
+
         </div>
+
+        <button id="lancerPartie" onclick="chargerJeu()">Lancer le jeu</button>
 
     </body>
 </html>
