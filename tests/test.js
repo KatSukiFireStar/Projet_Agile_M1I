@@ -36,7 +36,7 @@ describe('Tests unitaires - chargerFichierJson()', function () {
     
     assert.equal(resultat.length, 2);
     assert.equal(resultat[0], 'TestProjet');
-    assert.deepEqual(resultat[1], [['Tâche1', 'Détails1']]);
+    assert.deepEqual(resultat[1].next().value, { details: 'Détails1', nom_tache: 'Tâche1' });
     
     const h1Content = document.querySelector('h1').innerHTML;
     assert.strictEqual(h1Content, 'Planning Poker - Projet TestProjet chargé');
@@ -61,7 +61,15 @@ describe('Tests unitaires - iterateur listeTaches', function (){
   it('Devrait avoir le meme nombre d\'objet', function () {
     fs.readFile("src/ressources/backlog_1.json", (err, data) => {
       let fichierJson = JSON.parse(data.toString());
-      assert.equal(fichierJson['liste_tache'].length, 5);
+      setFichierJson(fichierJson);
+      let iterator = listeTaches();
+      let resultat = iterator.next();
+      let nb = 1;
+      while(!resultat.done){
+        resultat = iterator.next();
+        nb++;
+      }
+      assert.equal(nb, 5);
     });
   });
 
@@ -72,13 +80,24 @@ describe('Tests unitaires - iterateur listeTaches', function (){
       let iterator = listeTaches();
       for(let i = 0; i < fichierJson['liste_tache'].length; i++){
         let resultat = iterator.next();
+        assert.equal(resultat.value['nom_tache'], "tache n°"+(i+1));
+        assert.equal(resultat.value['details'], "..."+(i+1))
+      }
+    });
+  });
+
+  it('Devrait avoir done == false sauf pour le dernier', function () {
+    fs.readFile("src/ressources/backlog_1.json", (err, data) => {
+      let fichierJson = JSON.parse(data.toString());
+      setFichierJson(fichierJson);
+      let iterator = listeTaches();
+      for (let i = 0; i < fichierJson['liste_tache'].length; i++) {
+        let resultat = iterator.next();
         if(i < fichierJson['liste_tache'].length - 1){
           assert.equal(resultat.done, false);
         }else{
           assert.equal(resultat.done, true);
         }
-        assert.equal(resultat.value['nom_tache'], "tache n°"+(i+1));
-        assert.equal(resultat.value['details'], "..."+(i+1))
       }
     });
   });

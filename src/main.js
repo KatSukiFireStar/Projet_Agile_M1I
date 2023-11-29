@@ -28,19 +28,12 @@ function chargerFichierJson(evt) {
         
     let nomProjet = fichierJson["nom_projet"];
 
-    let listeTaches = [];
-    for(let i=0; i<fichierJson['liste_tache'].length; i++) {
-        listeTaches.push([fichierJson['liste_tache'][i]['nom_tache'], fichierJson['liste_tache'][i]['details']]);
-    }
-
-    //listeTaches = traitement(contenu["liste_tache"]);
-
     if(fichierJson["liste_tache"][0]["difficulte"]) {
         alert("Attention !! Le fichier n'a pas le bon format ! " +
             "Lancer une partie avec ce fichier réinitialisera les difficultées de celui-ci !");
     }
     _("h1").innerHTML = "Planning Poker - Projet " + nomProjet + " chargé";
-    return [nomProjet, listeTaches];
+    return [nomProjet, listeTaches()];
 }
 
 
