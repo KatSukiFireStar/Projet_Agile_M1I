@@ -44,13 +44,13 @@ function chargerFichierJson(evt) {
 }
 
 
-function* listeTaches(){
+function listeTaches(){
     //console.log("APPEL listeTaches()");
     let indexTache = 0;
     return {
         next: function () {
             let tache;
-            if (indexTache < fichierJson.length - 1) {
+            if (indexTache < fichierJson['liste_tache'].length - 1) {
                 tache = {value: fichierJson['liste_tache'][indexTache], done: false};
                 indexTache++;
                 return tache;
@@ -131,7 +131,7 @@ function validerFormulaire() {
    
     let maPartie = new Partie(selectMode, selectNbJoueur, selectListeJoueurs, nomProjet, listeTaches);
     const envoie = JSON.stringify(maPartie);
-    window.location.href = "./jeux.html?data=" + encodeURIComponent(envoie);;
+    //window.location.href = "./jeux.html?data=" + encodeURIComponent(envoie);;
 }
 
 function fInit(){

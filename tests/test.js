@@ -77,8 +77,8 @@ describe('Tests unitaires - iterateur listeTaches', function (){
         }else{
           assert.equal(resultat.done, true);
         }
-        assert.equal(resultat.value[i]['nom_tache'], "tache n°"+(i+1));
-        assert.equal(resultat.value[i]['details'], "..."+(i+1))
+        assert.equal(resultat.value['nom_tache'], "tache n°"+(i+1));
+        assert.equal(resultat.value['details'], "..."+(i+1))
       }
     });
   });
