@@ -1,4 +1,10 @@
 {
+    "nombre_joueur": "2",
+    "nom_joueur": [
+        "arthur",
+        "marta"
+    ],
+    "mode_jeu":"strict",
     "nom_projet":"nomSortie 1",
     "liste_tache":[
         {
