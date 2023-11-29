@@ -1,45 +1,45 @@
 {
-    "nom_projet":"nomProjet 2",
-    "liste_tache":[
-       {
-          "nom_tache":"...1",
-          "details":"...2"
-       },
-       {
-          "nom_tache":"...2",
-          "details":"...2"
-       },
-       {
-          "nom_tache":"...3",
-          "details":"...3"
-       }, 
-       {
-          "nom_tache":"...4",
-          "details":"...4"
-       },
-       {
-          "nom_tache":"...5",
-          "details":"...5"
-       }, 
-       {
-        "nom_tache":"...6",
-        "details":"...6"
-        },
-        {
-            "nom_tache":"...7",
-            "details":"...7"
-        },
-        {
-            "nom_tache":"...8",
-            "details":"...8"
-        }, 
-        {
-            "nom_tache":"...9",
-            "details":"...9"
-        },
-        {
-            "nom_tache":"...10",
-            "details":"...10"
-        }
-    ]
- }
+  "nom_projet": "nomProjet 2",
+  "liste_tache": [
+    {
+      "nom_tache": "...1",
+      "details": "...2"
+    },
+    {
+      "nom_tache": "...2",
+      "details": "...2"
+    },
+    {
+      "nom_tache": "...3",
+      "details": "...3"
+    },
+    {
+      "nom_tache": "...4",
+      "details": "...4"
+    },
+    {
+      "nom_tache": "...5",
+      "details": "...5"
+    },
+    {
+      "nom_tache": "...6",
+      "details": "...6"
+    },
+    {
+      "nom_tache": "...7",
+      "details": "...7"
+    },
+    {
+      "nom_tache": "...8",
+      "details": "...8"
+    },
+    {
+      "nom_tache": "...9",
+      "details": "...9"
+    },
+    {
+      "nom_tache": "...10",
+      "details": "...10"
+    }
+  ]
+}

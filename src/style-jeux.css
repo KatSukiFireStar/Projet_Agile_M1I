@@ -1,5 +1,5 @@
 body {
-    display:flex;
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -12,7 +12,7 @@ body {
     width: 100%;
     background-color: white;
     border: solid 1px rgb(0, 0, 0);
-    
+
     margin: 5px;
     padding: 2px;
 }
@@ -22,7 +22,7 @@ body {
     width: 100%;
     background-color: white;
     border: solid 1px rgb(0, 0, 0);
-    
+
     margin: 5px;
     padding: 2px;
 }
@@ -45,15 +45,15 @@ body {
 #cartes {
     background-color: white;
     border: solid 1px red;
-    
+
     margin: 5px;
-    padding: 2px; 
+    padding: 2px;
 }
 
 #bouton {
     background-color: white;
     border: solid 1px red;
-    
+
     margin: 5px;
-    padding: 2px; 
+    padding: 2px;
 }

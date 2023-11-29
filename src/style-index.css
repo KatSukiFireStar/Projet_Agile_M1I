@@ -1,0 +1,15 @@
+#lancerPartie {
+    position: fixed;
+    bottom: 2%;
+    right: 2%;
+    font-size: 200%;
+    border: solid 2px #00ff1b;
+    background: #00ff1b;
+    border-radius: 30px;
+    padding: 1%;
+}
+
+#lancerPartie:hover {
+    border: solid 2px #007910;
+    background: #007910;
+}
