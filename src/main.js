@@ -2,20 +2,41 @@
 let cheminFichierJson = '';
 
 /**
- * Implémentation d'un patron de conception (1/3)
  * Classe Adaptateur qui permet d'adapter les données en fonction de nos besoins
- * En entrée, on aura toutes les données "en vrac" eten sortie, on aura les données prêtes à l'envoi 
- */class Adaptateur {
+ * En entrée, on aura toutes les données "en vrac" et en sortie, on aura les données prêtes à l'envoi
+ */
+class Adaptateur {
+    /**
+     * Constructeur de la classe Adaptateur
+     * @param {0 | 1} option - Type de partie à lancer (0 pour une nouvelle partie | 1 pour reprendre une partie)
+     * @param {string} mode - Mode de jeu
+     * @param {number} nbJoueurs - Nombre de joueurs
+     * @param {string[]} listeNomJoueurs - Tableau de nom des joueurs
+     */
     constructor(option, mode = '', nbJoueurs = 0, listeNomJoueurs = []) {
         if (option == 0) {
             // On est dans une nouvelle partie
-            this.adapterNouvellePartie(mode, nbJoueurs, listeNomJoueurs);
+            const objet = this.adapterNouvellePartie(mode, nbJoueurs, listeNomJoueurs);
+            console.log(objet);
+            this.donnees = {
+                mode: this.difficulte,
+                nbJoueurs: this.nbJoueurs,
+                nomJoueurs: this.listeNomJoueurs,
+                nomProjet: objet[0],
+                taches: objet[1]
+            };
         } else if (option == 1) {
             // On est dans une ancienne partie
             this.adapterAnciennePartie();
         }
     }
 
+    /**
+     * Méthode qui permet d'adapter les données dans le cas où l'on souhaite lancer une nouvelle partie
+     * @param mode {string} - Mode de jeu/difficulté choisi
+     * @param nbJoueurs {number} - Nombre de joueurs pour la partie
+     * @param listeNomJoueurs {list} - Liste avec les noms des joueurs
+     */
     adapterNouvellePartie(mode, nbJoueurs, listeNomJoueurs) {
         console.log("APPEL adapterNouvellePartie()");
         if ((mode != 'strict') && (mode != 'moyenne')) {
@@ -29,22 +50,35 @@ let cheminFichierJson = '';
         if (listeNomJoueurs.length != 0) {
             this.listeNomJoueurs = listeNomJoueurs;
         }
-        let fichier = new File([""], cheminFichierJson);
-        let lecteur = new FileReader();
-        lecteur.onload = function (evt) {
-            let fichierJson = evt.target.result;
-            let nomProjet = fichierJson[0]["nom_projet"];
-            console.log("test : ", nomProjet);
-            let liste = listeTaches();
-            console.log("test :", liste);
-        };
 
-        lecteur.readAsText(fichier);
+        let base = get('jsonFileLancer');
+
+        if (base.files.length > 0) {
+            let fichier = base.files[0];
+            let lecteur = new FileReader();
+
+            lecteur.onload = function (evt) {
+                let fichierJson = JSON.parse(evt.target.result);
+
+                let nomProjet = fichierJson["nom_projet"];
+                let liste = listeTaches(fichierJson);
+                console.log(nomProjet, liste);
+                return {nomProjet, liste}
+            };
+            lecteur.readAsText(fichier);
+
+        } else {
+            console.log("Aucun fichier sélectionné");
+        }
     }
 
+    /**
+     * Méthode qui permet d'adapter les données dans le cas où l'on souhaite lancer une partie déjà commencer
+     * @param chemin - Emplacement du fichier de partie
+     */
     adapterAnciennePartie(chemin) {
         console.log("APPEL adapterAnciennePartie()");
-        if (cheminFichierJson != '') {
+        if (cheminFichierJson !== '') {
             let fichier = new File([""], "filename");
             let lecteur = new FileReader();
 
@@ -70,7 +104,13 @@ function fInit(){
 
 window.onload = fInit;
 
-function listeTaches() {
+
+/**
+ * Itérateur de la liste de tâche d'un fichier Json
+ * @param fichierJson - Fichier contenant les tâches
+ * @returns {{next: (function(): ({value: ({nom_tache: string, details: string}), done: boolean}))}}
+ */
+function listeTaches(fichierJson) {
     //console.log("APPEL listeTaches()");
     let indexTache = 0;
     return {
@@ -215,6 +255,8 @@ function afficherJoueur(nb) {
  */
 function sauvegarderChemin(chemin) {
     cheminFichierJson = chemin;
+    console.log("appel test");
+    console.log(cheminFichierJson);
 }
 
 /**Fonction qui va lancer le traitement des données afin de pouvoir répondre à la demande de l'utilisateur.
@@ -222,11 +264,8 @@ function sauvegarderChemin(chemin) {
  * @param {0 | 1} option - Type de partie à lancer (0 pour une nouvelle partie | 1 pour reprendre une partie)
  */
 function validerFormulaire(option) {
-    //console.log("APPEL validerFormulaire + option= " + option);
     let monAdaptateur;
     if (option == 0) {
-        console.log("nouvelle partie");
-
         let selectMode = _('input[name="mode"]:checked').value;
         let selectNbJoueur = _('input[name="nbJoueurs"]:checked').value;
 
@@ -244,8 +283,10 @@ function validerFormulaire(option) {
         console.error("Vous tentez de valider un formulaire avec de mauvais parametres!");
         return;
     }
-
-    //window.location.href = "./jeux.html?data=" + encodeURIComponent(envoie);;
+    console.log(monAdaptateur);
+    const envoie = JSON.stringify(monAdaptateur.donnees);
+    console.log(envoie);
+    //window.location.href = "./jeux.html?data=" + encodeURIComponent(envoie);
 }
 
 
@@ -254,22 +295,7 @@ if (typeof window == 'object') {
 }
 
 
-/*class Partie {
-    constructor(mode, nbJoueur, listeJoueurs, nomProjet, listeTaches) {
-        this.mode = mode;
-        this.nbJoueur = nbJoueur;
-        this.listeJoueurs = listeJoueurs;
-        this.nomProjet = nomProjet;
-        this.listeTaches = listeTaches;
-    }
-}
-
-let fichierJson = "";
-let maPartie;
-
-function setFichierJson(fichier) {
-    fichierJson = fichier;
-}
+/*let fichierJson = "";
 
 function chargerFichierJson(evt, reprendre = false) {
     //console.log("APPEL chargerFichierJson()");
@@ -295,23 +321,6 @@ function chargerFichierJson(evt, reprendre = false) {
         return [nomProjet, listeTaches()];
     else
         return [nomProjet, listeTaches(), nombre_joueur, nom_joueur, mode_jeu];
-}
-
-
-function listeTaches() {
-    //console.log("APPEL listeTaches()");
-    let indexTache = 0;
-    return {
-        next: function () {
-            let tache;
-            if (indexTache < fichierJson['liste_tache'].length - 1) {
-                tache = {value: fichierJson['liste_tache'][indexTache], done: false};
-                indexTache++;
-                return tache;
-            }
-            return {value: fichierJson['liste_tache'][indexTache], done: true};
-        }
-    };
 }
 
 function loadFichierJson(reprendre = false) {

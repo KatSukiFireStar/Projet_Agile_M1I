@@ -70,7 +70,8 @@ h1 {
     
     margin: 5px;
     padding-left: 450px;
-
+    padding-right: 450px;
+    border: 1px solid red;
     background-color: #f8f8f8;
 }
 
@@ -194,4 +195,14 @@ ul {
 #regleStrict {
     display: block;
     text-align: justify;
+}
+
+.validerBouton {
+    position: fixed;
+    right: 2%;
+    bottom: 2%;
+}
+
+#selection-fichier {
+    margin-bottom: 10px;
 }

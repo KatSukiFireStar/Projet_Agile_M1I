@@ -39,7 +39,6 @@
                                         trouver au premier tour, un deuxième tour a lieu. Si le deuxième tour ne mène toujours pas à un accord,
                                         alors une moyenne des sommes est établie et la prochaine tâche commence.</p>
                 </div>
-
             </div>
             
             <div class="selection-nb-joueurs">
@@ -58,7 +57,7 @@
                 <input type="file" id="jsonFileLancer" accept=".json" onchange="sauvegarderChemin(this.value)"> <br>
             </div>
         
-            <button class="validerBouton" onclick="validerFormulaire(0)">Valider le formulaire</button>
+            <button class="validerBouton" onclick="validerFormulaire(0)">Lancer la partie</button>
         </div>
 
         <div class="menu" id="1">
@@ -66,7 +65,7 @@
             <h4>Sélectionner votre backlog (.json) :</h4>
             <input type="file" id="jsonFileReprendre" accept=".json" onchange="sauvegarderChemin(this.value)"> <br>
 
-            <button class="validerBouton" onclick="validerFormulaire(1)">Valider le formulaire</button>
+            <button class="validerBouton" onclick="validerFormulaire(1)">Lancer la partie</button>
         </div>
         
         <div id="regles-overlay" onclick="masquerRegles()">
