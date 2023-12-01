@@ -1,72 +1,80 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html;charset=utf8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="Guillaume Hostache, Flavien Gonin">
-    <meta name="description" content="M1 Informatique - Conception agile de projets informatiques">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Guillaume Hostache, Flavien Gonin">
+        <meta name="description" content="M1 Informatique - Conception agile de projets informatiques">
+      
+        <script src="https://kit.fontawesome.com/cb25104232.js" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="main.js"></script>
+        
+        <link rel="stylesheet" href="./style-index.css">
+        <link rel="icon" type="image/x-icon" href="./ressources/favicon.ico">
 
-    <script type="text/javascript" src="./main.js"></script>
-    <link rel="stylesheet" href="./style-index.css">
+        <title>Planning Poker</title>
+    </head>
 
-    <title>Planning Poker</title>
-</head>
+    <body>
+        <h1>Planning Poker</h1>
+        
+        <div id="naviguation-barre">
+            <button id="naviguation-info" onclick="afficherRegles()"><i class="fa-solid fa-circle-info"></i></button>
+            <button id="naviguation-bouton" onclick="afficherMenu(0)">Lancer une nouvelle partie</button>
+            <button id="naviguation-bouton" onclick="afficherMenu(1)">Reprendre une partie</button>
+        </div>
 
-<body>
-<h1>Planning Poker</h1>
+        <div class="menu" id="0">
+            <h4>"Rien de mieux qu'une bonne partie pour se mettre d'accord ..."</h4>
+            
+            <div class="selection-mode">
+                <h4>Sélectionner le mode de jeu :</h4>
+                <input type="radio" name="mode" id="r1" value="Strict"><label for="r1">Strict</label>
+                <input type="radio" name="mode" id="r2" value="Moyenne"><label for="r2">Moyenne</label>
+            </div>
+            
+            <div class="selection-nb-joueurs">
+                <h4>Sélectionner le nombre de joueurs :</h4>
+                <input type="radio" name="nbJoueurs" id="j2" value="2" onclick="afficherJoueur(this.value)"><label for="j2">2</label>
+                <input type="radio" name="nbJoueurs" id="j3" value="3" onclick="afficherJoueur(this.value)"><label for="j3">3</label>
+                <input type="radio" name="nbJoueurs" id="j4" value="4" onclick="afficherJoueur(this.value)"><label for="j4">4</label>
+            </div>
 
-<div id="regles">
-    <h2>Règles du jeu : </h2>
-    <p>Comment lancer une partie ? </p>
-    <p>Vous devez d'abord remplir les informations demandées, à savoir le nombre de joueur, le nom de chaque joueur,
-        le mode de jeu ainsi ensuite qu'un fichier au format.json qui contiendra les informations de votre projet</p>
 
-    <p>Principe du jeu :</p>
-    <p>Une fois la partie lancée, vous allez voir apparaitre chaque tache de votre liste.
-        Tour à tour, les joueurs vont pouvoir choisir une carte qui représente la difficulté de la tâche selon eux.
-        Une fois que tout les joueurs auront mis une carte. Les cartes seront retournées et le système assignera
-        une difficulté en fonction du mode de jeu qui aura été choisi aupréalable. Si aucun accord n'a été trouvée
-        on ne change pas de tâche et chaque joueur décide de reposer une carte.</p>
-    <p>TODO : finir ça</p>
-</div>
+            <div id="selection-nom-joueurs">
 
-<div id="partie">
-    <h2>Lancer une partie : </h2>
-    <h4>Selectionner un mode de jeu:</h4>
-    <input type="radio" id="m1" name="mode" value="strict" checked>
-    <label for="m1">Strict</label><br>
-    <input type="radio" id="m2" name="mode" value="moyenne">
-    <label for="m2">Moyenne</label><br>
-    <!-- TODO: ajouter plus de mode de jeu (médiane, majorité absolue, majorité relative) -->
+            </div>
+            <div id="selection-fichier">
+                <h4>Sélectionner votre backlog :</h4>
+                <input type="file" id="jsonFile" accept=".json"> <!--onchange="chargerFichierJson()">-->
+            </div>
+        
+            <button id="validerBouton" onclick="validerFormulaire(0)">Valider le formulaire</button>
+        </div>
 
-    <h4>Selectionner un nombre de joueur:</h4>
-    <form>
-        <label for="nbJoueurs">Nombre de joueurs: </label>
-        <select id="nbJoueurs" name="joueurs" onchange="loadJoueur(this.value)">
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-        </select>
-    </form>
-    <div id="pseudo">
+        <div class="menu" id="1">
+            <h4>"Le café était très bon, il est temps de reprendre la partie !"</h4>
+            <h4>Sélectionner votre backlog (.json) :</h4>
+            <input type="file" id="jsonFile" accept=".json" onchange="sauvegarderChemin(this.value)"> <br>
 
-    </div>
+            <button id="validerBouton" onclick="validerFormulaire(1)">Valider le formulaire</button>
+        </div>
+        
+        <div id="regles-overlay" onclick="masquerRegles()">
+            <div id="regles-contenu">
+                <h2>Règles du jeu : </h2>
+                <p>Comment lancer une partie ? </p>
+                <p>Vous devez d'abord remplir les informations demandées, à savoir le nombre de joueur, le nom de chaque joueur, 
+                    le mode de jeu ainsi ensuite qu'un fichier au format.json qui contiendra les informations de votre projet</p>
 
-    <label for="jsonFile"><h4>Sélectionner un fichier JSON :</h4></label>
-    <input type="file" id="jsonFile" accept=".json" onchange="loadFichierJson()"> <br>
-
-    <button id="validerBouton" onclick="validerFormulaire()">Valider le formulaire</button>
-</div>
-
-<div>
-    <h2>Reprendre une partie :</h2>
-    <label for="jsonFileReprendre"><h4>Sélectionner un fichier JSON :</h4></label>
-    <input type="file" id="jsonFileReprendre" accept=".json" onchange="loadFichierJson(true)"> <br>
-    <button id="validerBoutonReprendre" onclick="validerFormulaire(true)">Valider le formulaire</button>
-
-</div>
-
-<button id="lancerPartie" onclick="chargerJeu()">Lancer le jeu</button>
-
-</body>
+                <p>Principe du jeu :</p>
+                <p>Une fois la partie lancée, vous allez voir apparaitre chaque tache de votre liste. 
+                    Tour à tour, les joueurs vont pouvoir choisir une carte qui représente la difficulté de la tâche selon eux. 
+                    Une fois que tout les joueurs auront mis une carte. Les cartes seront retournées et le système assignera
+                    une difficulté en fonction du mode de jeu qui aura été choisi aupréalable. Si aucun accord n'a été trouvée
+                    on ne change pas de tâche et chaque joueur décide de reposer une carte.</p>
+                <p>TODO : finir ça</p>
+            </div>
+        </div>
+    </body>
 </html>

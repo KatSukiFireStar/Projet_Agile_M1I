@@ -1,15 +1,177 @@
-#lancerPartie {
-    position: fixed;
-    bottom: 2%;
-    right: 2%;
-    font-size: 200%;
-    border: solid 2px #00ff1b;
-    background: #00ff1b;
-    border-radius: 30px;
-    padding: 1%;
+body { 
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+
+    margin: 0;
+    padding: 0;
+
+    background-color: #ffffff;
 }
 
-#lancerPartie:hover {
-    border: solid 2px #007910;
-    background: #007910;
+h1 {
+    border-radius: 25px;
+
+    margin: 10px 85px 10px 85px; /*margin: top right bottom left;*/
+    padding: 10px;
+    
+    background-color: rgb(63, 183, 105);
+    color: #ffffff;
+}
+
+#naviguation-barre {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    margin: 0px;
+    padding: 10px;
+
+    background-color: rgb(49, 71, 57);
+}
+
+#naviguation-info {
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+
+    margin: 5px 25px 5px 0px;
+    padding: 10px;
+
+    background-color: rgb(90, 142, 90);
+    color: #ffffff;
+}
+
+#naviguation-info:hover {
+    background-color: #cae0cc;
+}
+
+#naviguation-bouton {
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+
+    margin: 5px 5px 5px 5px;
+    padding: 10px;
+
+    background-color: rgb(90, 142, 90);
+    color: #ffffff;
+}
+
+#naviguation-bouton:hover {
+    background-color: #cae0cc;
+}
+
+.menu {
+    display: none;
+    flex-direction: column;
+    justify-content: left;
+    align-items: baseline;
+    
+    margin: 5px;
+    padding-left: 450px;
+
+    background-color: #f8f8f8;
+}
+
+h4 {
+    font-style: italic;
+    color: #555555;
+}
+
+.selection-mode {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+input[type="radio"] {
+    display: flex;
+    margin-left: 15px;
+}
+
+label {
+    position: relative;
+    color: #175e2f;
+    font-family: "Poppins", sans-serif;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6em;
+    border: 1.5px solid #05b03e;
+    padding: 0.1em 2em;
+    border-radius: 0.5em;
+}
+
+input[type="radio"]:checked + label {
+    background-color: #175e2f;
+    color: #ffffff;
+}
+
+.selection-nb-joueurs {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#nbJoueurs {
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+}
+
+button {
+    padding: 10px;
+    background-color: #4caf50;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    margin: 5px 0;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.selection-nom-joueurs {
+    display: flex;
+}
+
+
+#regles-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+#regles-contenu {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff;;
+    padding: 20px;
+    max-width: 800px;
+    max-height: 600px;
+    text-align: center;
+    border-radius: 10px;
+    overflow-y: auto; 
+}
+
+#regles-contenu::-webkit-scrollbar {
+    width: 10px;
+}
+
+#regles-contenu::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 5px;
+}
+
+#regles-contenu::-webkit-scrollbar-track {
+    background-color: #eee;
 }

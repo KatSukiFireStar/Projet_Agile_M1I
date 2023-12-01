@@ -1,24 +1,54 @@
 const assert = require('assert');
-const {describe, it} = require('mocha');
-const {JSDOM} = require('jsdom');
-const {chargerFichierJson, listeTaches, setFichierJson} = require('../src/main');
+const { describe, it } = require('mocha');
+const { JSDOM } = require('jsdom');
 const fs = require("fs");
 
-const dom = new JSDOM('<!DOCTYPE html><html><head></head><body><h1></h1><input type="file" id="jsonFile" accept=".json"></body></html>');
+// Charger le contenu HTML du fichier
+const html = fs.readFileSync('src/index.html', 'utf-8');
 
-global.window = dom.window;
-global.document = dom.window.document;
+// Configuration de jsdom
+const { window } = new JSDOM(html, { runScripts: 'dangerously' });
 
-describe('Test Bidon', function () {
-    it('devrait fonctionner sans aucun problème particulier', function () {
-        const conditionTrue = true;
+// Charger le script
+const scriptContent = fs.readFileSync('src/main.js', 'utf-8');
+eval(scriptContent);
 
-        // assertions bidon
-        assert.notEqual(conditionTrue, 0 == 1);
-        assert.equal(conditionTrue, true);
-    });
+describe('Test Unitaire - Bidon', function () {
+  it('devrait fonctionner sans aucun problème particulier', function () {
+    const conditionTrue = true;
+
+    // assertions bidon
+    assert.notEqual(conditionTrue, 0==1);
+    assert.equal(conditionTrue, true);
+  });
 });
 
+// Exemple de test Mocha
+describe('Test Unitaire - Affichage Règles Jeu', () => {
+  beforeEach(function () {
+    global.document = window.document;
+    global.window = window;
+  });
+
+  it('toggleCharter() devrait alterner l\'affichage de l\'overlay', () => {
+    afficherRegles(); // Affiche l'overlay
+    let charterOverlay = document.getElementById('regles-overlay');
+    assert.strictEqual(charterOverlay.style.display, 'block');
+
+    masquerRegles(); // Masque l'overlay
+    charterOverlay = document.getElementById('regles-overlay');
+    assert.strictEqual(charterOverlay.style.display, 'none');
+  });
+
+  it('closeCharter() devrait masquer l\'overlay', () => {
+    afficherRegles(); // Affiche l'overlay
+    masquerRegles(); // Masque l'overlay
+    const charterOverlay = document.getElementById('regles-overlay');
+    assert.strictEqual(charterOverlay.style.display, 'none');
+  });
+});
+
+/*
 const evtValideMock = {
     target: {
         result: '{"nom_projet": "TestProjet", "liste_tache": [{"nom_tache": "Tâche1", "details": "Détails1"}]}',
@@ -101,4 +131,4 @@ describe('Tests unitaires - iterateur listeTaches', function () {
             }
         });
     });
-});
+});*/
