@@ -18,7 +18,7 @@ let cheminFichierJson = '';
 
     adapterNouvellePartie(mode, nbJoueurs, listeNomJoueurs) {
         console.log("APPEL adapterNouvellePartie()");
-        if (mode != 'strict' && mode != 'moyenne') {
+        if ((mode != 'strict') && (mode != 'moyenne')) {
             this.difficulte = mode;
         }
 
@@ -26,9 +26,20 @@ let cheminFichierJson = '';
             this.nbJoueurs = nbJoueurs;
         }
 
-        if (listeNomJoueurs.length !== 0) {
+        if (listeNomJoueurs.length != 0) {
             this.listeNomJoueurs = listeNomJoueurs;
         }
+        let fichier = new File([""], cheminFichierJson);
+        let lecteur = new FileReader();
+        lecteur.onload = function (evt) {
+            let fichierJson = evt.target.result;
+            let nomProjet = fichierJson[0]["nom_projet"];
+            console.log("test : ", nomProjet);
+            let liste = listeTaches();
+            console.log("test :", liste);
+        };
+
+        lecteur.readAsText(fichier);
     }
 
     adapterAnciennePartie(chemin) {
@@ -36,7 +47,7 @@ let cheminFichierJson = '';
         if (cheminFichierJson != '') {
             let fichier = new File([""], "filename");
             let lecteur = new FileReader();
-            let data = lecteur.readAsText(fichier, 'UTF-8');
+
         } else {
             console.log('erreur, pas de fichier');
         }
@@ -51,6 +62,29 @@ let cheminFichierJson = '';
     }
 }
 
+/** Fonction qui sera appeler au chargement de la page */
+function fInit(){
+     nettoyerMenu(get('0'));
+     nettoyerMenu(get('1'));
+}
+
+window.onload = fInit;
+
+function listeTaches() {
+    //console.log("APPEL listeTaches()");
+    let indexTache = 0;
+    return {
+        next: function () {
+            let tache;
+            if (indexTache < fichierJson['liste_tache'].length - 1) {
+                tache = {value: fichierJson['liste_tache'][indexTache], done: false};
+                indexTache++;
+                return tache;
+            }
+            return {value: fichierJson['liste_tache'][indexTache], done: true};
+        }
+    };
+}
 
 /** Fonction "raccourci" pour une opération que l'on va utiliser très souvent dans le code */
 function get(id){
@@ -76,29 +110,48 @@ function masquerRegles() {
 }
 
 /** Fonction qui va afficher/masquer les menus de jeu 
- * @param {integer} option - permet la différence entre les deux choix possibles 
- * 0 -> menu Lancer une nouvelle partie
- * 1 -> menu Reprendre une partie
+ * @param {0 | 1} option - Type de partie à lancer (0 pour une nouvelle partie | 1 pour reprendre une partie)
 */
 function afficherMenu(option) {
+    if(option !== 0 && option !== 1){
+        console.error("Vous tentez de valider un formulaire avec de mauvais parametres!");
+        return;
+    }
+
     const menuLancer = get('0');
     const menuReprendre = get('1');
 
     if (option === 0) {
         menuLancer.style.display = 'flex';
         menuReprendre.style.display = 'none';
-        nettoyerMenu(menuLancer);
         afficherJoueur(2);
     } else if (option === 1) {
         menuReprendre.style.display = 'flex';
         menuLancer.style.display = 'none';
-        nettoyerMenu(menuReprendre);
     }
 }
 
-/** Fonction qui va réinitialiser les menu, remettre les valeurs par défaut
+function afficherRegleMode(option){
+    if(option !== 0 && option !== 1){
+        console.error("Vous tentez de valider un formulaire avec de mauvais parametres!");
+        return;
+    }
+
+    let regleStrict = get("regleStrict");
+    let regleMoyenne = get("regleMoyenne");
+
+    if(option === 0){
+        regleStrict.style.display = 'flex';
+        regleMoyenne.style.display = 'none';
+    }else if(option === 1){
+        regleMoyenne.style.display = 'flex';
+        regleStrict.style.display = 'none';
+    }
+}
+
+/** Fonction qui va réinitialiser les menus et remettre les valeurs par défaut.
  * On fait appel à cette fonction à chaque fois que l'on change/quitte le menu
- * @param {HTMLElement | null} menu - le menu que l'on va réinitialiser
+ * @param {HTMLElement | null} menu - Menu à réinitialiser
  */
 function nettoyerMenu(menu) {
     const listeRadioBoutons = menu.querySelectorAll('input[type="radio"]');
@@ -123,7 +176,7 @@ function nettoyerMenu(menu) {
 }
 
 /** Fonction qui va afficher les entrées text pour saisir les noms des joueurs
- * @param {integer} nb - le nombre de joueur que l'on a sélectionné
+ * @param {number} nb - Nombre de joueurs sélectionner
  */
 function afficherJoueur(nb) {
     let div = get('selection-nom-joueurs');
@@ -157,45 +210,39 @@ function afficherJoueur(nb) {
 }
 
 
-/**
- * @function
- * @name sauvegarderChemin
- * @brief
- * @param chemin
+/** Permet de sauvegarder le chemin du fichier que l'on va utiliser
+ * @param {string} chemin - Chemin d'accès au fichier selectionner
  */
 function sauvegarderChemin(chemin) {
     cheminFichierJson = chemin;
 }
 
-/**
- * @function
- * @name validerFormulaire
- * @brief Fonction qui va lancer le traitement des données afin de pouvoir répondre à la demande de l'utilisateur.
+/**Fonction qui va lancer le traitement des données afin de pouvoir répondre à la demande de l'utilisateur.
  * Récupère toutes les données et utilise ensuite la classe Adaptateur
- * @param {0 | 1} option - Permet de selectionner le type de partie à lancer (0 pour une nouvelle partie | 1 pour reprendre une partie)
+ * @param {0 | 1} option - Type de partie à lancer (0 pour une nouvelle partie | 1 pour reprendre une partie)
  */
 function validerFormulaire(option) {
-    if(option != 0 && option != 1){
-        console.error("Vous tentez de valider un formulaire avec de mauvais parametres!");
-        return;
-    }
     //console.log("APPEL validerFormulaire + option= " + option);
     let monAdaptateur;
     if (option == 0) {
         console.log("nouvelle partie");
 
         let selectMode = _('input[name="mode"]:checked').value;
-        let selectNbJoueur = get('input[name="mode"]:checked').value;
-        let selectListeJoueurs = [];
+        let selectNbJoueur = _('input[name="nbJoueurs"]:checked').value;
 
-        for (let i = 2; i < selectNbJoueur; i++) {
-            selectListeJoueurs.push(get('j' + i).value);
+        let selectListeJoueurs = [];
+        let tab = document.querySelectorAll('input[name=\"nomJoueurs\"]');
+        for (let i = 0; i < selectNbJoueur; i++) {
+            selectListeJoueurs.push(tab[i].value);
         }
 
         monAdaptateur = new Adaptateur(0, selectMode, selectNbJoueur, selectListeJoueurs);
     } else if (option == 1) {
         console.log("ancienne partie");
         monAdaptateur = new Adaptateur(1);
+    } else {
+        console.error("Vous tentez de valider un formulaire avec de mauvais parametres!");
+        return;
     }
 
     //window.location.href = "./jeux.html?data=" + encodeURIComponent(envoie);;
@@ -265,42 +312,6 @@ function listeTaches() {
             return {value: fichierJson['liste_tache'][indexTache], done: true};
         }
     };
-}
-
-function loadJoueur(nbJoueur) {
-    //console.log("APPEL loadJoueur()");
-    let div = get("pseudo");
-
-    const listeName = []
-    for (let inp of div.children) {
-        if (inp.type == "text")
-            listeName.push(inp.value);
-    }
-
-    while (div.firstChild) {
-        div.removeChild(div.firstChild);
-    }
-
-    for (let i = 0; i < nbJoueur; i++) {
-        let input = document.createElement('input');
-        input.type = "text";
-        input.name = "n" + (i + 1);
-        input.id = input.name;
-        let label = document.createElement('label');
-        label.for = input.id;
-        label.innerHTML = "Pseudo joueur " + (i + 1) + ": ";
-        div.appendChild(label);
-        div.appendChild(input);
-        div.appendChild(document.createElement('br'));
-    }
-
-    let index = 0;
-    for (let i = 0; i < div.childElementCount; i++) {
-        if (div.childNodes[i].type == "text" && index < listeName.length) {
-            div.childNodes[i].value = listeName[index];
-            index++;
-        }
-    }
 }
 
 function loadFichierJson(reprendre = false) {
