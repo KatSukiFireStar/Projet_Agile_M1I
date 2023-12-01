@@ -17,7 +17,8 @@ let cheminFichierJson = '';
     }
 
     adapterNouvellePartie(mode, nbJoueurs, listeNomJoueurs) {
-        if (mode != 'Strict' && mode != 'Moyenne') {
+        console.log("APPEL adapterNouvellePartie()");
+        if (mode != 'strict' && mode != 'moyenne') {
             this.difficulte = mode;
         }
 
@@ -36,7 +37,6 @@ let cheminFichierJson = '';
             let fichier = new File([""], "filename");
             let lecteur = new FileReader();
             let data = lecteur.readAsText(fichier, 'UTF-8');
-            
         } else {
             console.log('erreur, pas de fichier');
         }
@@ -88,6 +88,7 @@ function afficherMenu(option) {
         menuLancer.style.display = 'flex';
         menuReprendre.style.display = 'none';
         nettoyerMenu(menuLancer);
+        afficherJoueur(2);
     } else if (option === 1) {
         menuReprendre.style.display = 'flex';
         menuLancer.style.display = 'none';
@@ -102,12 +103,12 @@ function afficherMenu(option) {
 function nettoyerMenu(menu) {
     const listeRadioBoutons = menu.querySelectorAll('input[type="radio"]');
     listeRadioBoutons.forEach((radio) => {
-        /*if ((radio.id != 'j2') && (radio.id != 'r1')) {
+        if ((radio.id != 'j2') && (radio.id != 'r1')) {
             radio.checked = false;
         } else {
             radio.checked = true;
-        }*/
-        radio.checked = false;
+        }
+        //radio.checked = false;
     });
 
     let div = get('selection-nom-joueurs');
@@ -155,21 +156,46 @@ function afficherJoueur(nb) {
     }
 }
 
+
+/**
+ * @function
+ * @name sauvegarderChemin
+ * @brief
+ * @param chemin
+ */
 function sauvegarderChemin(chemin) {
     cheminFichierJson = chemin;
 }
 
-/** Fonction qui va lancer le traitement des données afin de pouvoir répondre à la demande de l'utilisateur
+/**
+ * @function
+ * @name validerFormulaire
+ * @brief Fonction qui va lancer le traitement des données afin de pouvoir répondre à la demande de l'utilisateur.
  * Récupère toutes les données et utilise ensuite la classe Adaptateur
+ * @param {0 | 1} option - Permet de selectionner le type de partie à lancer (0 pour une nouvelle partie | 1 pour reprendre une partie)
  */
 function validerFormulaire(option) {
-    console.log("APPEL validerFormulaire + option= " + option)
-    if (option === 0) {
-        console.log("a venir ...");
-    } else if (option === 1) {
+    if(option != 0 && option != 1){
+        console.error("Vous tentez de valider un formulaire avec de mauvais parametres!");
+        return;
+    }
+    //console.log("APPEL validerFormulaire + option= " + option);
+    let monAdaptateur;
+    if (option == 0) {
+        console.log("nouvelle partie");
+
+        let selectMode = _('input[name="mode"]:checked').value;
+        let selectNbJoueur = get('input[name="mode"]:checked').value;
+        let selectListeJoueurs = [];
+
+        for (let i = 2; i < selectNbJoueur; i++) {
+            selectListeJoueurs.push(get('j' + i).value);
+        }
+
+        monAdaptateur = new Adaptateur(0, selectMode, selectNbJoueur, selectListeJoueurs);
+    } else if (option == 1) {
         console.log("ancienne partie");
-        console.log(cheminFichierJson);
-        let monAdaptateur = new Adaptateur(1);
+        monAdaptateur = new Adaptateur(1);
     }
 
     //window.location.href = "./jeux.html?data=" + encodeURIComponent(envoie);;
@@ -193,14 +219,6 @@ if (typeof window == 'object') {
 
 let fichierJson = "";
 let maPartie;
-
-function _(sel) {
-    return document.querySelector(sel);
-}
-
-function get(id) {
-    return document.getElementById(id);
-}
 
 function setFichierJson(fichier) {
     fichierJson = fichier;

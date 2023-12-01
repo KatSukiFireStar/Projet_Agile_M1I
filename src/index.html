@@ -29,13 +29,13 @@
             
             <div class="selection-mode">
                 <h4>Sélectionner le mode de jeu :</h4>
-                <input type="radio" name="mode" id="r1" value="Strict"><label for="r1">Strict</label>
-                <input type="radio" name="mode" id="r2" value="Moyenne"><label for="r2">Moyenne</label>
+                <input type="radio" name="mode" id="r1" value="strict" checked><label for="r1">Strict</label>
+                <input type="radio" name="mode" id="r2" value="moyenne"><label for="r2">Moyenne</label>
             </div>
             
             <div class="selection-nb-joueurs">
                 <h4>Sélectionner le nombre de joueurs :</h4>
-                <input type="radio" name="nbJoueurs" id="j2" value="2" onclick="afficherJoueur(this.value)"><label for="j2">2</label>
+                <input type="radio" name="nbJoueurs" id="j2" value="2" checked onclick="afficherJoueur(this.value)"><label for="j2">2</label>
                 <input type="radio" name="nbJoueurs" id="j3" value="3" onclick="afficherJoueur(this.value)"><label for="j3">3</label>
                 <input type="radio" name="nbJoueurs" id="j4" value="4" onclick="afficherJoueur(this.value)"><label for="j4">4</label>
             </div>
@@ -46,7 +46,7 @@
             </div>
             <div id="selection-fichier">
                 <h4>Sélectionner votre backlog :</h4>
-                <input type="file" id="jsonFileLancer" accept=".json"> <!--onchange="chargerFichierJson()">-->
+                <input type="file" id="jsonFileLancer" accept=".json" onchange="sauvegarderChemin(this.value)"> <br>
             </div>
         
             <button class="validerBouton" onclick="validerFormulaire(0)">Valider le formulaire</button>
