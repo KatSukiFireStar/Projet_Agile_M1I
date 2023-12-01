@@ -84,11 +84,11 @@ function afficherMenu(option) {
     const menuLancer = get('0');
     const menuReprendre = get('1');
 
-    if (option == 0) {
+    if (option === 0) {
         menuLancer.style.display = 'flex';
         menuReprendre.style.display = 'none';
         nettoyerMenu(menuLancer);
-    } else if (option == 1) {
+    } else if (option === 1) {
         menuReprendre.style.display = 'flex';
         menuLancer.style.display = 'none';
         nettoyerMenu(menuReprendre);
@@ -129,7 +129,7 @@ function afficherJoueur(nb) {
     const listeNomJoueurs = [];
 
     for(let saisie of div.children){
-        if(saisie.type=="text")
+        if(saisie.type==="text")
             listeNomJoueurs.push(saisie.value);
     }
 
@@ -148,7 +148,7 @@ function afficherJoueur(nb) {
 
     let index = 0;
     for(let i = 0; i < div.childElementCount; i++){
-        if(div.childNodes[i].type == "text" && index < listeNomJoueurs.length){
+        if(div.childNodes[i].type === "text" && index < listeNomJoueurs.length){
             div.childNodes[i].value = listeNomJoueurs[index];
             index++;
         }
@@ -164,9 +164,9 @@ function sauvegarderChemin(chemin) {
  */
 function validerFormulaire(option) {
     console.log("APPEL validerFormulaire + option= " + option)
-    if (option == 0) {
+    if (option === 0) {
         console.log("a venir ...");
-    } else if (option == 1) {
+    } else if (option === 1) {
         console.log("ancienne partie");
         console.log(cheminFichierJson);
         let monAdaptateur = new Adaptateur(1);

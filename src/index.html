@@ -19,9 +19,9 @@
         <h1>Planning Poker</h1>
         
         <div id="naviguation-barre">
-            <button id="naviguation-info" onclick="afficherRegles()"><i class="fa-solid fa-circle-info"></i></button>
-            <button id="naviguation-bouton" onclick="afficherMenu(0)">Lancer une nouvelle partie</button>
-            <button id="naviguation-bouton" onclick="afficherMenu(1)">Reprendre une partie</button>
+            <button class="naviguation-info" onclick="afficherRegles()"><i class="fa-solid fa-circle-info"></i></button>
+            <button class="naviguation-bouton" onclick="afficherMenu(0)">Lancer une nouvelle partie</button>
+            <button class="naviguation-bouton" onclick="afficherMenu(1)">Reprendre une partie</button>
         </div>
 
         <div class="menu" id="0">
@@ -46,18 +46,18 @@
             </div>
             <div id="selection-fichier">
                 <h4>Sélectionner votre backlog :</h4>
-                <input type="file" id="jsonFile" accept=".json"> <!--onchange="chargerFichierJson()">-->
+                <input type="file" id="jsonFileLancer" accept=".json"> <!--onchange="chargerFichierJson()">-->
             </div>
         
-            <button id="validerBouton" onclick="validerFormulaire(0)">Valider le formulaire</button>
+            <button class="validerBouton" onclick="validerFormulaire(0)">Valider le formulaire</button>
         </div>
 
         <div class="menu" id="1">
             <h4>"Le café était très bon, il est temps de reprendre la partie !"</h4>
             <h4>Sélectionner votre backlog (.json) :</h4>
-            <input type="file" id="jsonFile" accept=".json" onchange="sauvegarderChemin(this.value)"> <br>
+            <input type="file" id="jsonFileReprendre" accept=".json" onchange="sauvegarderChemin(this.value)"> <br>
 
-            <button id="validerBouton" onclick="validerFormulaire(1)">Valider le formulaire</button>
+            <button class="validerBouton" onclick="validerFormulaire(1)">Valider le formulaire</button>
         </div>
         
         <div id="regles-overlay" onclick="masquerRegles()">

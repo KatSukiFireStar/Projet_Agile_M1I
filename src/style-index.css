@@ -18,7 +18,7 @@ h1 {
     color: #ffffff;
 }
 
-#naviguation-barre {
+.naviguation-barre {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -30,7 +30,7 @@ h1 {
     background-color: rgb(49, 71, 57);
 }
 
-#naviguation-info {
+.naviguation-info {
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -42,11 +42,11 @@ h1 {
     color: #ffffff;
 }
 
-#naviguation-info:hover {
+.naviguation-info:hover {
     background-color: #cae0cc;
 }
 
-#naviguation-bouton {
+.naviguation-bouton {
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -58,7 +58,7 @@ h1 {
     color: #ffffff;
 }
 
-#naviguation-bouton:hover {
+.naviguation-bouton:hover {
     background-color: #cae0cc;
 }
 
