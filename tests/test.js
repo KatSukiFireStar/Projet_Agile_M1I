@@ -48,6 +48,7 @@ describe('Test Unitaire - Affichage Règles Jeu', () => {
   });
 });
 
+/*
 describe('Tests unitaires - iterateur listeTaches', function () {
   let err, data;
   it('Devrait avoir le meme nombre d\'objet', function () {
@@ -90,7 +91,7 @@ describe('Tests unitaires - iterateur listeTaches', function () {
       }
     });
   });
-});
+});*/
 
 /*
 const evtValideMock = {

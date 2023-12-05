@@ -25,11 +25,13 @@
       },
       {
         "nom_tache": "tache n°4",
-        "details": "...4"
+        "details": "...4",
+        "difficulte": ""
       },
       {
         "nom_tache": "tache n°5",
-        "details": "...5"
+        "details": "...5",
+        "difficulte": ""
       }
     ]
   }

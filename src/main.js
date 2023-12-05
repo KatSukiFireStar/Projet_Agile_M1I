@@ -1,6 +1,7 @@
 /**
  * Classe Adaptateur qui permet d'adapter les données en fonction de nos besoins
- * En entrée, on aura toutes les données "en vrac" et en sortie, on aura les données prêtes à l'envoi
+ * En entrée, on aura toutes les données "en vrac" et en sortie, on aura les données prêtes à l'envoi en fonction des
+ * besoins que l'on aura dans la page de jeux
  */
 class Adaptateur {
     /**
@@ -16,45 +17,48 @@ class Adaptateur {
     }
     
     /** Méthode qui permet de préparer les données dans le cas d'une partie que l'on veut reprendre
-     * asynchrone car elle attend le chargement complet du fichier Json que l'on récupère
-     * charge les données et les envois sur la page de jeux
+     * asynchrone, car elle attend le chargement du fichier json que l'on récupère.
+     * récupère uniquement la position de la tache sur laquelle on s'était arrêté.
      */
     async adapterAnciennePartie() {
-        try {
-            const objet = await this.adapterSauvegardeBacklog(); 
+        try{
+            const position = await this.recupererSituation();
             this.donnees = {
-                mode: objet.mode,
-                nbJoueurs: objet.nbJoueurs,
-                nomJoueurs: objet.listeJoueurs,
-                nomProjet: objet.nomProjet, 
-                taches: objet.liste
+                indice: position,
+                fichierJson: get('jsonFileReprendre').value
             };
             const envoie = JSON.stringify(this.donnees);
             window.location.href = "./jeux.html?data=" + encodeURIComponent(envoie);
-        
-        } catch (error) {
-            console.log("erreur ... ", error);
+        } catch (e) {
+            console.log("erreur : ", e);
         }
     }
-    /** Méthode qui adapte le fichierJson dans le cas d'une ancienne partie 
-     * retourne une promesse
-    */
-    async adapterSauvegardeBacklog() {
+
+    /**
+     * Méthode qui récupère la position de la dernière tâche traitée
+     * @returns {Promise<unknown>} - promesse (asychrone) qui contient l'indice de la dernière tâche traitée
+     */
+    async recupererSituation() {
         return new Promise((resolve, reject) => {
             let base = get('jsonFileReprendre');
 
             if (base.files.length > 0) {
                 let fichier = base.files[0];
+                let position = 0;
                 let lecteur = new FileReader();
 
                 lecteur.onload = function (evt) {
                     let fichierJson = JSON.parse(evt.target.result);
-                    let mode = fichierJson["mode"];
-                    let nbJoueurs = fichierJson["nbJoueurs"];
-                    let listeJoueurs = fichierJson["liste_joueurs"];
-                    let nomProjet = fichierJson["nom_projet"];
-                    let liste = listeTaches(fichierJson);
-                    resolve({ mode, nbJoueurs, listeJoueurs, nomProjet, liste });
+                    let liste = fichierJson["liste_tache"];
+
+                    for(let i=0; i<liste.length; i++) {
+                        let maTache = fichierJson["liste_tache"][i];
+                        if (maTache['difficulte'] !== "") {
+                            position += 1;
+                        }
+                    }
+
+                    resolve({ position });
                 };
 
                 lecteur.onerror = function (evt) {
@@ -69,31 +73,23 @@ class Adaptateur {
         });
     }
 
-    /** Méthode qui permet de préparer les données dans le cas d'une nouvelle partie
-     * asynchrone car elle attend le chargement complet du fichier Json que l'on récupère
-     * charge les données et les envois sur la page de jeux
-     */
-    async adapterNouvellePartie() {
-        try {
-            const objet = await this.adapterBacklog(); 
-            this.donnees = {
-                mode: this.adapterMode(),
-                nbJoueurs: this.adapterNbJoueurs(),
-                nomJoueurs: this.adapterListeJoueurs(),
-                nomProjet: objet.nomProjet,
-                taches: objet.liste
-            };
+    /** Méthode qui s'occupe d'adapter les données dans le cas où l'on lance une nouvelle partie
+     * s'occupe aussi d'envoyer les données vers la page de jeux*/
+     adapterNouvellePartie() {
+        this.donnees = {
+            mode: this.adapterMode(),
+            nbJoueurs: this.adapterNbJoueurs(),
+            nomJoueurs: this.adapterListeJoueurs(),
+            fichierJson: get('jsonFileLancer').value
+        };
 
-            //console.log("paquet nouveau prêt : ", this.donnees);
-            const envoie = JSON.stringify(this.donnees);
-            window.location.href = "./jeux.html?data=" + encodeURIComponent(envoie);
-        } catch (error) {
-            console.log("erreur ... ", error);
-        }
+        const envoie = JSON.stringify(this.donnees);
+        window.location.href = "./jeux.html?data=" + encodeURIComponent(envoie);
     }
 
-    /** Méthode qui adapte le mode de jeux dans le cas d'une nouvelle partie
-     * 
+    /**
+     * Méthode qui adapte le mode de jeux dans le cas d'une nouvelle partie
+     * @returns {*|string} - le mode de jeux sélectionné ou celui par défaut (strict)
      */
     adapterMode() {
         let mode = _('input[name="mode"]:checked').value;
@@ -104,14 +100,22 @@ class Adaptateur {
         return Modes.Strict;
     }
 
+    /**
+     *  Méthode qui adapte le nombre de joueurs dans le cas d'une nouvelle partie
+     * @returns {number|*} - le nombre de joueurs choisi ou celui par défaut (3)
+     */
     adapterNbJoueurs() {
         let nbJoueurs = _('input[name="nbJoueurs"]:checked').value;
         if (1 < nbJoueurs && nbJoueurs < 5) {
             return nbJoueurs;
         }
-        return 2;
+        return 3;
     }
 
+    /**
+     * Méthode qui adapte le nombre de joueurs dans le cas d'une nouvelle partie
+     * @returns {string[]|*[]} - la liste avec les noms des joueurs choisies ou une liste par défaut
+     */
     adapterListeJoueurs() {
         let listeJoueurs = [];
         let tab = document.querySelectorAll('input[name=\"nomJoueurs\"]');
@@ -124,34 +128,6 @@ class Adaptateur {
            return listeJoueurs;
         }
         return ['Pedro', 'Sancho', 'Mendoza'];
-    }
-   
-    async adapterBacklog() {
-        return new Promise((resolve, reject) => {
-            let base = get('jsonFileLancer');
-
-            if (base.files.length > 0) {
-                let fichier = base.files[0];
-                let lecteur = new FileReader();
-
-                lecteur.onload = function (evt) {
-                    let fichierJson = JSON.parse(evt.target.result);
-
-                    let nomProjet = fichierJson["nom_projet"];
-                    let liste = listeTaches(fichierJson);
-                    resolve({ nomProjet, liste });
-                };
-
-                lecteur.onerror = function (evt) {
-                    reject("Erreur lors de la lecture du fichier");
-                };
-
-                lecteur.readAsText(fichier);
-            } else {
-                console.log("Aucun fichier sélectionné");
-                reject("Aucun fichier sélectionné");
-            }
-        });
     }
 }
 
@@ -168,7 +144,8 @@ function masquerRegles() {
     regles.style.display = 'none';
 }
 
-/** Fonction qui va afficher/masquer les menus de jeu 
+/** Fonction qui va afficher/masquer les menus de jeu, procède aux nettoyages,
+ * bon affichage dans le cas du menu pour une nouvelle partie
  * @param {0 | 1} option - Type de partie à lancer (0 pour une nouvelle partie | 1 pour reprendre une partie)
 */
 function afficherMenu(option) {
@@ -181,7 +158,6 @@ function afficherMenu(option) {
     const menuReprendre = get('1');
     
     if (option === 0) {
-        // On lance une nouvelle partie, on nettoie l'autre menu
         nettoyerMenu(get('1'));
         menuLancer.style.display = 'flex';
         menuReprendre.style.display = 'none';
@@ -226,7 +202,6 @@ function nettoyerMenu(menu) {
         } else {
             radio.checked = true;
         }
-        //radio.checked = false;
     });
 
     let div = get('selection-nom-joueurs');
@@ -283,7 +258,8 @@ function validerFormulaire(option) {
     let monAdaptateur = new Adaptateur(option);  
 }
 
-/** Fonction qui sera appeler au chargement de la page */
+/** Fonction qui sera appeler au chargement de la page
+ * permet juste de nettoyer les menus avant le premier clique de l'utilisateur */
 function fInit(){
     nettoyerMenu(get('0'));
     nettoyerMenu(get('1'));
