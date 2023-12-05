@@ -18,7 +18,7 @@
     <body>
         <h1>Planning Poker</h1>
         
-        <div id="naviguation-barre">
+        <div class="naviguation-barre">
             <button class="naviguation-info" onclick="afficherRegles()"><i class="fa-solid fa-circle-info"></i></button>
             <button class="naviguation-bouton" onclick="afficherMenu(0)">Lancer une nouvelle partie</button>
             <button class="naviguation-bouton" onclick="afficherMenu(1)">Reprendre une partie</button>
@@ -28,18 +28,15 @@
             <h4>"Rien de mieux qu'une bonne partie pour se mettre d'accord ..."</h4>
             
             <div class="selection-mode">
-                <div>
-                    <h4>Sélectionner le mode de jeu :</h4>
-                    <input type="radio" name="mode" id="r1" value="strict" onclick="afficherRegleMode(0)" checked><label for="r1">Strict</label>
-                    <input type="radio" name="mode" id="r2" value="moyenne" onclick="afficherRegleMode(1)"><label for="r2">Moyenne</label>
-                </div>
-                <div>
-                    <p id="regleStrict">Tant que tous les joueurs ne sont pas en accord, le tour recommence</p>
-                    <p id="regleMoyenne">Lors du premier tour tous les joueurs doivent être en accord. Si aucun compromis n'a été
+                <h4>Sélectionner le mode de jeu :</h4>
+                <input type="radio" name="mode" id="r1" value="strict" onclick="afficherRegleMode(0)" checked><label for="r1">Strict</label>
+                <input type="radio" name="mode" id="r2" value="moyenne" onclick="afficherRegleMode(1)"><label for="r2">Moyenne</label> 
+            </div>
+            <!-- Hey ! Il n'y avait pas besoin de faire des div ! -->
+            <p id="regleStrict">Tant que tous les joueurs ne sont pas en accord, le tour recommence</p>
+            <p id="regleMoyenne">Lors du premier tour tous les joueurs doivent être en accord. Si aucun compromis n'a été
                                         trouver au premier tour, un deuxième tour a lieu. Si le deuxième tour ne mène toujours pas à un accord,
                                         alors une moyenne des sommes est établie et la prochaine tâche commence.</p>
-                </div>
-            </div>
             
             <div class="selection-nb-joueurs">
                 <h4>Sélectionner le nombre de joueurs :</h4>
@@ -48,11 +45,11 @@
                 <input type="radio" name="nbJoueurs" id="j4" value="4" onclick="afficherJoueur(this.value)"><label for="j4">4</label>
             </div>
 
+            <div id="selection-nom-joueurs"></div>
+            
+            <br>
 
-            <div id="selection-nom-joueurs">
-
-            </div>
-            <div id="selection-fichier">
+            <div class="selection-fichier">
                 <h4>Sélectionner votre backlog :</h4>
                 <input type="file" id="jsonFileLancer" accept=".json"> <br>
             </div>
@@ -62,8 +59,11 @@
 
         <div class="menu" id="1">
             <h4>"Le café était très bon, il est temps de reprendre la partie !"</h4>
-            <h4>Sélectionner votre backlog (.json) :</h4>
-            <input type="file" id="jsonFileReprendre" accept=".json"> <br>
+            
+            <div class="selection-fichier">
+                <h4>Sélectionner votre sauvegarde de backlog :</h4>
+                <input type="file" id="jsonFileReprendre" accept=".json"> <br>
+            </div>
 
             <button class="validerBouton" onclick="validerFormulaire(1)">Lancer la partie</button>
         </div>

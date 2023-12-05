@@ -155,9 +155,19 @@ class Adaptateur {
     }
 }
 
+/** Fonction "raccourci" pour une opération que l'on va utiliser très souvent dans le code */
+function get(id){
+    return document.getElementById(id);
+}
+
+/** Fonction "raccourci" pour une opération que l'on va utiliser très souvent dans le code */
+function _(sel){
+    return document.querySelector(sel);
+}
+
 /**
- * Itérateur de la liste de tâche d'un fichier Json
- * @param fichierJson - Fichier contenant les tâches
+ * Itérateur de la liste de tâche d'un fichier json
+ * @param fichierJson - fichier json contenant les tâches
  * @returns {{next: (function(): ({value: ({nom_tache: string, details: string}), done: boolean}))}}
  */
 function listeTaches(fichierJson) {
@@ -174,16 +184,6 @@ function listeTaches(fichierJson) {
             return {value: fichierJson['liste_tache'][indexTache], done: true};
         }
     };
-}
-
-/** Fonction "raccourci" pour une opération que l'on va utiliser très souvent dans le code */
-function get(id){
-    return document.getElementById(id);
-}
-
-/** Fonction "raccourci" pour une opération que l'on va utiliser très souvent dans le code */
-function _(sel){
-    return document.querySelector(sel);
 }
 
 /** Fonction qui s'active quand on clique sur le bouton (i) 
@@ -210,17 +210,23 @@ function afficherMenu(option) {
 
     const menuLancer = get('0');
     const menuReprendre = get('1');
-
+    
     if (option === 0) {
+        // On lance une nouvelle partie, on nettoie l'autre menu
+        nettoyerMenu(get('1'));
         menuLancer.style.display = 'flex';
         menuReprendre.style.display = 'none';
         afficherJoueur(2);
     } else if (option === 1) {
+        nettoyerMenu(get('0'));
         menuReprendre.style.display = 'flex';
         menuLancer.style.display = 'none';
     }
 }
 
+/** Fonction qui va afficher l'intitulé des règles 
+ * en fonction du bouton sur lequel l'utilisateur a cliqué 
+*/
 function afficherRegleMode(option){
     if(option !== 0 && option !== 1){
         console.error("Vous tentez de valider un formulaire avec de mauvais parametres!");
@@ -269,6 +275,7 @@ function nettoyerMenu(menu) {
  * @param {number} nb - Nombre de joueurs sélectionner
  */
 function afficherJoueur(nb) {
+    const defauts = ['ex : \"Léonardo\"', 'ex : \"Raphaël\"', 'ex : \"Michelangelo\"', 'ex : \"Donatello\"'];
     let div = get('selection-nom-joueurs');
     const listeNomJoueurs = [];
 
@@ -286,7 +293,7 @@ function afficherJoueur(nb) {
         input.type = "text";
         input.name = "nomJoueurs";
         input.id = "j"+(i+1);
-        input.placeholder = "Pseudo du Joueur" + (i+1)
+        input.placeholder = defauts[i];
         div.appendChild(input);
     }
 

@@ -5,7 +5,7 @@ body {
     margin: 0;
     padding: 0;
 
-    background-color: #ffffff;
+    background-color: #f4efef;
 }
 
 h1 {
@@ -14,20 +14,20 @@ h1 {
     margin: 10px 85px 10px 85px; /*margin: top right bottom left;*/
     padding: 10px;
     
-    background-color: rgb(63, 183, 105);
+    background-color: #368E55;
     color: #ffffff;
 }
 
 .naviguation-barre {
     display: flex;
     flex-direction: row;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
 
     margin: 0px;
-    padding: 10px;
+    padding: 1px;
 
-    background-color: rgb(49, 71, 57);
+    background-color: #DDE6E0;
 }
 
 .naviguation-info {
@@ -35,15 +35,15 @@ h1 {
     border-radius: 4px;
     cursor: pointer;
 
-    margin: 5px 25px 5px 0px;
+    margin: 5px 30px 5px 0px;
     padding: 10px;
 
-    background-color: rgb(90, 142, 90);
+    background-color: #368E55;
     color: #ffffff;
 }
 
 .naviguation-info:hover {
-    background-color: #cae0cc;
+    background-color: #98c09c;
 }
 
 .naviguation-bouton {
@@ -54,12 +54,12 @@ h1 {
     margin: 5px 5px 5px 5px;
     padding: 10px;
 
-    background-color: rgb(90, 142, 90);
+    background-color: #368E55;
     color: #ffffff;
 }
 
 .naviguation-bouton:hover {
-    background-color: #cae0cc;
+    background-color: #98c09c;
 }
 
 .menu {
@@ -67,27 +67,34 @@ h1 {
     flex-direction: column;
     justify-content: left;
     align-items: baseline;
+    margin: 5px 2.5px 5px 2.5px;
     
-    margin: 5px;
     padding-left: 450px;
-    padding-right: 450px;
-    border: 1px solid red;
-    background-color: #f8f8f8;
-}
-
-h4 {
+    padding-right: 400px;
+    
+    background-color: #cedfd4;
     font-style: italic;
-    color: #555555;
+    color: #545353;
 }
 
-.selection-mode>div {
+.selection-mode {
     display: flex;
     flex-direction: row;
     align-items: center;
 }
-.selection-mode {
-    display: flex;
-    flex-direction: column;
+
+#regleStrict {
+    font-style: italic;
+    color: #545353;
+    display: block;
+    text-align: justify;
+}
+
+#regleMoyenne {
+    font-style: italic;
+    color: #545353;
+    display: none;
+    text-align: justify;
 }
 
 input[type="radio"] {
@@ -97,19 +104,19 @@ input[type="radio"] {
 
 label {
     position: relative;
-    color: #175e2f;
+    color: #2e7246;
     font-family: "Poppins", sans-serif;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
     gap: 0.6em;
-    border: 1.5px solid #05b03e;
+    border: 1.5px solid #368E55;
     padding: 0.1em 2em;
     border-radius: 0.5em;
 }
 
 input[type="radio"]:checked + label {
-    background-color: #175e2f;
+    background-color: #2e7246;
     color: #ffffff;
 }
 
@@ -125,22 +132,40 @@ input[type="radio"]:checked + label {
     align-items:center;
 }
 
-button {
+.selection-nb-joueurs {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+input[type="file"] {
+    display: flex;
+    margin-left: 15px;
+}
+
+.selection-fichier {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.validerBouton {
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    align-items: end;
     padding: 10px;
-    background-color: #4caf50;
+    background-color: #368E55;
     color: #ffffff;
     border: none;
     cursor: pointer;
     border-radius: 4px;
     margin: 5px 0;
+    margin-left: auto; 
 }
 
-button:hover {
-    background-color: #45a049;
-}
-
-.selection-nom-joueurs {
-    display: flex;
+.validerBouton:hover {
+    background-color: #98c09c;
 }
 
 #regles-overlay {
@@ -152,7 +177,6 @@ button:hover {
     height: 100%;
 
     background-color: rgba(0, 0, 0, 0.6);
-    /*border: solid 1px red;*/
 }
 
 #regles-contenu {
@@ -162,9 +186,10 @@ button:hover {
     transform: translate(-50%, -50%);
     background-color: #ffffff;;
     padding: 20px;
-    margin: 60px;
-    max-width: 800px;
-    max-height: 600px;
+    margin: 20;
+    max-width: 900px;
+    max-height: 700px;
+    align-items: center;
     text-align: justify;
     border-radius: 10px;
     overflow-y: auto; 
@@ -185,24 +210,4 @@ ul {
 
 #regles-contenu::-webkit-scrollbar-track {
     background-color: #eee;
-}
-
-#regleMoyenne {
-    display: none;
-    text-align: justify;
-}
-
-#regleStrict {
-    display: block;
-    text-align: justify;
-}
-
-.validerBouton {
-    position: fixed;
-    right: 2%;
-    bottom: 2%;
-}
-
-#selection-fichier {
-    margin-bottom: 10px;
 }
