@@ -98,10 +98,10 @@ class Adaptateur {
     adapterMode() {
         let mode = _('input[name="mode"]:checked').value;
         // On vérifie que le mode est bien correct 
-        if ((mode == 'strict') || (mode == 'moyenne')) {
+        if ((mode == Modes.Strict) || (mode == Mode.Moyenne)) {
             return mode;
         }
-        return 'strict';
+        return Modes.Strict;
     }
 
     adapterNbJoueurs() {
@@ -153,37 +153,6 @@ class Adaptateur {
             }
         });
     }
-}
-
-/** Fonction "raccourci" pour une opération que l'on va utiliser très souvent dans le code */
-function get(id){
-    return document.getElementById(id);
-}
-
-/** Fonction "raccourci" pour une opération que l'on va utiliser très souvent dans le code */
-function _(sel){
-    return document.querySelector(sel);
-}
-
-/**
- * Itérateur de la liste de tâche d'un fichier json
- * @param fichierJson - fichier json contenant les tâches
- * @returns {{next: (function(): ({value: ({nom_tache: string, details: string}), done: boolean}))}}
- */
-function listeTaches(fichierJson) {
-    //console.log("APPEL listeTaches()");
-    let indexTache = 0;
-    return {
-        next: function () {
-            let tache;
-            if (indexTache < fichierJson['liste_tache'].length - 1) {
-                tache = {value: fichierJson['liste_tache'][indexTache], done: false};
-                indexTache++;
-                return tache;
-            }
-            return {value: fichierJson['liste_tache'][indexTache], done: true};
-        }
-    };
 }
 
 /** Fonction qui s'active quand on clique sur le bouton (i) 
@@ -275,7 +244,7 @@ function nettoyerMenu(menu) {
  * @param {number} nb - Nombre de joueurs sélectionner
  */
 function afficherJoueur(nb) {
-    const defauts = ['ex : \"Léonardo\"', 'ex : \"Raphaël\"', 'ex : \"Michelangelo\"', 'ex : \"Donatello\"'];
+    const defauts = ['ex : \"Seiya\"', 'ex : \"Shiryu\"', 'ex : \"Shun\"', 'ex : \"Hyoga\"'];
     let div = get('selection-nom-joueurs');
     const listeNomJoueurs = [];
 

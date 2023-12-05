@@ -8,7 +8,8 @@
       
         <script src="https://kit.fontawesome.com/cb25104232.js" crossorigin="anonymous"></script>
         <script type="text/javascript" src="main.js"></script>
-        
+        <script type="text/javascript" src="./utilitaire.js"></script>
+
         <link rel="stylesheet" href="./style-index.css">
         <link rel="icon" type="image/x-icon" href="./ressources/favicon.ico">
 
@@ -29,8 +30,8 @@
             
             <div class="selection-mode">
                 <h4>Sélectionner le mode de jeu :</h4>
-                <input type="radio" name="mode" id="r1" value="strict" onclick="afficherRegleMode(0)" checked><label for="r1">Strict</label>
-                <input type="radio" name="mode" id="r2" value="moyenne" onclick="afficherRegleMode(1)"><label for="r2">Moyenne</label> 
+                <input type="radio" name="mode" id="r1" value=Modes.Strict onclick="afficherRegleMode(0)" checked><label for="r1">Strict</label>
+                <input type="radio" name="mode" id="r2" value=Modes.Moyenne onclick="afficherRegleMode(1)"><label for="r2">Moyenne</label>
             </div>
             <!-- Hey ! Il n'y avait pas besoin de faire des div ! -->
             <p id="regleStrict">Tant que tous les joueurs ne sont pas en accord, le tour recommence</p>
