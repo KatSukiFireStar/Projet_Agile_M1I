@@ -1,0 +1,35 @@
+{
+    "mode": "moyenne",
+    "nbJoueurs": 3, 
+    "liste_joueurs":[
+        "Mendoza", 
+        "Sancho", 
+        "Pedro"
+    ],
+    "nom_projet": "construction de la cité d'or",
+    "liste_tache": [
+      {
+        "nom_tache": "tache n°1",
+        "details": "...1",
+        "difficulte": "8"
+      },
+      {
+        "nom_tache": "tache n°2",
+        "details": "...2",
+        "difficulte": "20"
+      },
+      {
+        "nom_tache": "tache n°3",
+        "details": "...3",
+        "difficulte": "?"
+      },
+      {
+        "nom_tache": "tache n°4",
+        "details": "...4"
+      },
+      {
+        "nom_tache": "tache n°5",
+        "details": "...5"
+      }
+    ]
+  }

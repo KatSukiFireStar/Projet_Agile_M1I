@@ -1,6 +1,3 @@
-// variable globale, obligé de la garder pour le moment
-let cheminFichierJson = '';
-
 /**
  * Classe Adaptateur qui permet d'adapter les données en fonction de nos besoins
  * En entrée, on aura toutes les données "en vrac" et en sortie, on aura les données prêtes à l'envoi
@@ -9,101 +6,154 @@ class Adaptateur {
     /**
      * Constructeur de la classe Adaptateur
      * @param {0 | 1} option - Type de partie à lancer (0 pour une nouvelle partie | 1 pour reprendre une partie)
-     * @param {string} mode - Mode de jeu
-     * @param {number} nbJoueurs - Nombre de joueurs
-     * @param {string[]} listeNomJoueurs - Tableau de nom des joueurs
      */
-    constructor(option, mode = '', nbJoueurs = 0, listeNomJoueurs = []) {
+    constructor(option) {
         if (option == 0) {
-            // On est dans une nouvelle partie
-            const objet = this.adapterNouvellePartie(mode, nbJoueurs, listeNomJoueurs);
-            console.log(objet);
-            this.donnees = {
-                mode: this.difficulte,
-                nbJoueurs: this.nbJoueurs,
-                nomJoueurs: this.listeNomJoueurs,
-                nomProjet: objet[0],
-                taches: objet[1]
-            };
+            this.adapterNouvellePartie();
         } else if (option == 1) {
-            // On est dans une ancienne partie
             this.adapterAnciennePartie();
         }
     }
-
-    /**
-     * Méthode qui permet d'adapter les données dans le cas où l'on souhaite lancer une nouvelle partie
-     * @param mode {string} - Mode de jeu/difficulté choisi
-     * @param nbJoueurs {number} - Nombre de joueurs pour la partie
-     * @param listeNomJoueurs {list} - Liste avec les noms des joueurs
+    
+    /** Méthode qui permet de préparer les données dans le cas d'une partie que l'on veut reprendre
+     * asynchrone car elle attend le chargement complet du fichier Json que l'on récupère
+     * charge les données et les envois sur la page de jeux
      */
-    adapterNouvellePartie(mode, nbJoueurs, listeNomJoueurs) {
-        console.log("APPEL adapterNouvellePartie()");
-        if ((mode != 'strict') && (mode != 'moyenne')) {
-            this.difficulte = mode;
-        }
-
-        if (1 < nbJoueurs && nbJoueurs < 5) {
-            this.nbJoueurs = nbJoueurs;
-        }
-
-        if (listeNomJoueurs.length != 0) {
-            this.listeNomJoueurs = listeNomJoueurs;
-        }
-
-        let base = get('jsonFileLancer');
-
-        if (base.files.length > 0) {
-            let fichier = base.files[0];
-            let lecteur = new FileReader();
-
-            lecteur.onload = function (evt) {
-                let fichierJson = JSON.parse(evt.target.result);
-
-                let nomProjet = fichierJson["nom_projet"];
-                let liste = listeTaches(fichierJson);
-                console.log(nomProjet, liste);
-                return {nomProjet, liste}
+    async adapterAnciennePartie() {
+        try {
+            const objet = await this.adapterSauvegardeBacklog(); 
+            this.donnees = {
+                mode: objet.mode,
+                nbJoueurs: objet.nbJoueurs,
+                nomJoueurs: objet.listeJoueurs,
+                nomProjet: objet.nomProjet, 
+                taches: objet.liste
             };
-            lecteur.readAsText(fichier);
-
-        } else {
-            console.log("Aucun fichier sélectionné");
+            const envoie = JSON.stringify(this.donnees);
+            window.location.href = "./jeux.html?data=" + encodeURIComponent(envoie);
+        
+        } catch (error) {
+            console.log("erreur ... ", error);
         }
     }
+    /** Méthode qui adapte le fichierJson dans le cas d'une ancienne partie 
+     * retourne une promesse
+    */
+    async adapterSauvegardeBacklog() {
+        return new Promise((resolve, reject) => {
+            let base = get('jsonFileReprendre');
 
-    /**
-     * Méthode qui permet d'adapter les données dans le cas où l'on souhaite lancer une partie déjà commencer
-     * @param chemin - Emplacement du fichier de partie
+            if (base.files.length > 0) {
+                let fichier = base.files[0];
+                let lecteur = new FileReader();
+
+                lecteur.onload = function (evt) {
+                    let fichierJson = JSON.parse(evt.target.result);
+                    let mode = fichierJson["mode"];
+                    let nbJoueurs = fichierJson["nbJoueurs"];
+                    let listeJoueurs = fichierJson["liste_joueurs"];
+                    let nomProjet = fichierJson["nom_projet"];
+                    let liste = listeTaches(fichierJson);
+                    resolve({ mode, nbJoueurs, listeJoueurs, nomProjet, liste });
+                };
+
+                lecteur.onerror = function (evt) {
+                    reject("Erreur lors de la lecture du fichier");
+                };
+
+                lecteur.readAsText(fichier);
+            } else {
+                console.log("Aucun fichier sélectionné");
+                reject("Aucun fichier sélectionné");
+            }
+        });
+    }
+
+    /** Méthode qui permet de préparer les données dans le cas d'une nouvelle partie
+     * asynchrone car elle attend le chargement complet du fichier Json que l'on récupère
+     * charge les données et les envois sur la page de jeux
      */
-    adapterAnciennePartie(chemin) {
-        console.log("APPEL adapterAnciennePartie()");
-        if (cheminFichierJson !== '') {
-            let fichier = new File([""], "filename");
-            let lecteur = new FileReader();
+    async adapterNouvellePartie() {
+        try {
+            const objet = await this.adapterBacklog(); 
+            this.donnees = {
+                mode: this.adapterMode(),
+                nbJoueurs: this.adapterNbJoueurs(),
+                nomJoueurs: this.adapterListeJoueurs(),
+                nomProjet: objet.nomProjet,
+                taches: objet.liste
+            };
 
-        } else {
-            console.log('erreur, pas de fichier');
+            //console.log("paquet nouveau prêt : ", this.donnees);
+            const envoie = JSON.stringify(this.donnees);
+            window.location.href = "./jeux.html?data=" + encodeURIComponent(envoie);
+        } catch (error) {
+            console.log("erreur ... ", error);
         }
     }
 
-    envoyerNouvellePartie() {
-        // Implementation de la méthode
+    /** Méthode qui adapte le mode de jeux dans le cas d'une nouvelle partie
+     * 
+     */
+    adapterMode() {
+        let mode = _('input[name="mode"]:checked').value;
+        // On vérifie que le mode est bien correct 
+        if ((mode == 'strict') || (mode == 'moyenne')) {
+            return mode;
+        }
+        return 'strict';
     }
 
-    envoyerAnciennePartie() {
-        // Implementation de la méthode
+    adapterNbJoueurs() {
+        let nbJoueurs = _('input[name="nbJoueurs"]:checked').value;
+        if (1 < nbJoueurs && nbJoueurs < 5) {
+            return nbJoueurs;
+        }
+        return 2;
+    }
+
+    adapterListeJoueurs() {
+        let listeJoueurs = [];
+        let tab = document.querySelectorAll('input[name=\"nomJoueurs\"]');
+        
+        for (let i = 0; i < tab.length; i++) {
+            listeJoueurs.push(tab[i].value);
+        }
+
+        if (listeJoueurs.length != 0) {
+           return listeJoueurs;
+        }
+        return ['Pedro', 'Sancho', 'Mendoza'];
+    }
+   
+    async adapterBacklog() {
+        return new Promise((resolve, reject) => {
+            let base = get('jsonFileLancer');
+
+            if (base.files.length > 0) {
+                let fichier = base.files[0];
+                let lecteur = new FileReader();
+
+                lecteur.onload = function (evt) {
+                    let fichierJson = JSON.parse(evt.target.result);
+
+                    let nomProjet = fichierJson["nom_projet"];
+                    let liste = listeTaches(fichierJson);
+                    resolve({ nomProjet, liste });
+                };
+
+                lecteur.onerror = function (evt) {
+                    reject("Erreur lors de la lecture du fichier");
+                };
+
+                lecteur.readAsText(fichier);
+            } else {
+                console.log("Aucun fichier sélectionné");
+                reject("Aucun fichier sélectionné");
+            }
+        });
     }
 }
-
-/** Fonction qui sera appeler au chargement de la page */
-function fInit(){
-     nettoyerMenu(get('0'));
-     nettoyerMenu(get('1'));
-}
-
-window.onload = fInit;
-
 
 /**
  * Itérateur de la liste de tâche d'un fichier Json
@@ -249,156 +299,20 @@ function afficherJoueur(nb) {
     }
 }
 
-
-/** Permet de sauvegarder le chemin du fichier que l'on va utiliser
- * @param {string} chemin - Chemin d'accès au fichier selectionner
- */
-function sauvegarderChemin(chemin) {
-    cheminFichierJson = chemin;
-    console.log("appel test");
-    console.log(cheminFichierJson);
-}
-
 /**Fonction qui va lancer le traitement des données afin de pouvoir répondre à la demande de l'utilisateur.
  * Récupère toutes les données et utilise ensuite la classe Adaptateur
  * @param {0 | 1} option - Type de partie à lancer (0 pour une nouvelle partie | 1 pour reprendre une partie)
  */
 function validerFormulaire(option) {
-    let monAdaptateur;
-    if (option == 0) {
-        let selectMode = _('input[name="mode"]:checked').value;
-        let selectNbJoueur = _('input[name="nbJoueurs"]:checked').value;
-
-        let selectListeJoueurs = [];
-        let tab = document.querySelectorAll('input[name=\"nomJoueurs\"]');
-        for (let i = 0; i < selectNbJoueur; i++) {
-            selectListeJoueurs.push(tab[i].value);
-        }
-
-        monAdaptateur = new Adaptateur(0, selectMode, selectNbJoueur, selectListeJoueurs);
-    } else if (option == 1) {
-        console.log("ancienne partie");
-        monAdaptateur = new Adaptateur(1);
-    } else {
-        console.error("Vous tentez de valider un formulaire avec de mauvais parametres!");
-        return;
-    }
-    console.log(monAdaptateur);
-    const envoie = JSON.stringify(monAdaptateur.donnees);
-    console.log(envoie);
-    //window.location.href = "./jeux.html?data=" + encodeURIComponent(envoie);
+    let monAdaptateur = new Adaptateur(option);  
 }
 
+/** Fonction qui sera appeler au chargement de la page */
+function fInit(){
+    nettoyerMenu(get('0'));
+    nettoyerMenu(get('1'));
+}
 
 if (typeof window == 'object') {
-    window.onload;
+    window.onload = fInit;
 }
-
-
-/*let fichierJson = "";
-
-function chargerFichierJson(evt, reprendre = false) {
-    //console.log("APPEL chargerFichierJson()");
-    setFichierJson(JSON.parse(evt.target.result));
-
-    let nomProjet = fichierJson["nom_projet"];
-    let nombre_joueur;
-    let nom_joueur;
-    let mode_jeu;
-
-    if (reprendre) {
-        nombre_joueur = fichierJson['nombre_joueur'];
-        nom_joueur = fichierJson['nom_joueur'];
-        mode_jeu = fichierJson['mode_jeu'];
-    }
-
-    if (!reprendre && fichierJson["liste_tache"][0]["difficulte"]) {
-        alert("Attention !! Le fichier n'a pas le bon format ! " +
-            "Lancer une partie avec ce fichier réinitialisera les difficultées de celui-ci !");
-    }
-    _("h1").innerHTML = "Planning Poker - Projet " + nomProjet + " chargé";
-    if (!reprendre)
-        return [nomProjet, listeTaches()];
-    else
-        return [nomProjet, listeTaches(), nombre_joueur, nom_joueur, mode_jeu];
-}
-
-function loadFichierJson(reprendre = false) {
-    //console.log("APPEL loadFichierJson()");
-    let objet;
-    if (!reprendre)
-        objet = get('jsonFile');
-    else
-        objet = get('jsonFileReprendre')
-
-    if (objet.files.length > 0) {
-        const fichier = objet.files[0];
-        const lecteur = new FileReader();
-        lecteur.onload = function (evt) {
-            if (!reprendre) {
-                const [nomProjet, listeTaches] = chargerFichierJson(evt);
-
-                // Stockez ces informations dans une variable locale
-                objet.informations = {nomProjet, listeTaches};
-            } else {
-                const [nomProjet, listeTaches, nombre_joueur, nom_joueur, mode_jeu] = chargerFichierJson(evt, true);
-                objet.informations = {nomProjet, listeTaches, nombre_joueur, nom_joueur, mode_jeu};
-            }
-        };
-        //lecteur.onload = chargerFichierJson;
-        lecteur.readAsText(fichier);
-    } else {
-        _("h1").innerHTML = "Planning Poker - Pas de projet chargé";
-    }
-}
-
-function validerFormulaire(reprendre = false) {
-    //console.log("APPEL validerFormulaire()");
-    // On récupère toutes les informations nécessaires pour lancer la partie
-    let selectMode, selectNbJoueur, selectListeJoueurs, nomProjet, listeTaches;
-
-    if (!reprendre) {
-        selectMode = _('input[name="mode"]:checked').value;
-        selectNbJoueur = get('nbJoueurs').value;
-
-        selectListeJoueurs = []
-        for (let i = 1; i <= selectNbJoueur; i++) {
-            selectListeJoueurs.push(get('n' + i).value);
-        }
-        // Utilisez les informations stockées dans la variable locale
-        nomProjet = get('jsonFile').informations.nomProjet;
-        listeTaches = get('jsonFile').informations.listeTaches;
-    } else {
-        selectMode = get('jsonFileReprendre').informations.mode_jeu;
-        selectNbJoueur = get('jsonFileReprendre').informations.nombre_joueur;
-        selectListeJoueurs = get('jsonFileReprendre').informations.nom_joueur;
-    }
-
-    maPartie = new Partie(selectMode, selectNbJoueur, selectListeJoueurs, nomProjet, listeTaches);
-}
-
-function chargerJeu() {
-    if (fichierJson == "") {
-        alert("Vous n'avez pas entrer de fichier de partie!");
-        return;
-    }
-
-    let load = true;
-
-    if (!(fichierJson['nombre_joueur'] && fichierJson['nom_joueur'])) {
-        let div = get("pseudo");
-        const listeName = []
-        for (let inp of div.children) {
-            if (inp.type == "text" && inp.value == "")
-                load = false;
-        }
-    }
-
-    if (!load)
-        alert("La partie ne peux pas commencer les noms des joueurs n'ont pas été renseigné!")
-    else {
-        const envoie = JSON.stringify(maPartie);
-        window.location.href = "./jeux.html?data=" + encodeURIComponent(envoie);
-
-    }
-}*/
