@@ -12,3 +12,11 @@ const Modes = {
     Strict: "strict",
     Moyenne: "moyenne"
 }
+
+function saveData(name, data){
+    localStorage.setItem(name,data);
+}
+
+function getData(name){ //retourne l'objet de clé "favoris"
+    return localStorage.getItem(name)
+}

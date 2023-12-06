@@ -41,28 +41,28 @@ function initialiserPartie() {
     maPartie = chargerPartie();
     console.log(maPartie);
 
-    let fichier = new File([""], maPartie.fichierJson);
-    let lecteur = new FileReader();
+    fichierJson = JSON.parse(getData("fichier"));
 
-    console.log(fichier);
-
-    lecteur.onload = function (evt) {
-        fichierJson = JSON.parse(evt.target.result);
-        console.log(fichierJson);
-    };
-
-    lecteur.readAsText(fichier);
-
-    iterator = listeTaches(maPartie.fichierJson);
+    iterator = listeTaches(fichierJson);
 
     let divInfo = get('info');
 
     let h1 = document.createElement('h1');
+    //ToDo: Rajouter le nomProjet dans maPartie
     h1.innerText = 'Planning Poker - ' + maPartie['nomProjet'];
+    divInfo.append(h1);
+
+    let h_tache = document.createElement("h2");
+    h_tache.id = "titre_tache";
+    divInfo.append(h_tache);
+
+    let p_details = document.createElement("p");
+    p_details.id = "details_tache";
+    divInfo.append(p_details);
 
     nextTask();
 
-    divInfo.append(h1);
+
     current_player = 0;
     let divJoueurCartes = get('cartes');
     for (let i = 0; i < listeCartes.length; i++) {
@@ -73,12 +73,13 @@ function initialiserPartie() {
         imgCarte.id = "carte_"+i;
         // écouteurs pour gérer le clic sur la carte
         imgCarte.addEventListener('click', function () {
+            let indiceCarte = i;
             carteSelectionnee[current_player] = listeCartes[i];
-            imgCarte.classList.add('carteSelectionnee');
+            imgCarte.classList.add('.carteSelectionnee');
             let divCarte = get("cartes");
-            for (let i = 0; i < listeCartes.length; i++){
-                if(get("cartes"+i).classList.contains("carteSelectionnee"))
-                    get("cartes"+i).classList.remove("carteSelectionnee")
+            for (let j = 0; j < listeCartes.length; j++){
+                if(j != indiceCarte && get("carte_"+j).classList.contains(".carteSelectionnee"))
+                    get("carte_"+j).classList.remove(".carteSelectionnee")
             }
         });
         divJoueurCartes.appendChild(imgCarte);
@@ -136,19 +137,19 @@ function validerChoix() {
 
 function nextTask(){
     numeroTache++;
-    let tache = iterator.next();
+    let tache = iterator.next().value;
     let div_info = get("info");
-    let h_tache = document.createElement("h2");
+    let h_tache = get("titre_tache");
     h_tache.innerHTML = tache['nom_tache'];
-    let p_details = document.createElement("p");
+    let p_details = get("details_tache");
     p_details.innerHTML = tache['details'];
     div_info.appendChild(p_details);
 }
 
 function reloadCartes(){
     for (let i = 0; i < listeCartes.length; i++)
-        if(get("cartes"+i).classList.contains("carteSelectionnee"))
-            get("cartes"+i).classList.remove("carteSelectionnee");
+        if(get("carte_"+i).classList.contains(".carteSelectionnee"))
+            get("carte_"+i).classList.remove(".carteSelectionnee");
 }
 
 function endTask(){

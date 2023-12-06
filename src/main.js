@@ -76,11 +76,32 @@ class Adaptateur {
     /** Méthode qui s'occupe d'adapter les données dans le cas où l'on lance une nouvelle partie
      * s'occupe aussi d'envoyer les données vers la page de jeux*/
      adapterNouvellePartie() {
+        let base = get('jsonFileLancer');
+        if (base.files.length > 0) {
+            let fichier = base.files[0];
+            let position = 0;
+            let lecteur = new FileReader();
+
+            lecteur.onload = function (evt) {
+                let fichierJson = JSON.parse(evt.target.result);
+                saveData("fichier", JSON.stringify(fichierJson));
+            };
+
+            lecteur.onerror = function (evt) {
+                reject("Erreur lors de la lecture du fichier");
+            };
+
+            lecteur.readAsText(fichier);
+        } else {
+            console.log("Aucun fichier sélectionné");
+            reject("Aucun fichier sélectionné");
+        }
+
         this.donnees = {
             mode: this.adapterMode(),
             nbJoueurs: this.adapterNbJoueurs(),
             nomJoueurs: this.adapterListeJoueurs(),
-            fichierJson: get('jsonFileLancer').value
+            fichierJson: get('jsonFileLancer').value.substring(12)
         };
 
         const envoie = JSON.stringify(this.donnees);
@@ -94,7 +115,7 @@ class Adaptateur {
     adapterMode() {
         let mode = _('input[name="mode"]:checked').value;
         // On vérifie que le mode est bien correct 
-        if ((mode == Modes.Strict) || (mode == Mode.Moyenne)) {
+        if ((mode == Modes.Strict) || (mode == Modes.Moyenne)) {
             return mode;
         }
         return Modes.Strict;
