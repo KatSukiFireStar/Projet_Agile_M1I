@@ -13,10 +13,15 @@ const Modes = {
     Moyenne: "moyenne"
 }
 
+/**
+ * Sauvegarde l'attribut data dans le local storage avec le nom name
+ * @param name - Nom d'enregistrement dans le local storage
+ * @param data - Données enregistré dans le local storage
+ */
 function saveData(name, data){
-    localStorage.setItem(name,data);
+    sessionStorage.setItem(name,data);
 }
 
 function getData(name){ //retourne l'objet de clé "favoris"
-    return localStorage.getItem(name)
+    return sessionStorage.getItem(name)
 }
