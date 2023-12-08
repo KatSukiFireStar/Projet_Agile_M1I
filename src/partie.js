@@ -126,9 +126,11 @@ function validerChoix() {
 
         divApercu.appendChild(imgApercu);
         reloadCartes();
-        if(current_player != maPartie.nbJoueurs-1){
+        let h4 = get('name');
+        if(current_player !== maPartie.nbJoueurs-1){
             current_player++;
-        }else{
+            h4.innerHTML = "C'est à ton tour : " + maPartie['nomJoueurs'][current_player];
+        }else {
             current_player = 0;
             printCarte();
             changeButton();
@@ -267,6 +269,11 @@ function reloadCartes(){
         }
 }
 
+/**
+ * Teste les conditions de validations en fonction du mode de jeu et des
+ * cartes sélectionnées
+ * @returns {boolean}
+ */
 function endTask(){
     if(current_turn == 1){
         for(let i = 0; i < Object.size(carteSelectionnee)-1; i++){
