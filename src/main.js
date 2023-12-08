@@ -9,9 +9,9 @@ class Adaptateur {
      * @param {0 | 1} option - Type de partie à lancer (0 pour une nouvelle partie | 1 pour reprendre une partie)
      */
     constructor(option) {
-        if (option == 0) {
+        if (option === 0) {
             this.adapterNouvellePartie();
-        } else if (option == 1) {
+        } else if (option === 1) {
             this.adapterAnciennePartie();
         }
     }
@@ -115,7 +115,7 @@ class Adaptateur {
     adapterMode() {
         let mode = _('input[name="mode"]:checked').value;
         // On vérifie que le mode est bien correct 
-        if ((mode == Modes.Strict) || (mode == Modes.Moyenne)) {
+        if ((mode === Modes.Strict) || (mode === Modes.Moyenne)) {
             return mode;
         }
         return Modes.Strict;
@@ -145,7 +145,7 @@ class Adaptateur {
             listeJoueurs.push(tab[i].value);
         }
 
-        if (listeJoueurs.length != 0) {
+        if (listeJoueurs.length !== 0) {
            return listeJoueurs;
         }
         return ['Pedro', 'Sancho', 'Mendoza'];
@@ -218,11 +218,7 @@ function afficherRegleMode(option){
 function nettoyerMenu(menu) {
     const listeRadioBoutons = menu.querySelectorAll('input[type="radio"]');
     listeRadioBoutons.forEach((radio) => {
-        if ((radio.id != 'j2') && (radio.id != 'r1')) {
-            radio.checked = false;
-        } else {
-            radio.checked = true;
-        }
+        radio.checked = !((radio.id !== 'j2') && (radio.id !== 'r1'));
     });
 
     let div = get('selection-nom-joueurs');
@@ -257,7 +253,7 @@ function afficherJoueur(nb) {
         let input = document.createElement('input');
         input.type = "text";
         input.name = "nomJoueurs";
-        input.id = "j"+(i+1);
+        input.id = "jt"+(i+1);
         input.placeholder = defauts[i];
         div.appendChild(input);
     }
