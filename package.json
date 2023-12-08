@@ -1,9 +1,4 @@
 {
-  "devDependencies": {
-    "jsdoc": "^4.0.2",
-    "jsdom": "^22.1.0",
-    "mocha": "^10.2.0"
-  },
   "name": "planning_poker",
   "version": "1.0.0",
   "description": "description",
@@ -16,7 +11,12 @@
     "test": "mocha tests/*.js",
     "docs": "jsdoc src -d docs"
   },
-
+  "devDependencies": {
+    "cypress": "^13.6.0",
+    "jsdoc": "^4.0.2",
+    "jsdom": "^22.1.0",
+    "mocha": "^10.2.0"
+  },
   "dependencies": {
     "acorn": "^8.11.2",
     "acorn-jsx": "^5.3.2",

@@ -1,0 +1,66 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+
+    margin: 0;
+    padding: 0;
+
+    background-color: #f4efef;
+}
+
+#info {
+    text-align: left;
+    width: 100%;
+
+    margin: 10px 85px 10px 85px; /*margin: top right bottom left;*/
+    padding: 10px;
+
+    background-color: #368E55;
+    color: #ffffff;
+}
+
+#apercu {
+    text-align: left;
+    width: 100%;
+    background-color: white;
+    border: solid 1px rgb(0, 0, 0);
+
+    margin: 5px;
+    padding: 2px;
+}
+
+#joueur {
+    text-align: left;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    background-color: white;
+    border: solid 1px rgb(0, 0, 0);
+
+    margin: 5px;
+    padding: 2px;
+}
+
+#cartes {
+    background-color: white;
+    border: solid 1px red;
+
+    margin: 5px;
+    padding: 2px;
+}
+
+#bouton {
+    background-color: white;
+    border: solid 1px red;
+
+    margin: 5px;
+    padding: 2px;
+}

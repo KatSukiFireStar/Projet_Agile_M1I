@@ -1,4 +1,4 @@
-name: CI
+name: CI - Planning Poker
 
 on:
   push:
@@ -26,3 +26,11 @@ jobs:
 
     - name: Generate Documentation
       run: npm run docs
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: docs/
+
+   

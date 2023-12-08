@@ -1,25 +1,25 @@
 {
-   "nom_projet":"...",
-   "liste_tache":[
-      {
-         "nom_tache":"...1",
-         "details":"...2"
-      },
-      {
-         "nom_tache":"...2",
-         "details":"...2"
-      },
-      {
-         "nom_tache":"...3",
-         "details":"...3"
-      }, 
-      {
-         "nom_tache":"...4",
-         "details":"...4"
-      },
-      {
-         "nom_tache":"...5",
-         "details":"...5"
-      }
-   ]
+  "nom_projet": "nom projet n°1",
+  "liste_tache": [
+    {
+      "nom_tache": "tache n°1",
+      "details": "...1"
+    },
+    {
+      "nom_tache": "tache n°2",
+      "details": "...2"
+    },
+    {
+      "nom_tache": "tache n°3",
+      "details": "...3"
+    },
+    {
+      "nom_tache": "tache n°4",
+      "details": "...4"
+    },
+    {
+      "nom_tache": "tache n°5",
+      "details": "...5"
+    }
+  ]
 }
