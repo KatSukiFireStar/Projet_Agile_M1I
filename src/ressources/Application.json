@@ -1,0 +1,53 @@
+{
+  "nom_projet": "Conception du site interne de l'entreprise",
+  "liste_tache": [
+    {
+      "nom_tache": "Connaître les effectifs de la société",
+      "details": "Voir les identités des collaborateurs sur une page d’acceuil"
+    },
+    {
+      "nom_tache": "Mettre à jour le trombinoscope",
+      "details": "Avoir une interface pour pouvoir créer un nouveau profil"
+    },
+    {
+      "nom_tache": "Le rendre reconnaissable de tous",
+      "details": "Pouvoir insérer une photo de la personne dans son profi"
+    },
+    {
+      "nom_tache": "Mettre à jour le trombinoscope",
+      "details": "Pouvoir modifier un profil existant"
+    },
+    {
+      "nom_tache": "Pouvoir contacter ou reconnaître une personne",
+      "details": "Pouvoir consulter le profil détaillé d’une identité sélectionnée"
+    },
+    {
+      "nom_tache": "De la connaître ou de la reconnaître",
+      "details": "Pouvoir voir une photo de la personne recherchée"
+    },
+    {
+      "nom_tache": "Trouver le profil de la personne recherchée",
+      "details": "Pouvoir faire une recherce à partir du nom, du prénom ou d’une partie de l’un ou l’autre"
+    },
+    {
+      "nom_tache": "Rendre l’affichage plus clair",
+      "details": "Obtenir un affichage paginé avec un nombre défini d’identité"
+    },
+    {
+      "nom_tache": "Limiter l’accès aux pages de paramétrages et de modification du site",
+      "details": "Devoir m’identifier"
+    },
+    {
+      "nom_tache": "Déléguer l’administration à un collègue",
+      "details": "Pouvoir créer un nouvel administrateur"
+    },
+    {
+      "nom_tache": "S’approprier le site",
+      "details": "Pouvoir personnaliser l’identité du site"
+    },
+    {
+      "nom_tache": "Respecter l’identité graphique de la société",
+      "details": "Pouvoir personnaliser la charte graphique du site"
+    }
+  ]
+}

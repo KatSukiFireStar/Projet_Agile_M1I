@@ -135,7 +135,7 @@ class Adaptateur {
 
     /**
      * Méthode qui adapte le nombre de joueurs dans le cas d'une nouvelle partie
-     * @returns {string[]|*[]} - la liste avec les noms des joueurs choisies ou une liste par défaut
+     * @returns {string[]}
      */
     adapterListeJoueurs() {
         let listeJoueurs = [];
@@ -250,7 +250,7 @@ function afficherJoueur(nb) {
     }
 
     for (let i=0; i<nb; i++) {
-        let input = document.createElement('input');
+        let input = create('input');
         input.type = "text";
         input.name = "nomJoueurs";
         input.id = "jt"+(i+1);
