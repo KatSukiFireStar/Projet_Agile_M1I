@@ -1,287 +1,230 @@
-/**
- * Classe Adaptateur qui permet d'adapter les données en fonction de nos besoins
- * En entrée, on aura toutes les données "en vrac" et en sortie, on aura les données prêtes à l'envoi en fonction des
- * besoins que l'on aura dans la page de jeux
+/** Classe Adaptateur qui permet d'adapter les données en fonction de nos besoins
+ * En entrée, on aura toutes les données 'en vrac', ensuite, la classe va valider les données et les sauvegarder dans
+ * le 'Session Storage' ainsi, dans la page 'jeux.html', on pourra récupérer les données et les utiliser comme on le
+ * souhaite.
  */
 class Adaptateur {
-    /**
-     * Constructeur de la classe Adaptateur
+    /** Constructeur de la classe Adaptateur
      * @param {0 | 1} option - Type de partie à lancer (0 pour une nouvelle partie | 1 pour reprendre une partie)
      */
     constructor(option) {
         if (option === 0) {
-            this.adapterNouvellePartie();
-        } else if (option === 1) {
-            this.adapterAnciennePartie();
+            this.adapterMode();
+            this.adapterNbJoueurs();
+            this.adapterNomJoueurs();
         }
+        this.adapterFichierJson(option);
     }
-    
-    /** Méthode qui permet de préparer les données dans le cas d'une partie que l'on veut reprendre
-     * asynchrone, car elle attend le chargement du fichier json que l'on récupère.
-     * récupère uniquement la position de la tache sur laquelle on s'était arrêté.
+
+    /** Méthode qui adapte le fichier dans les deux cas.
+     * Si l'on lance une nouvelle partie, le fichier est simplement sauvegardé dans le 'session storage'
+     * sinon, dans le cas d'une reprise de partie, on va aussi sauvegarder le fichier (qui sera différent) mais
+     * on va aussi récupérer la position de la tache sur laquelle les joueurs s'étaient arrêtés.
      */
-    async adapterAnciennePartie() {
-        try{
-            const position = await this.recupererSituation();
-            this.donnees = {
-                indice: position,
-                fichierJson: get('jsonFileReprendre').value
-            };
-            const envoie = JSON.stringify(this.donnees);
-            window.location.href = "./jeux.html?data=" + encodeURIComponent(envoie);
-        } catch (e) {
-            console.log("erreur : ", e);
-        }
-    }
-
-    /**
-     * Méthode qui récupère la position de la dernière tâche traitée
-     * @returns {Promise<unknown>} - promesse (asychrone) qui contient l'indice de la dernière tâche traitée
-     */
-    async recupererSituation() {
-        return new Promise((resolve, reject) => {
-            let base = get('jsonFileReprendre');
-
-            if (base.files.length > 0) {
-                let fichier = base.files[0];
-                let position = 0;
-                let lecteur = new FileReader();
-
-                lecteur.onload = function (evt) {
-                    let fichierJson = JSON.parse(evt.target.result);
-                    let liste = fichierJson["liste_tache"];
-
-                    for(let i=0; i<liste.length; i++) {
-                        let maTache = fichierJson["liste_tache"][i];
-                        if (maTache['difficulte'] !== "") {
-                            position += 1;
-                        }
-                    }
-
-                    resolve({ position });
-                };
-
-                lecteur.onerror = function (evt) {
-                    reject("Erreur lors de la lecture du fichier");
-                };
-
-                lecteur.readAsText(fichier);
-            } else {
-                console.log("Aucun fichier sélectionné");
-                reject("Aucun fichier sélectionné");
-            }
-        });
-    }
-
-    /** Méthode qui s'occupe d'adapter les données dans le cas où l'on lance une nouvelle partie
-     * s'occupe aussi d'envoyer les données vers la page de jeux*/
-     adapterNouvellePartie() {
-        let base = get('jsonFileLancer');
+    adapterFichierJson(option) {
+        let base = (option === 0) ? get('jsonFileLancer') : get('jsonFileReprendre');
         if (base.files.length > 0) {
             let fichier = base.files[0];
-            let position = 0;
             let lecteur = new FileReader();
 
             lecteur.onload = function (evt) {
                 let fichierJson = JSON.parse(evt.target.result);
-                saveData("fichier", JSON.stringify(fichierJson));
-            };
+                if (option === 1) {
+                    let position = 0;
+                    let liste = fichierJson['liste_tache'];
 
-            lecteur.onerror = function (evt) {
-                reject("Erreur lors de la lecture du fichier");
+                    for(let i=0; i<liste.length; i++) {
+                        let maTache = fichierJson['liste_tache'][i];
+                        if (maTache['difficulte'] !== "") {
+                            position += 1;
+                        }
+                    }
+                    saveData('position', position);
+                }
+                saveData('fichierJson', JSON.stringify(fichierJson));
             };
 
             lecteur.readAsText(fichier);
         } else {
-            console.log("Aucun fichier sélectionné");
-            reject("Aucun fichier sélectionné");
+            console.error("erreur - aucun fichier n'est sélectionné !");
         }
-
-        this.donnees = {
-            mode: this.adapterMode(),
-            nbJoueurs: this.adapterNbJoueurs(),
-            nomJoueurs: this.adapterListeJoueurs(),
-            fichierJson: get('jsonFileLancer').value.substring(12)
-        };
-
-        const envoie = JSON.stringify(this.donnees);
-        window.location.href = "./jeux.html?data=" + encodeURIComponent(envoie);
     }
 
-    /**
-     * Méthode qui adapte le mode de jeux dans le cas d'une nouvelle partie
-     * @returns {*|string} - le mode de jeux sélectionné ou celui par défaut (strict)
+    /** Méthode qui adapte le mode de jeux dans tous les cas. Si le mode sélectionné par les joueurs est invalide
+     * alors le mode par défaut est attribué (Strict). Sauvegarde la valeur dans le 'session storage'.
      */
     adapterMode() {
         let mode = _('input[name="mode"]:checked').value;
-        // On vérifie que le mode est bien correct 
+        // On vérifie que le mode est bien correct
         if ((mode === Modes.Strict) || (mode === Modes.Moyenne)) {
-            return mode;
+            saveData('mode', mode);
+        } else {
+            saveData('mode', Modes.Strict);
         }
-        return Modes.Strict;
     }
 
-    /**
-     *  Méthode qui adapte le nombre de joueurs dans le cas d'une nouvelle partie
-     * @returns {number|*} - le nombre de joueurs choisi ou celui par défaut (3)
+    /** Méthode qui adapte le nombre de joueurs de la partie. Si le nombre est invalide
+     * alors, on sauvegarde 2 joueurs. Sauvegarde la valeur dans le 'session storage'.
      */
     adapterNbJoueurs() {
         let nbJoueurs = _('input[name="nbJoueurs"]:checked').value;
         if (1 < nbJoueurs && nbJoueurs < 5) {
-            return nbJoueurs;
+            saveData('nbJoueurs', nbJoueurs);
+        } else {
+            saveData('nbJoueurs', 2);
         }
-        return 3;
     }
 
-    /**
-     * Méthode qui adapte le nombre de joueurs dans le cas d'une nouvelle partie
-     * @returns {string[]}
+    /** Méthode qui adapte la liste avec les noms des joueurs de la partie. Si cette liste est vide, elle est invalide
+     * et alors, on attribue une liste avec 2 noms de joueurs. Sauvegarde la valeur dans le 'session storage'.
      */
-    adapterListeJoueurs() {
-        let listeJoueurs = [];
-        let tab = document.querySelectorAll('input[name=\"nomJoueurs\"]');
-        
-        for (let i = 0; i < tab.length; i++) {
-            listeJoueurs.push(tab[i].value);
+    adapterNomJoueurs() {
+        let nomJoueurs = [];
+        let div = document.querySelectorAll('input[name="nomJoueurs"]');
+
+        for (let i = 0; i < div.length; i++) {
+            nomJoueurs.push(div[i].value);
         }
 
-        if (listeJoueurs.length !== 0) {
-           return listeJoueurs;
+        if (nomJoueurs.length !== 0){
+            saveData('nomJoueurs', nomJoueurs);
+        } else {
+            saveData('nomJoueurs', ['Titi', 'Grosminet']);
         }
-        return ['Pedro', 'Sancho', 'Mendoza'];
     }
 }
 
-/** Fonction qui s'active quand on clique sur le bouton (i) 
- * Cette fonction va afficher les règles si les règles étaient masquées et va les masquer dans le cas contraire*/ 
+/** Fonction qui s'active quand on clique sur le bouton (i)
+ * Cette fonction va afficher les règles si les règles étaient masquées et va les masquer dans le cas contraire
+ */
 function afficherRegles() {
     let regles = get('regles-overlay');
     regles.style.display = (regles.style.display === 'block') ? 'none' : 'block';
 }
 
-/** Fonction qui va masquer les règles du jeu */
+/** Fonction qui va masquer les règles du jeu dans tous les cas */
 function masquerRegles() {
     let regles = get('regles-overlay');
     regles.style.display = 'none';
 }
 
-/** Fonction qui va afficher/masquer les menus de jeu, procède aux nettoyages,
- * bon affichage dans le cas du menu pour une nouvelle partie
+/** Fonction qui va afficher/masquer les menus de jeu, procède aux nettoyages avant d'afficher les menus,
+ * Veille à afficher les menus avec les valeurs par défauts
  * @param {0 | 1} option - Type de partie à lancer (0 pour une nouvelle partie | 1 pour reprendre une partie)
 */
 function afficherMenu(option) {
-    if(option !== 0 && option !== 1){
-        console.error("Vous tentez de valider un formulaire avec de mauvais parametres!");
-        return;
-    }
-
     const menuLancer = get('0');
     const menuReprendre = get('1');
-    
+
+    nettoyerMenu(option);
     if (option === 0) {
-        nettoyerMenu(get('1'));
         menuLancer.style.display = 'flex';
         menuReprendre.style.display = 'none';
         afficherJoueur(2);
     } else if (option === 1) {
-        nettoyerMenu(get('0'));
         menuReprendre.style.display = 'flex';
         menuLancer.style.display = 'none';
+    } else {
+        console.error("erreur - le paramètre est invalide !");
     }
 }
 
-/** Fonction qui va afficher l'intitulé des règles 
- * en fonction du bouton sur lequel l'utilisateur a cliqué 
-*/
-function afficherRegleMode(option){
-    if(option !== 0 && option !== 1){
-        console.error("Vous tentez de valider un formulaire avec de mauvais parametres!");
-        return;
-    }
+/** Fonction qui va afficher l'intitulé des règles dans le menu pour une nouvelle partie
+ * Les règles affichées sont différentes en fonction du bouton sur lequel l'utilisateur a cliqué
+ * @param {0 | 1} option - Type de règles à afficher (0 : Strict | 1 : Moyenne)
+ */
+function afficherReglesMode(option){
+    let regleStrict = get('regleStrict');
+    let regleMoyenne = get('regleMoyenne');
 
-    let regleStrict = get("regleStrict");
-    let regleMoyenne = get("regleMoyenne");
-
-    if(option === 0){
+    if (option === 0) {
         regleStrict.style.display = 'flex';
         regleMoyenne.style.display = 'none';
-    }else if(option === 1){
+    } else if (option === 1) {
         regleMoyenne.style.display = 'flex';
         regleStrict.style.display = 'none';
+    } else {
+        console.error("erreur - le paramètre est invalide !");
     }
 }
 
 /** Fonction qui va réinitialiser les menus et remettre les valeurs par défaut.
  * On fait appel à cette fonction à chaque fois que l'on change/quitte le menu
- * @param {HTMLElement | null} menu - Menu à réinitialiser
+ * @param option - Type de menu que l'on va nettoyer (0 : nouvelle partie | 1 : reprendre partie)
  */
-function nettoyerMenu(menu) {
-    const listeRadioBoutons = menu.querySelectorAll('input[type="radio"]');
-    listeRadioBoutons.forEach((radio) => {
-        radio.checked = !((radio.id !== 'j2') && (radio.id !== 'r1'));
-    });
-
-    let div = get('selection-nom-joueurs');
-    for (let i = div.children.length - 1; i >= 0; i--) {
-        if (div.children[i].type === 'text') {
-            div.removeChild(div.children[i]);
+function nettoyerMenu(option) {
+    const menu = get(option);
+    let saisieFichier;
+    if (option === 0) {
+        let radioBoutons = menu.querySelectorAll('input[type="radio"]');
+        radioBoutons.forEach((radio) => {
+            radio.checked = !((radio.id !== 'j2') && (radio.id !== 'r1'));
+        });
+        afficherReglesMode(0);
+        let saisies = get('selection-nom-joueurs');
+        for (let i = saisies.children.length - 1; i >= 0; i--) {
+            if (saisies.children[i].type === 'text') {
+                saisies.removeChild(saisies.children[i]);
+            }
         }
+        saisieFichier = get('jsonFileLancer');
+    } else if (option === 1) {
+        saisieFichier = get('jsonFileReprendre');
+    } else {
+        console.error("erreur - le paramètre est invalide !");
     }
 
-    const saisieFichier = _('input[type="file"]');
     saisieFichier.value = '';
 }
 
-/** Fonction qui va afficher les entrées text pour saisir les noms des joueurs
- * @param {number} nb - Nombre de joueurs sélectionner
- */
-function afficherJoueur(nb) {
-    const defauts = ['ex : \"Seiya\"', 'ex : \"Shiryu\"', 'ex : \"Shun\"', 'ex : \"Hyoga\"'];
-    let div = get('selection-nom-joueurs');
-    const listeNomJoueurs = [];
 
-    for(let saisie of div.children){
-        if(saisie.type==="text")
-            listeNomJoueurs.push(saisie.value);
+/** Fonction qui va afficher les entrées de type 'text' pour saisir les noms des joueurs
+ * @param {number} nbJoueur - le nombre de joueurs
+ */
+function afficherJoueur(nbJoueur) {
+    const nomJoueursDefauts = ['ex : "Seiya"', 'ex : "Shiryu"', 'ex : "Shun"', 'ex : "Hyoga"'];
+
+    const nomJoueurs = [];
+    let div = get('selection-nom-joueurs');
+    for (let nomJoueur of div.children) {
+        if (nomJoueur.type === 'text') {
+            nomJoueurs.push(nomJoueur.value);
+        }
     }
 
     while (div.firstChild) {
         div.removeChild(div.firstChild);
     }
 
-    for (let i=0; i<nb; i++) {
+    for (let i=0; i<nbJoueur; i++) {
         let input = create('input');
-        input.type = "text";
-        input.name = "nomJoueurs";
-        input.id = "jt"+(i+1);
-        input.placeholder = defauts[i];
+        input.type = 'text';
+        input.name = 'nomJoueurs';
+        input.id = 'jt'+(i+1);
+        input.placeholder = nomJoueursDefauts[i];
+        input.value = '';
         div.appendChild(input);
     }
 
-    let index = 0;
-    for(let i = 0; i < div.childElementCount; i++){
-        if(div.childNodes[i].type === "text" && index < listeNomJoueurs.length){
-            div.childNodes[i].value = listeNomJoueurs[index];
-            index++;
+    let i = 0;
+    for (let j = 0; j < div.childElementCount; j++){
+        let enfant = div.children[j];
+        if (enfant.type === 'text' && i < nomJoueurs.length) {
+            enfant.value = nomJoueurs[i];
+            i++;
         }
     }
 }
 
-/**Fonction qui va lancer le traitement des données afin de pouvoir répondre à la demande de l'utilisateur.
- * Récupère toutes les données et utilise ensuite la classe Adaptateur
+/** Fonction qui va lancer le traitement des données afin de pouvoir répondre à la demande de l'utilisateur.
+ * Récupère toutes les données et utilise ensuite la classe Adaptateur qui va se charger du traitement
  * @param {0 | 1} option - Type de partie à lancer (0 pour une nouvelle partie | 1 pour reprendre une partie)
  */
 function validerFormulaire(option) {
-    let monAdaptateur = new Adaptateur(option);  
-}
-
-/** Fonction qui sera appeler au chargement de la page
- * permet juste de nettoyer les menus avant le premier clique de l'utilisateur */
-function fInit(){
-    nettoyerMenu(get('0'));
-    nettoyerMenu(get('1'));
+    new Adaptateur(option);
+    window.location.href = 'jeux.html';
 }
 
 if (typeof window == 'object') {
-    window.onload = fInit;
+    window.onload
 }

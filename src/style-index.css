@@ -24,7 +24,7 @@ h1 {
     align-items: center;
     justify-content: center;
 
-    margin: 0px;
+    margin: 0;
     padding: 1px;
 
     background-color: #DDE6E0;
@@ -35,7 +35,7 @@ h1 {
     border-radius: 4px;
     cursor: pointer;
 
-    margin: 5px 30px 5px 0px;
+    margin: 5px 30px 5px 0;
     padding: 10px;
 
     background-color: #368E55;
@@ -67,7 +67,7 @@ h1 {
     flex-direction: column;
     justify-content: left;
     align-items: baseline;
-    margin: 5px 2.5px 5px 2.5px;
+    margin: 5px 3px 5px 3px;
     
     padding-left: 450px;
     padding-right: 400px;
@@ -110,7 +110,7 @@ label {
     display: inline-flex;
     align-items: center;
     gap: 0.6em;
-    border: 1.5px solid #368E55;
+    border: 1px solid #368E55;
     padding: 0.1em 2em;
     border-radius: 0.5em;
 }
@@ -160,8 +160,7 @@ input[type="file"] {
     border: none;
     cursor: pointer;
     border-radius: 4px;
-    margin: 5px 0;
-    margin-left: auto; 
+    margin: 5px 0 5px auto;
 }
 
 .validerBouton:hover {
@@ -186,7 +185,7 @@ input[type="file"] {
     transform: translate(-50%, -50%);
     background-color: #ffffff;;
     padding: 20px;
-    margin: 20;
+    margin: 20px;
     max-width: 900px;
     max-height: 700px;
     align-items: center;

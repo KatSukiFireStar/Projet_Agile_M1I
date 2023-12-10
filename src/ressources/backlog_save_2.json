@@ -1,0 +1,38 @@
+{
+  "mode": "strict",
+  "nb_joueurs": 4,
+  "liste_joueurs":[
+    "Léonardo",
+    "Raphaël",
+    "Donatello",
+    "Michelangelo"
+  ],
+  "nom_projet": "La pizza aux 99 Fromages",
+  "liste_tache": [
+    {
+      "nom_tache": "Se renseigner sur la légende de cette pizza",
+      "détails": "Maître Splinter nous à raconter la légende de la pizza aux 99 Fromages, est-ce vrai ? Comment est-ce possible !?",
+      "difficulte": "5"
+    },
+    {
+      "nom_tache": "Se renseigner sur la légende de cette pizza",
+      "détails": "...",
+      "difficulte": "100"
+    },
+    {
+      "nom_tache": "...",
+      "détails": "Maître Splinter nous à raconter la légende de la pizza aux 99 Fromages, est-ce vrai ? Comment est-ce possible !?",
+      "difficulte": ""
+    },
+    {
+      "nom_tache": "Se renseigner sur la légende de cette pizza",
+      "détails": "...",
+      "difficulte": ""
+    },
+    {
+      "nom_tache": "...",
+      "détails": "Maître Splinter nous à raconter la légende de la pizza aux 99 Fromages, est-ce vrai ? Comment est-ce possible !?",
+      "difficulte": ""
+    }
+  ]
+}
