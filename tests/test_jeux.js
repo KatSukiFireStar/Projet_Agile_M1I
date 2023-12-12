@@ -4,7 +4,7 @@ const fs = require("fs");
 const { listeTaches, chargerPartie } = require('../src/jeux.js');
 
 describe('Tests Unitaires - fonction itérateur listesTaches', function () {
-    it('Devrait avoir le meme nombre d\'objet', function () {
+    it('Devrait avoir le meme nombre d\'objet. Il y a 5 objets et un vide pour le done == true.', function () {
         fs.readFile("src/ressources/backlog_test.json", (err, data) => {
             let fichierJson = JSON.parse(data.toString());
             let iterator = listeTaches(fichierJson);
@@ -14,7 +14,7 @@ describe('Tests Unitaires - fonction itérateur listesTaches', function () {
                 resultat = iterator.next();
                 nb++;
             }
-            assert.equal(nb, 5);
+            assert.equal(nb, 6);
         });
     });
 
