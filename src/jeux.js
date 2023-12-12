@@ -177,6 +177,7 @@ function validerChoix() {
             // le tour semble être terminé
             joueurCourant = 0;
             h4.style.display = 'none';
+            get("cartes").style.display = 'none';
             printCarte(); // On révèle les cartes
             changeButton('finTour'); // On adapte le bouton
         }
@@ -287,6 +288,7 @@ function nextTurn(){
     changeButton("debut");
     let h4 = get('name');
     h4.style.display = 'flex';
+    get("cartes").style.display = 'flex';
     h4.innerHTML = "C'est à ton tour : " + maPartie.nomJoueurs[joueurCourant];
 }
 
