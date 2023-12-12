@@ -7,31 +7,36 @@
     "Donatello",
     "Michelangelo"
   ],
-  "nom_projet": "Dérober la pizza aux 99 fromages de Jules Pognante",
+  "nom_projet": "Développement d'un Système de gestion de Compte Bancaire",
   "liste_tache": [
     {
-      "nom_tache": "Se renseigner sur la légende de cette pizza",
-      "details": "Maître Splinter nous à raconter la légende de la pizza aux 99 Fromages, est-ce vrai ? Comment est-ce possible !?",
+      "nom_tache": "Définir les caractéristiques d'un client, analyse des besoins",
+      "details": "Nous travaillons dans une banque avec tout les profils, il faut trouver un système qui conviennent à tous.",
       "difficulte": "5"
     },
     {
-      "nom_tache": "Parvenir à localiser le repère de Jules",
-      "details": "Cette pizza existe bel et bien, elle se trouve dans le repère de Jules Pognante, il faut le trouver !",
-      "difficulte": "100"
-    },
-    {
-      "nom_tache": "S'infiltrer dans le repère de Jules",
-      "details": "Son repère est très bien garder, comment allons-nous entrer dans sa demeure",
+      "nom_tache": "Réalisation de la base de données et des requêtes",
+      "details": "",
       "difficulte": ""
     },
     {
-      "nom_tache": "Faire face à Jules Pognante et récupérer la pizza aux 99 fromages",
-      "details": "Nous sommes face aux frigos de Jules, dedans, la pizza est conservée... Mais Jules n'est pas prêt de la partager ... Il va falloir l'affronter",
+      "nom_tache": "Développement du logiciel",
+      "details": "Maintenant, il faut développer l'interface, ainsi que les différentes fonctionnalités du logiciel",
       "difficulte": ""
     },
     {
-      "nom_tache": "Mission accompli, c'est l'heure de la dégustation !",
-      "details": "La folie fromagère de Jules Pognante à eu raison de lui, nous l'avons vaincu ! il est temps de profiter de la victoire !",
+      "nom_tache": "Mise en place d'une couche de sécurité",
+      "details": "Il faut que notre système soit robuste, les données doivent être chiffrés afin de garantir l'anonymat et la protection des données de nos clients",
+      "difficulte": ""
+    },
+    {
+      "nom_tache": "Mise en place des tests d'intégration, fonctionnelles, unitaires",
+      "details": "Dernière étape, le client veut des tests complets pour éviter toutes mauvaises surprises",
+      "difficulte": ""
+    },
+    {
+      "nom_tache": "Livraison, mise en place du logiciel",
+      "details": "hop, on livre, on assure le déploiement, on met en place les dashboards ...",
       "difficulte": ""
     }
   ]

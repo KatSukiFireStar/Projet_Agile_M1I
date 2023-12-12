@@ -83,11 +83,17 @@ class Adaptateur {
      * et alors, on attribue une liste avec 2 noms de joueurs. Sauvegarde la valeur dans le 'session storage'.
      */
     adapterNomJoueurs() {
+        let nomJoueursDefaut = ['Seiya', "Shiryu", "Shun", "Hyoga"];
         let nomJoueurs = [];
         let div = document.querySelectorAll('input[name="nomJoueurs"]');
 
         for (let i = 0; i < div.length; i++) {
-            nomJoueurs.push(div[i].value);
+            if (div[i].value === "") {
+                nomJoueurs.push(nomJoueursDefaut[i]);
+            } else {
+                nomJoueurs.push(div[i].value);
+            }
+
         }
 
         if (nomJoueurs.length !== 0){
@@ -225,8 +231,12 @@ function afficherJoueur(nbJoueur) {
  * @param {0 | 1} option - Type de partie à lancer (0 pour une nouvelle partie | 1 pour reprendre une partie)
  */
 function validerFormulaire(option) {
-    new Adaptateur(option);
-    window.location.href = 'jeux.html';
+    let saisie = (option === 0) ? get('jsonFileLancer') : get('jsonFileReprendre');
+    if (saisie.files.length !== 0) {
+        new Adaptateur(option);
+        window.location.href = 'jeux.html';
+    }
+
 }
 
 if (typeof window == 'object') {

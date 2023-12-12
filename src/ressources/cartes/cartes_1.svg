@@ -7,8 +7,31 @@
    viewBox="0 0 58.264584 90.26458"
    version="1.1"
    id="svg5"
+   sodipodi:docname="cartes_1.svg"
+   inkscape:version="1.3.1 (91b66b0783, 2023-11-16)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="2.3625454"
+     inkscape:cx="110.0508"
+     inkscape:cy="170.57873"
+     inkscape:window-width="1920"
+     inkscape:window-height="1002"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
   <defs
      id="defs2" />
   <g
@@ -17,90 +40,22 @@
     <g
        id="g4748"
        transform="translate(13.738212,-31.020481)">
-      <circle
-         style="fill:none;stroke:none;stroke-width:0.264583;stroke-opacity:1"
-         id="path1141-1-9"
-         cx="118.66357"
-         cy="89.054672"
-         r="5" />
-      <text
-         xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';fill:none;stroke:#000000;stroke-width:0.264583;stroke-opacity:1"
-         x="117.25105"
-         y="90.820328"
-         id="text1197-0-7"><tspan
-           id="tspan1195-6-7"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';fill:#000000;fill-opacity:1;stroke-width:0.264583"
-           x="117.25105"
-           y="90.820328">1</tspan></text>
-      <circle
-         style="fill:none;stroke:none;stroke-width:0.264583;stroke-opacity:1"
-         id="path1141-5-6"
-         cx="70.663582"
-         cy="89.054672"
-         r="5" />
-      <text
-         xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';fill:none;stroke:#000000;stroke-width:0.264583;stroke-opacity:1"
-         x="69.25106"
-         y="90.820328"
-         id="text1197-9-7"><tspan
-           id="tspan1195-4-3"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';fill:#000000;fill-opacity:1;stroke-width:0.264583"
-           x="69.25106"
-           y="90.820328">1</tspan></text>
       <rect
-         style="fill:none;stroke:#000000;stroke-width:0.264583;stroke-opacity:1"
+         style="fill:#006b00;stroke:#ffffff;stroke-width:0.264583;stroke-opacity:1;fill-opacity:1"
          id="rect111-6"
          width="58"
          height="90"
          x="65.663582"
          y="4.0546694"
          rx="5" />
-      <path
-         id="rect111-3-5"
-         style="fill:none;stroke:#000000;stroke-width:0.264583;stroke-opacity:1"
-         d="m 75.55692,8.0544414 a 5,5 0 0 1 0.12402,1.09554 5,5 0 0 1 -5.00021,5.0002116 5,5 0 0 1 -1.01699,-0.109038 v 70.11149 a 5,5 0 0 1 0.90278,-0.0853 5,5 0 0 1 5.00021,4.9997 5,5 0 0 1 -0.1018,0.98753 h 38.35632 a 5,5 0 0 1 -0.11266,-1.02939 5,5 0 0 1 5.00021,-5.00021 5,5 0 0 1 0.95498,0.0925 V 13.947621 a 5,5 0 0 1 -1.02422,0.111104 5,5 0 0 1 -5.00021,-5.0002106 5,5 0 0 1 0.1049,-1.004073 z" />
-      <circle
-         style="fill:none;stroke:none;stroke-width:0.264583;stroke-opacity:1"
-         id="path1141-0-6"
-         cx="70.663582"
-         cy="9.0546694"
-         r="5" />
       <text
          xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';fill:none;stroke:#000000;stroke-width:0.264583;stroke-opacity:1"
-         x="69.25106"
-         y="10.820325"
-         id="text1197-91-3"><tspan
-           id="tspan1195-7-9"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';fill:#000000;fill-opacity:1;stroke-width:0.264583"
-           x="69.25106"
-           y="10.820325">1</tspan></text>
-      <circle
-         style="fill:none;stroke:none;stroke-width:0.264583;stroke-opacity:1"
-         id="path1141-4"
-         cx="118.66358"
-         cy="9.0546694"
-         r="5" />
-      <text
-         xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';fill:none;stroke:#000000;stroke-width:0.264583;stroke-opacity:1"
-         x="117.25106"
-         y="10.820325"
-         id="text1197-8"><tspan
-           id="tspan1195-1"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';fill:#000000;fill-opacity:1;stroke-width:0.264583"
-           x="117.25106"
-           y="10.820325">1</tspan></text>
-      <text
-         xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:25.4px;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-opacity:1"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:25.4px;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.264583;stroke-opacity:1"
          x="87.399178"
          y="58.135159"
          id="text1429-2"><tspan
            id="tspan1427-9"
-           style="font-size:25.4px;stroke-width:0.264583"
+           style="font-size:25.4px;stroke-width:0.264583;stroke:#ffffff;stroke-opacity:1;fill:#ffffff;fill-opacity:1"
            x="87.399178"
            y="58.135159">1</tspan></text>
     </g>

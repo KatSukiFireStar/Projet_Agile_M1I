@@ -1,10 +1,10 @@
-const listeCartes = ["0", "1", "2", "3", "5", "8", "13", "20", "40", "100", "cafe", "interro"];
-let timer = 30;
+// TODO Guillaume - finir le css de la partie du milieu, rapport
+const listeCartes = ["0", "1", "2", "3", "5", "8", "13", "20", "40", "100", "interro", "cafe"];
+let timer = {time:31, option:'choix'};
 let maPartie, iterateur, joueurCourant, numeroTache = -1;
 let tourCourant = 1;
 let tacheCourrante = ""
 let carteSelectionnee = {};
-//let valeurCarte = {};
 
 // Formats du fichier de sauvegarde Json ...
 let sauvegarde = {
@@ -17,7 +17,8 @@ let sauvegarde = {
     liste_tache: []
 };
 
-/** Itérateur de la liste de tâche d'un fichier json
+/**
+ * Itérateur de la liste de tâche d'un fichier json
  * @param fichierJson - fichier json contenant les tâches
  * @returns {{next: ((function(): ({value: *, done: boolean}))|*)}}
  */
@@ -42,57 +43,74 @@ function listeTaches(fichierJson) {
  * il change de tours en prenant en compte si le joueur a pu jouer.
  */
 function gestionTimer(){
-    timer--;
+    timer.time--;
     let p_timer = get("timer");
-    p_timer.innerHTML = timer.toString() + " <i class='fa-regular fa-hourglass'</i>";
-    if(timer === 0){
-        if(get("validerBouton").innerHTML === "Valider votre Carte"){
+    let icone = '';
+    if (timer.option === 'choix') {
+        if (20 <= timer.time) {
+            icone = "<i class='fa-solid fa-hourglass-start'</i>";
+        } else if (6 <= timer.time) {
+            icone = "<i class='fa-solid fa-hourglass-half'</i>";
+        } else if (0 < timer.time) {
+            icone = "<i class='fa-solid fa-hourglass-end'</i>";
+        } else {
             let carteBool = false;
             let indice = 0;
-            for (let j = 0; j < listeCartes.length; j++){
-                if(get("carte_"+j).classList.contains(".carteSelectionnee")){
+            for (let j = 0; j < listeCartes.length; j++) {
+                if (get("carte_" + j).classList.contains(".carteSelectionnee")) {
                     carteBool = true;
                     indice = j;
                 }
             }
-            if(!carteBool){
-                get("carte_"+(listeCartes.length-1).toString()).classList.add(".carteSelectionnee");
-                indice = listeCartes.length-1;
+            if (!carteBool) {
+                get("carte_" + (listeCartes.length - 2).toString()).classList.add(".carteSelectionnee");
+                indice = listeCartes.length - 2;
             }
             carteSelectionnee[joueurCourant] = listeCartes[indice];
             validerChoix();
-        }else{
+        }
+    } else {
+        if (40 <= timer.time) {
+            icone = "<i class='fa-solid fa-hourglass-start'</i>";
+        } else if (10 <= timer.time) {
+            icone = "<i class='fa-solid fa-hourglass-half'</i>";
+        } else if (0 !== timer.time) {
+            icone = "<i class='fa-solid fa-hourglass-end'</i>";
+        } else {
+            console.log("timer à 0 !");
             nextTurn();
         }
     }
+    p_timer.innerHTML = "Horloge : " + timer.time.toString() + " " + icone;
 }
 
-/** Permet de retourner toutes les données dont on a besoin pour notre partie.
+/**
+ * Permet de retourner toutes les données dont on a besoin pour notre partie.
  * Initialise également la sauvegarde, avec les premières informations simples
  * @returns {any} - retourne un objet qui sera notre partie.
  */
 function chargerPartie() {
-    // tiens compte de position ...
+    console.log("chargerPartie");
     let partie = {};
-    let position = getData('position');
-    if (position === null) {
+    partie.position = getData('position');
+    if (partie.position === null) {
         partie.position = 0;
+        partie.fichierJson = JSON.parse(getData('fichierJson'));
+
         partie.mode = getData('mode');
         partie.nbJoueurs = getData('nbJoueurs');
-        let donnees = getData('nomJoueurs');
-        partie.nomJoueurs = donnees.split(',');
+        partie.nomJoueurs = getData('nomJoueurs').split(',');
 
-        partie.fichierJson = JSON.parse(getData('fichierJson'));
     } else {
-        let fichierJson = JSON.parse(getData('fichierJson'));
         partie.position = getData('position');
-        partie.mode = fichierJson['mode'];
-        partie.nbJoueurs = fichierJson['nb_joueurs'];
+        partie.fichierJson = JSON.parse(getData('fichierJson'));
+
+        partie.mode = partie.fichierJson['mode'];
+        partie.nbJoueurs = partie.fichierJson['nb_joueurs'];
         partie.nomJoueurs = [];
-        for(let i = 0; i< fichierJson['liste_joueurs'].length; i++) {
-            partie.nomJoueurs.push(fichierJson['liste_joueurs'][i]);
+        for(let i = 0; i< partie.fichierJson['liste_joueurs'].length; i++) {
+            partie.nomJoueurs.push(partie.fichierJson['liste_joueurs'][i]);
         }
-        partie.fichierJson = fichierJson;
     }
 
     sauvegarde.mode = partie.mode;
@@ -103,20 +121,17 @@ function chargerPartie() {
     return partie;
 }
 
-/** Définit toutes les valeurs de la page qui doivent être changé selon
+/**
+ * Définit toutes les valeurs de la page qui doivent être changé selon
  * les informations de partie. Cette fonction est appelé en début de partie
  */
 function initialiserPartie() {
+    console.log("init partie");
     maPartie = chargerPartie();
     console.log(maPartie);
 
-    let boutonValider = get("validerBouton");
-    boutonValider.disabled = true;
-    get("timer").innerHTML = timer.toString() + " <i class='fa-regular fa-hourglass'</i>";
-    setInterval(gestionTimer, 1000);
     iterateur = listeTaches(maPartie.fichierJson);
 
-    // On gère l'affichage des infos au-dessus ...
     let divInfo = get('info');
 
     let h1 = create('h1');
@@ -131,59 +146,84 @@ function initialiserPartie() {
     p_details.id = "details_tache";
     divInfo.append(p_details);
 
-    // On lance le tour
+    setInterval(gestionTimer, 1000);
+
+    let titreH4 = get('table_titre');
+    titreH4.innerHTML = "Table des cartes - Tour n° " + tourCourant;
+
     joueurCourant = 0;
     numeroTache = 0;
-    if(maPartie.position !== 0){
-        while(numeroTache < maPartie.position){
+    if (maPartie.position !== 0) {
+        while (numeroTache < maPartie.position) {
             nextTask();
             sauvegarderDifficulte(maPartie.fichierJson['liste_tache'][numeroTache-1]['difficulte']);
         }
     }
     nextTask();
 
+    let nameH4 = get('name');
+    nameH4.innerHTML = "C'est à ton tour : " + maPartie.nomJoueurs[joueurCourant];
 
-    let h4 = get('name');
-    h4.innerHTML = "C'est à ton tour : " + maPartie.nomJoueurs[joueurCourant];
+    let boutonValider = get("validerBouton");
+    boutonValider.disabled = true;
 
     let divJoueurCartes = get('cartes');
     loadCartes(divJoueurCartes);
 }
 
-/** Permet de charger toutes les cartes dans la divJoueurCartes
+/**
+ * Permet de charger toutes les cartes dans la divJoueurCartes
  * @param divJoueurCartes
  */
-function loadCartes(divJoueurCartes){
+function loadCartes(divJoueurCartes) {
+    console.log("loadcartes");
     for (let i = 0; i < listeCartes.length; i++) {
         let imgCarte = create('img');
         imgCarte.src = "./ressources/cartes/cartes_" + listeCartes[i] + ".svg";
-        imgCarte.width = 75;
-        imgCarte.height = 75;
-        imgCarte.id = "carte_"+i;
-        // écouteurs pour gérer le clic sur la carte
+        imgCarte.width = 55;
+        imgCarte.height = 85;
+        imgCarte.id = "carte_" + i;
+
+        imgCarte.classList.add('carteNonSelectionnee');
+
+        // Écouteurs pour gérer le clic sur la carte
         imgCarte.addEventListener('click', function () {
             let validate_button = get("validerBouton");
-            validate_button.disabled = false;
             let indiceCarte = i;
-            carteSelectionnee[joueurCourant] = listeCartes[i];
-            imgCarte.classList.add('.carteSelectionnee');
-            imgCarte.style.marginBottom = "20px";
-            for (let j = 0; j < listeCartes.length; j++){
-                if(j !== indiceCarte && get("carte_"+j).classList.contains(".carteSelectionnee")){
-                    get("carte_"+j).classList.remove(".carteSelectionnee");
-                    get("carte_"+j).style.marginBottom = "0px";
+
+            // Vérifie si la carte est déjà sélectionnée
+            if (imgCarte.classList.contains('carteSelectionnee')) {
+                delete carteSelectionnee[joueurCourant];
+            } else {
+                carteSelectionnee[joueurCourant] = listeCartes[i];
+            }
+
+            // Ajoute/retire les classes pour gérer le surlignage
+            imgCarte.classList.toggle('carteSelectionnee');
+            imgCarte.classList.toggle('carteNonSelectionnee');
+
+            for (let j = 0; j < listeCartes.length; j++) {
+                if (j !== indiceCarte && get("carte_" + j).classList.contains("carteSelectionnee")) {
+                    get("carte_" + j).classList.toggle('carteSelectionnee');
+                    get("carte_" + j).classList.toggle('carteNonSelectionnee');
                 }
             }
+
+            // Vérifie si au moins une carte est sélectionnée pour activer ou désactiver le bouton
+            validate_button.disabled = Object.keys(carteSelectionnee).length === 0;
         });
+
         divJoueurCartes.appendChild(imgCarte);
     }
 }
 
-/** Fonction qui valide la carte que le joueur à sélectionner.
+/**
+ * Fonction qui valide la carte que le joueur à sélectionner.
  * Si c'est le dernier joueur qui a joué, marque la fin du tour en révélant les cartes et en changeant de bouton.
  */
 function validerChoix() {
-    let divApercu = get('apercu');
+    console.log("validerChoix");
+    let divApercu = get('table');
 
     if (carteSelectionnee[joueurCourant] !== "") {
         let validate_button = get("validerBouton");
@@ -192,71 +232,86 @@ function validerChoix() {
         let imgApercu = create('img');
         imgApercu.src = "./ressources/cartes/cartes_.svg";
         imgApercu.classList.add('.invisible');
-        imgApercu.width = 75;
-        imgApercu.height = 75;
+        imgApercu.width = 175;
+        imgApercu.height = 175;
 
         divApercu.appendChild(imgApercu);
-        reloadCartes();
+        reloadCartes(); // On recharge les cartes -> permet d'enlever la sélection
         let h4 = get('name');
         if(joueurCourant !== maPartie.nbJoueurs-1){
-            // le tour n'est pas fini, classique ...
             joueurCourant++;
             h4.innerHTML = "C'est à ton tour : " + maPartie.nomJoueurs[joueurCourant];
-            timer = 30;
+            timer.time = 30;
+            timer.option = 'choix';
         }else {
             // le tour semble être terminé
             joueurCourant = 0;
-            h4.style.display = 'none';
-            get("cartes").style.display = 'none';
-            timer = 60;
+            timer.time = 60;
+            timer.option = 'debat';
             printCarte(); // On révèle les cartes
             changeButton('finTour'); // On adapte le bouton
         }
     }
 }
 
-/** Vérifie qu'aucune carte n'est sélectionnée et enlève la selection sinon
+/**
+ * Vérifie qu'aucune carte n'est sélectionnée et enlève la selection sinon
  */
 function reloadCartes() {
+    console.log("reloadcartes");
     for (let i = 0; i < listeCartes.length; i++) {
-        if (get("carte_" + i).classList.contains(".carteSelectionnee")) {
-            get("carte_" + i).classList.remove(".carteSelectionnee");
-            get("carte_" + i).style.marginBottom = "0px";
+        let carte = get("carte_" + i);
+        if (carte.classList.contains("carteSelectionnee")) {
+            carte.classList.remove("carteSelectionnee");
+            carte.classList.add("carteNonSelectionnee");
         }
     }
 }
 
-/** Fonction qui à chaque fin de tour, révèle les cartes que les joueurs ont sélectionnées
+/**
+ * Fonction qui à chaque fin de tour, révèle les cartes que les joueurs ont sélectionnées
  */
-function printCarte(){
-    let div_apercu = get("apercu");
-    while (div_apercu.firstChild) {
-        div_apercu.removeChild(div_apercu.firstChild);
-    }
-    for(let i=0; i< Object.size(carteSelectionnee); i++) {
-        let carte = create("img");
-        carte.src = "./ressources/cartes/cartes_"+carteSelectionnee[i]+".svg";
-        carte.width = 75;
-        carte.height = 75;
-        div_apercu.append(carte);
-    }
+function printCarte() {
+    console.log("printcartes");
+    let div_apercu = get("table");
+
+    let imgElements = div_apercu.querySelectorAll('img');
+    let i = 0;
+    imgElements.forEach((imgElement) => {
+        imgElement.src = "./ressources/cartes/cartes_" + carteSelectionnee[i] + ".svg";
+        i++;
+    });
 }
 
-/** Fonction qui change le bouton de validation de carte en fonction de la situation.
+
+/**
+ * Fonction qui change le bouton de validation de carte en fonction de la situation.
  * Si l'on est au début d'un tour, on garde le comportement simple (valider le choix)
  * Sinon, on marque la fin du tour ou de la tâche
  */
-function changeButton(situation){
+function changeButton(situation) {
+    console.log("changeBouton");
     // Avant de changer de bouton, on vérifie si l'on passe à la tâche suivante ou si l'on doit relancer un tour
     let bouton = get("validerBouton");
+
     if (situation === "debut") {
         bouton.onclick = validerChoix;
         bouton.innerHTML = "Valider votre carte";
         bouton.disabled = true;
-    } else if (situation ==="finTour") {
+    } else if (situation === "finTour") {
+        let h4 = get('name');
+        h4.style.display = 'none';
+        let cartes = get('cartes');
+        cartes.style.display = 'none';
+
         bouton.onclick = nextTurn;
         if (endTask()) {
-            bouton.innerHTML = 'Prochaine Tâche';
+            if (validerCafe()) {
+                bouton.innerHTML = 'Pause Café !';
+            } else {
+                bouton.innerHTML = 'Prochaine Tâche';
+            }
+
         } else {
             bouton.innerHTML = "Prochain Tour";
         }
@@ -264,11 +319,13 @@ function changeButton(situation){
     }
 }
 
+
 /**
  * Sauvegarde la difficulté pour la tache courrante dans une liste
  * @param difficulte - Difficulté à sauvegarder
  */
 function sauvegarderDifficulte(difficulte = ""){
+    console.log("sauvegarderDifficulte");
     if(difficulte==="interro")
         difficulte = "?"
     sauvegarde.liste_tache.push({
@@ -278,11 +335,48 @@ function sauvegarderDifficulte(difficulte = ""){
     });
 }
 
-/** Vérifie toutes les informations et agit en consequences.
+
+function calculerMoyenne() {
+    let moyenne = 0;
+    let nbCartes = 0;
+    for(let i = 0; i < Object.size(carteSelectionnee); i++){
+        if (carteSelectionnee[i] !== "cafe" && carteSelectionnee[i] !== "interro") {
+            moyenne += parseInt(carteSelectionnee[i]);
+            nbCartes++;
+        }
+    }
+    return moyenne/nbCartes;
+}
+
+function validerInterro() {
+    // On refait une vérification pour détecter la pause café ...
+    let cptInterro = 0;
+    for(let i = 0; i < Object.size(carteSelectionnee); i++){
+        if (carteSelectionnee[i] === "interro") {
+            cptInterro += 1;
+        }
+    }
+    return (cptInterro === parseInt(maPartie.nbJoueurs));
+}
+
+function validerCafe() {
+    // On refait une vérification pour détecter la pause café ...
+    let cptCafe = 0;
+    for(let i = 0; i < Object.size(carteSelectionnee); i++){
+        if (carteSelectionnee[i] === "cafe") {
+            cptCafe += 1;
+        }
+    }
+    return (cptCafe === parseInt(maPartie.nbJoueurs));
+}
+
+/**
+ * Vérifie toutes les informations et agit en consequences.
  * Cette fonction peut changer de tour, recommencer le tour en cours
  * ou sauvegarder la partie
  */
 function nextTurn(){
+    console.log("nextTurn");
     if (endTask()) {
         tourCourant = 1;
         if (maPartie.mode === Modes.Strict){
@@ -290,31 +384,19 @@ function nextTurn(){
                 sauvegarderDifficulte(carteSelectionnee[0]);
             }else{
                 sauvegarderDifficulte();
+                console.log("appel 1 dans nextturn");
                 sauvegarderPartie();
             }
         }else if (maPartie.mode === Modes.Moyenne){
-            let counter_coffee = 0;
-            let counter_interro = 0;
-            let moyenne = 0;
-            let nbCartes = 0;
-            for(let i = 0; i < Object.size(carteSelectionnee); i++){
-                if (carteSelectionnee[i] !== "cafe" && carteSelectionnee[i] !== "interro") {
-                    moyenne += parseInt(carteSelectionnee[i]);
-                    nbCartes++;
-                } else if(carteSelectionnee[i] === "cafe") {
-                    counter_coffee++;
-                } else if(carteSelectionnee[i] === "interro") {
-                    counter_interro++;
+            if (!validerCafe()) {
+                if (!validerInterro()) {
+                    let moyenne =  calculerMoyenne();
+                    sauvegarderDifficulte(moyenne.toString());
+                } else {
+                    sauvegarderDifficulte("?");
                 }
-            }
-            if (counter_coffee !== parseInt(maPartie.nbJoueurs) && counter_interro !== parseInt(maPartie.nbJoueurs)) {
-                moyenne /= nbCartes;
-                sauvegarderDifficulte(moyenne.toString());
-            } else if(counter_coffee === parseInt(maPartie.nbJoueurs)){
+            } else {
                 sauvegarderDifficulte();
-                sauvegarderPartie();
-            } else if(counter_interro === parseInt(maPartie.nbJoueurs)){
-                sauvegarderDifficulte("?");
             }
         }
         nextTask();
@@ -323,31 +405,44 @@ function nextTurn(){
     }
     carteSelectionnee = {};
     joueurCourant = 0;
-    let div_apercu = get("apercu");
-    while(div_apercu.firstChild)
-        div_apercu.removeChild(div_apercu.firstChild);
+
+    let div_apercu = get("table");
+    let imgElements = div_apercu.querySelectorAll('img');
+
+    // Supprimez chaque balise img
+    imgElements.forEach((imgElement) => {
+        imgElement.remove();
+    });
 
     changeButton("debut");
     let h4 = get('name');
     h4.style.display = 'flex';
-    timer = 30;
+    timer.time = 30;
+    timer.option = 'choix';
     get("cartes").style.display = 'block';
     h4.innerHTML = "C'est à ton tour : " + maPartie.nomJoueurs[joueurCourant];
+    let titreH4 = get('table_titre');
+    titreH4.innerHTML = "Table des cartes - Tour n° " + tourCourant;
 }
 
-/** Change l'affichage de la tâche courante, on passe à la tâche suivante.
+/**
+ * Change l'affichage de la tâche courante, on passe à la tâche suivante.
  * Si l'on était sûr la dernière tâche, alors, on sauvegarde la partie.
  */
 function nextTask(){
+    console.log("tachenext");
     numeroTache++;
 
     let it = iterateur.next();
     tacheCourrante = it.value;
 
     if (it.done) {
-        console.log("On a fini !");
+        // On re-vérifie le cas "cafe" pour éviter le double téléchargement
         numeroTache--;
-        sauvegarderPartie();
+        if (!validerCafe()) {
+            sauvegarderPartie();
+        }
+
     }
 
     let div_info = get("info");
@@ -363,11 +458,13 @@ function nextTask(){
 
 
 
-/** Test les conditions pour valider une tâche ou non en fonction du mode de jeux de la partie
+/**
+ * Test les conditions pour valider une tâche ou non en fonction du mode de jeux de la partie
  * et des cartes sélectionnées.
  * @returns {boolean} - true si un accord est trouvée, false sinon
  */
 function endTask(){
+    console.log("endtask");
     if (tourCourant === 1) {
         for (let i = 0; i < Object.size(carteSelectionnee)-1; i++) {
             if (carteSelectionnee[i] !== carteSelectionnee[i+1]) {
@@ -387,10 +484,12 @@ function endTask(){
     }
 }
 
-/** Fonction qui sauvegarde la partie et retourne à la page d'accueil index.html
+/**
+ * Fonction qui sauvegarde la partie et retourne à la page d'accueil index.html
  * écrit le contenu de sauvegarde dans un fichier .json et lance le téléchargement de celui-ci.
  */
 function sauvegarderPartie(){
+    console.log("savepartie et quitte");
     // Penses à sauvegarder toutes les tâches non traitées ...
     if (numeroTache < maPartie.fichierJson['liste_tache'].length) {
         for (let i = numeroTache; i < maPartie.fichierJson['liste_tache'].length; i++) {

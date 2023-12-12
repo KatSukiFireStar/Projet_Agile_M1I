@@ -3,71 +3,119 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
     font-family: 'Arial', sans-serif;
     text-align: left;
-
     margin: 0;
     padding: 0;
-
-    background-color: #f4efef;
+    background-color: #cedfd4;
 }
 
 #info {
-    text-align: left;
-
-    margin: 10px 5px 10px 5px; /*margin: top right bottom left;*/
-    padding: 10px;
-    width: 85%;
+    width: 80%;
     background-color: #368E55;
-    border-radius: 12px;
     border: 1px solid #368E55;
     color: #ffffff;
+    margin: 10px 5px;
+    padding: 10px;
+    border-radius: 12px;
 }
 
-#apercu {
-    text-align: left;
-    width: 95%;
-    background-color: #cedfd4;
-    border: 1px solid #cedfd4;
+#table {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 
-    margin: 5px;
-    padding: 2px;
+    text-align: center;
+    width: 95%;
+    height: 180px;
+    background-color: red;
+    border: 1px solid #cedfd4;
+    margin: 10px 5px;
+    padding: 10px;
+    border-radius: 12px;
+}
+
+#table_informations {
+    background-color: blue;
+}
+
+#table img {
+    margin-top: 10px;
+    margin-right: 10px;
 }
 
 #joueur {
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; /* Ajoutez cette ligne pour centrer les éléments horizontalement */
+    background-color: #cedfd4;
+    width: 95%;
+    color: #ffffff;
+    margin: 10px 5px;
+    padding: 10px;
+    border-radius: 12px;
+}
+
+#cartes_bouton {
+    display:flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+}
 
-    margin: 10px 5px 10px 5px; /*margin: top right bottom left;*/
-    padding: 10px;
-
-    background-color: #368E55;
-    border-radius: 12px;
-    border: 1px solid #368E55;
-    width: 85%;
+#joueur h4#name {
+    color: #545353;
     text-align: left;
-    color: #ffffff;
+    font-size: 20pt;
+    /* Ajoutez cette règle pour éliminer la marge par défaut */
+    margin: 0;
 }
 
 #cartes {
-    background-color: white;
-    border: solid 1px red;
-
-    margin: 5px;
-    padding: 2px;
+    margin-left:0;
+    margin-right: 15px;
+    padding-left:0;
 }
 
-#bouton {
-    background-color: white;
-    border: solid 1px red;
-
-    margin: 5px;
-    padding: 2px;
+#cartes img{
+    margin-top: 10px;
+    margin-right: 10px;
 }
 
-#timer{
-    font-size: 20px;
+/* Gestion de la sélection des cartes du joueur*/
+#cartes img.carteSelectionnee {
+    border: solid 2px black;
+    filter: brightness(60%);
 }
+
+#cartes img.carteNonSelectionnee {
+    border: solid 2px transparent;
+    filter:none;
+}
+
+#validerBouton {
+    background-color: #4CAF50;
+    color: white;
+    border: solid 1px blue;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 10px;
+    margin-left: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+#validerBouton:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+#validerBouton:hover {
+    background-color: #45a049;
+}
+
+
+
