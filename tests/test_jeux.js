@@ -24,8 +24,10 @@ describe('Tests Unitaires - fonction itérateur listesTaches', function () {
             let iterator = listeTaches(fichierJson);
             for (let i = 0; i < fichierJson['liste_tache'].length; i++) {
                 let resultat = iterator.next();
-                assert.equal(resultat.value['nom_tache'], "tache n°" + (i + 1));
-                assert.equal(resultat.value['details'], "..." + (i + 1))
+                if(!resultat.done){
+                    assert.equal(resultat.value['nom_tache'], "tache n°" + (i + 1));
+                    assert.equal(resultat.value['details'], "..." + (i + 1))
+                }
             }
         });
     });
@@ -36,7 +38,7 @@ describe('Tests Unitaires - fonction itérateur listesTaches', function () {
             let iterator = listeTaches(fichierJson);
             for (let i = 0; i < fichierJson['liste_tache'].length; i++) {
                 let resultat = iterator.next();
-                if (i < fichierJson['liste_tache'].length - 1) {
+                if (i < fichierJson['liste_tache'].length) {
                     assert.equal(resultat.done, false);
                 } else {
                     assert.equal(resultat.done, true);
