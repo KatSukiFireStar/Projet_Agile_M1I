@@ -1,4 +1,5 @@
 /**
+ * @enum
  * Classe énumeration des modes de jeu
  * @type {{Strict: string, Moyenne: string}}
  */
