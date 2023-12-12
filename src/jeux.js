@@ -36,10 +36,15 @@ function listeTaches(fichierJson) {
     };
 }
 
+/**
+ * Gere l'affichage et les actions du timer.
+ * Selon la situation, soit il change de joueurs, soit
+ * il change de tours en prenant en compte si le joueur a pu jouer.
+ */
 function gestionTimer(){
     timer--;
-    let h_timer = get("timer");
-    h_timer.innerHTML = timer.toString();
+    let p_timer = get("timer");
+    p_timer.innerHTML = timer.toString() + " <i class='fa-regular fa-hourglass'</i>";
     if(timer === 0){
         if(get("validerBouton").innerHTML === "Valider votre Carte"){
             let carteBool = false;
@@ -107,7 +112,7 @@ function initialiserPartie() {
 
     let boutonValider = get("validerBouton");
     boutonValider.disabled = true;
-    get("timer").innerHTML = timer;
+    get("timer").innerHTML = timer.toString() + " <i class='fa-regular fa-hourglass'</i>";
     setInterval(gestionTimer, 1000);
     iterateur = listeTaches(maPartie.fichierJson);
 
@@ -259,6 +264,10 @@ function changeButton(situation){
     }
 }
 
+/**
+ * Sauvegarde la difficulté pour la tache courrante dans une liste
+ * @param difficulte - Difficulté à sauvegarder
+ */
 function sauvegarderDifficulte(difficulte = ""){
     if(difficulte==="interro")
         difficulte = "?"
