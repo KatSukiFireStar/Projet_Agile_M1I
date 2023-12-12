@@ -1,11 +1,10 @@
-
-const listeCartes = ["0", "1", "2", "3", "5", "8", "13", "20", "40", "100", "cafe", "interro"];
+const listeCartes = ["0", "1", "2", "3", "5", "8", "13", "20", "40", "100", "cafe", "?"];
 
 let maPartie, iterateur, joueurCourant, numeroTache = -1;
 let tourCourant = 1;
 
 let carteSelectionnee = {};
-let valeurCarte = {};
+//let valeurCarte = {};
 
 // Formats du fichier de sauvegarde Json ...
 let sauvegarde = {
@@ -384,7 +383,7 @@ function sauvegarderPartie(){
     document.body.removeChild(downloadLink);
     URL.revokeObjectURL(blobURL);
 
-    sessionStorage.clear(); // On vide le sessionStorage
+    clearStorage();
 
     window.location.href = "index.html";
 }

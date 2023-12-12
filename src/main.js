@@ -40,7 +40,7 @@ class Adaptateur {
                             position += 1;
                         }
                     }
-                    if(position != 0)
+                    if(position !== 0)
                         saveData('position', position);
                     else
                         saveData('position', null);
