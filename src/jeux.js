@@ -102,15 +102,13 @@ function initialiserPartie() {
     // On lance le tour
     joueurCourant = 0;
     numeroTache = 0;
-    if(maPartie.position != 0){
-        while(numeroTache <= maPartie.position){
-            sauvegarderDifficulte(maPartie.fichierJson['liste_tache'][numeroTache]['difficulte']);
+    if(maPartie.position !== 0){
+        while(numeroTache < maPartie.position){
             nextTask();
+            sauvegarderDifficulte(maPartie.fichierJson['liste_tache'][numeroTache-1]['difficulte']);
         }
-    }else{
-        nextTask();
     }
-
+    nextTask();
 
 
     let h4 = get('name');
@@ -250,35 +248,40 @@ function nextTurn(){
         if (maPartie.mode === Modes.Strict){
             if(carteSelectionnee[0] !== "cafe"){
                 sauvegarderDifficulte(carteSelectionnee[0]);
-                carteSelectionnee = {};
             }else{
                 sauvegarderDifficulte();
                 sauvegarderPartie();
             }
-        }else{
+        }else if (maPartie.mode === Modes.Moyenne){
             let counter_coffee = 0;
+            let counter_interro = 0;
             let moyenne = 0;
-            for(let i = 0; i < carteSelectionnee.length; i++){
-                if(carteSelectionnee[i] !== "cafe" && carteSelectionnee[i] !== "interro"){
+            let nbCartes = 0;
+            for(let i = 0; i < Object.size(carteSelectionnee); i++){
+                if (carteSelectionnee[i] !== "cafe" && carteSelectionnee[i] !== "?") {
                     moyenne += parseInt(carteSelectionnee[i]);
-                }
-
-                if(carteSelectionnee[i] !== "cafe"){
+                    nbCartes++;
+                } else if(carteSelectionnee[i] === "cafe") {
                     counter_coffee++;
+                } else if(carteSelectionnee[i] === "?") {
+                    counter_interro++;
                 }
             }
-            if (counter_coffee !== parseInt(maPartie.nbJoueurs)) {
-                moyenne /= parseInt(maPartie.nbJoueurs);
-                sauvegarderDifficulte(toString(moyenne))
-            } else {
+            if (counter_coffee !== parseInt(maPartie.nbJoueurs) && counter_interro !== parseInt(maPartie.nbJoueurs)) {
+                moyenne /= nbCartes;
+                sauvegarderDifficulte(moyenne.toString());
+            } else if(counter_coffee === parseInt(maPartie.nbJoueurs)){
                 sauvegarderDifficulte();
                 sauvegarderPartie();
+            } else if(counter_interro === parseInt(maPartie.nbJoueurs)){
+                sauvegarderDifficulte(carteSelectionnee[0]);
             }
         }
         nextTask();
     }else{
         tourCourant++;
     }
+    carteSelectionnee = {};
     joueurCourant = 0;
     let div_apercu = get("apercu");
     while(div_apercu.firstChild)
@@ -287,7 +290,7 @@ function nextTurn(){
     changeButton("debut");
     let h4 = get('name');
     h4.style.display = 'flex';
-    get("cartes").style.display = 'flex';
+    get("cartes").style.display = 'block';
     h4.innerHTML = "C'est à ton tour : " + maPartie.nomJoueurs[joueurCourant];
 }
 
@@ -339,19 +342,6 @@ function endTask(){
         }
         return true;
     } else if(maPartie.mode === Modes.Moyenne) {
-        const liste = [0, 1, 2, 3, 5, 8, 13, 20, 40, 100];
-        let ecarts = [];
-        let nbCartes = 0;
-        let sommes = 0;
-        for (let i=0; i<Object.size(carteSelectionnee)-1; i++) {
-            if (carteSelectionnee[i] !== "interro" && carteSelectionnee[i] !== "cafe") {
-                sommes += parseInt(carteSelectionnee);
-                nbCartes++;
-            }
-        }
-        let moyenne = sommes/nbCartes;
-        console.log("Calcul de la moyenne : ", moyenne);
-
         return true;
     }
 }
@@ -360,10 +350,10 @@ function endTask(){
  * écrit le contenu de sauvegarde dans un fichier .json et lance le téléchargement de celui-ci.
  */
 function sauvegarderPartie(){
-    // TODO : je crois qu'il y a un soucis ici ... {}, dans le fichier de sortie
     // Penses à sauvegarder toutes les tâches non traitées ...
     if (numeroTache < maPartie.fichierJson['liste_tache'].length) {
         for (let i = numeroTache; i < maPartie.fichierJson['liste_tache'].length; i++) {
+            nextTask();
             sauvegarderDifficulte("");
         }
     }
