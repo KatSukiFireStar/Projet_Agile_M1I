@@ -1,3 +1,4 @@
+
 const listeCartes = ["0", "1", "2", "3", "5", "8", "13", "20", "40", "100", "cafe", "interro"];
 
 let maPartie, iterateur, joueurCourant, numeroTache = -1;
@@ -22,17 +23,16 @@ let sauvegarde = {
  * @returns {{next: ((function(): ({value: *, done: boolean}))|*)}}
  */
 function listeTaches(fichierJson) {
-    // TODO : Implémenter la reprise de partie avec la position (itérateur tâche ?)
     let indexTache = 0;
     return {
         next: function () {
             let tache;
-            if (indexTache < fichierJson['liste_tache'].length - 1) {
+            if (indexTache < fichierJson['liste_tache'].length) {
                 tache = {value: fichierJson['liste_tache'][indexTache], done: false};
                 indexTache++;
                 return tache;
             }
-            return {value: fichierJson['liste_tache'][indexTache], done: true};
+            return {value: "", done: true};
         }
     };
 }
@@ -102,8 +102,17 @@ function initialiserPartie() {
 
     // On lance le tour
     joueurCourant = 0;
-    numeroTache = maPartie.position;
-    nextTask();
+    numeroTache = 0;
+    if(maPartie.position != 0){
+        while(numeroTache <= maPartie.position){
+            sauvegarderDifficulte(maPartie.fichierJson['liste_tache'][numeroTache]['difficulte']);
+            nextTask();
+        }
+    }else{
+        nextTask();
+    }
+
+
 
     let h4 = get('name');
     h4.innerHTML = "C'est à ton tour : " + maPartie.nomJoueurs[joueurCourant];
@@ -223,6 +232,14 @@ function changeButton(situation){
     }
 }
 
+function sauvegarderDifficulte(difficulte = ""){
+    sauvegarde.liste_tache.push({
+        nom_tache: maPartie.fichierJson['liste_tache'][numeroTache-1]['nom_tache'],
+        details: maPartie.fichierJson['liste_tache'][numeroTache-1]['details'],
+        difficulte: difficulte
+    });
+}
+
 /** Vérifie toutes les informations et agit en consequences.
  * Cette fonction peut changer de tour, recommencer le tour en cours
  * ou sauvegarder la partie
@@ -232,14 +249,10 @@ function nextTurn(){
         tourCourant = 1;
         if (maPartie.mode === Modes.Strict){
             if(carteSelectionnee[0] !== "cafe"){
-                valeurCarte[numeroTache] = carteSelectionnee[0];
-                sauvegarde.liste_tache.push({
-                    nom_tache: maPartie.fichierJson['liste_tache'][numeroTache]['nom_tache'],
-                    details: maPartie.fichierJson['liste_tache'][numeroTache]['details'],
-                    difficulte: carteSelectionnee[0] // ou moyenne selon le cas
-                });
+                sauvegarderDifficulte(carteSelectionnee[0]);
                 carteSelectionnee = {};
             }else{
+                sauvegarderDifficulte();
                 sauvegarderPartie();
             }
         }else{
@@ -256,13 +269,9 @@ function nextTurn(){
             }
             if (counter_coffee !== parseInt(maPartie.nbJoueurs)) {
                 moyenne /= parseInt(maPartie.nbJoueurs);
-                valeurCarte[numeroTache] = moyenne;
-                sauvegarde.liste_tache.push({
-                    nom_tache: maPartie.fichierJson['liste_tache'][numeroTache]['nom_tache'],
-                    details: maPartie.fichierJson['liste_tache'][numeroTache]['details'],
-                    difficulte: carteSelectionnee[0] // ou moyenne selon le cas
-                });
+                sauvegarderDifficulte(toString(moyenne))
             } else {
+                sauvegarderDifficulte();
                 sauvegarderPartie();
             }
         }
@@ -287,13 +296,14 @@ function nextTurn(){
 function nextTask(){
     numeroTache++;
 
-    sauvegarde.liste_tache.push({})
-    if (iterateur.done) {
+    let it = iterateur.next();
+    let tache = it.value;
+
+    if (it.done) {
         console.log("On a fini !");
+        numeroTache--;
         sauvegarderPartie();
     }
-
-    let tache = iterateur.next().value;
 
     let div_info = get("info");
 
@@ -327,8 +337,20 @@ function endTask(){
             }
         }
         return true;
-    }else if(maPartie.mode === Modes.Moyenne){
-        // TODO : Mode de jeux moyenne à implémenter
+    } else if(maPartie.mode === Modes.Moyenne) {
+        const liste = [0, 1, 2, 3, 5, 8, 13, 20, 40, 100];
+        let ecarts = [];
+        let nbCartes = 0;
+        let sommes = 0;
+        for (let i=0; i<Object.size(carteSelectionnee)-1; i++) {
+            if (carteSelectionnee[i] !== "interro" && carteSelectionnee[i] !== "cafe") {
+                sommes += parseInt(carteSelectionnee);
+                nbCartes++;
+            }
+        }
+        let moyenne = sommes/nbCartes;
+        console.log("Calcul de la moyenne : ", moyenne);
+
         return true;
     }
 }
@@ -339,13 +361,9 @@ function endTask(){
 function sauvegarderPartie(){
     // TODO : je crois qu'il y a un soucis ici ... {}, dans le fichier de sortie
     // Penses à sauvegarder toutes les tâches non traitées ...
-    if (sauvegarde.liste_tache.length < maPartie.fichierJson['liste_tache'].length) {
-        for (let i = sauvegarde.liste_tache.length; i < maPartie.fichierJson['liste_tache'].length; i++) {
-            sauvegarde.liste_tache.push({
-                nom_tache: maPartie.fichierJson['liste_tache'][i]['nom_tache'],
-                details: maPartie.fichierJson['liste_tache'][i]['details'],
-                difficulte: "" // ou une valeur par défaut appropriée
-            });
+    if (numeroTache < maPartie.fichierJson['liste_tache'].length) {
+        for (let i = numeroTache; i < maPartie.fichierJson['liste_tache'].length; i++) {
+            sauvegarderDifficulte("");
         }
     }
     const jsonContenu = JSON.stringify(sauvegarde, null, 2);

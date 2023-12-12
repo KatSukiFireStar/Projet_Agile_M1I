@@ -51,6 +51,10 @@ function getData(name){
     return sessionStorage.getItem(name);
 }
 
+function clearStorage(){
+    sessionStorage.clear();
+}
+
 /**
  * Récupère la taille de l'objet 'arr' et la retourne
  * @param arr - Objet dont on veut la taille

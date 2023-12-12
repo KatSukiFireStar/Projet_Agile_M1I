@@ -8,6 +8,7 @@ class Adaptateur {
      * @param {0 | 1} option - Type de partie à lancer (0 pour une nouvelle partie | 1 pour reprendre une partie)
      */
     constructor(option) {
+        clearStorage();
         if (option === 0) {
             this.adapterMode();
             this.adapterNbJoueurs();
@@ -39,7 +40,10 @@ class Adaptateur {
                             position += 1;
                         }
                     }
-                    saveData('position', position);
+                    if(position != 0)
+                        saveData('position', position);
+                    else
+                        saveData('position', null);
                 }
                 saveData('fichierJson', JSON.stringify(fichierJson));
             };
