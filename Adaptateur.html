@@ -31,8 +31,9 @@
         <h2><span class="attribs"><span class="type-signature"></span></span>Adaptateur<span class="signature">(option)</span><span class="type-signature"></span></h2>
         
             <div class="class-description">Classe Adaptateur qui permet d'adapter les données en fonction de nos besoins
-En entrée, on aura toutes les données "en vrac" et en sortie, on aura les données prêtes à l'envoi en fonction des
-besoins que l'on aura dans la page de jeux</div>
+En entrée, on aura toutes les données 'en vrac', ensuite, la classe va valider les données et les sauvegarder dans
+le 'Session Storage' ainsi, dans la page 'jeux.html', on pourra récupérer les données et les utiliser comme on le
+souhaite.</div>
         
     
 </header>
@@ -207,7 +208,7 @@ besoins que l'on aura dans la page de jeux</div>
     
 
     
-    <h4 class="name" id="adapterAnciennePartie"><span class="type-signature">(async) </span>adapterAnciennePartie<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="adapterFichierJson"><span class="type-signature"></span>adapterFichierJson<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -215,9 +216,10 @@ besoins que l'on aura dans la page de jeux</div>
 
 
 <div class="description">
-    Méthode qui permet de préparer les données dans le cas d'une partie que l'on veut reprendre
-asynchrone, car elle attend le chargement du fichier json que l'on récupère.
-récupère uniquement la position de la tache sur laquelle on s'était arrêté.
+    Méthode qui adapte le fichier dans les deux cas.
+Si l'on lance une nouvelle partie, le fichier est simplement sauvegardé dans le 'session storage'
+sinon, dans le cas d'une reprise de partie, on va aussi sauvegarder le fichier (qui sera différent) mais
+on va aussi récupérer la position de la tache sur laquelle les joueurs s'étaient arrêtés.
 </div>
 
 
@@ -261,7 +263,7 @@ récupère uniquement la position de la tache sur laquelle on s'était arrêté.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="main.js.html">main.js</a>, <a href="main.js.html#line23">line 23</a>
+        <a href="main.js.html">main.js</a>, <a href="main.js.html#line25">line 25</a>
     </li></ul></dd>
     
 
@@ -297,7 +299,7 @@ récupère uniquement la position de la tache sur laquelle on s'était arrêté.
     
 
     
-    <h4 class="name" id="adapterListeJoueurs"><span class="type-signature"></span>adapterListeJoueurs<span class="signature">()</span><span class="type-signature"> &rarr; {Array.&lt;string>}</span></h4>
+    <h4 class="name" id="adapterMode"><span class="type-signature"></span>adapterMode<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -305,7 +307,8 @@ récupère uniquement la position de la tache sur laquelle on s'était arrêté.
 
 
 <div class="description">
-    Méthode qui adapte le nombre de joueurs dans le cas d'une nouvelle partie
+    Méthode qui adapte le mode de jeux dans tous les cas. Si le mode sélectionné par les joueurs est invalide
+alors le mode par défaut est attribué (Strict). Sauvegarde la valeur dans le 'session storage'.
 </div>
 
 
@@ -349,340 +352,7 @@ récupère uniquement la position de la tache sur laquelle on s'était arrêté.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="main.js.html">main.js</a>, <a href="main.js.html#line140">line 140</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Array.&lt;string></span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="adapterMode"><span class="type-signature"></span>adapterMode<span class="signature">()</span><span class="type-signature"> &rarr; {*|string}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Méthode qui adapte le mode de jeux dans le cas d'une nouvelle partie
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="main.js.html">main.js</a>, <a href="main.js.html#line115">line 115</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    - le mode de jeux sélectionné ou celui par défaut (strict)
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">*</span>
-|
-
-<span class="param-type">string</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="adapterNbJoueurs"><span class="type-signature"></span>adapterNbJoueurs<span class="signature">()</span><span class="type-signature"> &rarr; {number|*}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Méthode qui adapte le nombre de joueurs dans le cas d'une nouvelle partie
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="main.js.html">main.js</a>, <a href="main.js.html#line128">line 128</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    - le nombre de joueurs choisi ou celui par défaut (3)
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">number</span>
-|
-
-<span class="param-type">*</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="adapterNouvellePartie"><span class="type-signature"></span>adapterNouvellePartie<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Méthode qui s'occupe d'adapter les données dans le cas où l'on lance une nouvelle partie
-s'occupe aussi d'envoyer les données vers la page de jeux
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="main.js.html">main.js</a>, <a href="main.js.html#line78">line 78</a>
+        <a href="main.js.html">main.js</a>, <a href="main.js.html#line60">line 60</a>
     </li></ul></dd>
     
 
@@ -718,7 +388,7 @@ s'occupe aussi d'envoyer les données vers la page de jeux
     
 
     
-    <h4 class="name" id="recupererSituation"><span class="type-signature">(async) </span>recupererSituation<span class="signature">()</span><span class="type-signature"> &rarr; {Promise.&lt;unknown>}</span></h4>
+    <h4 class="name" id="adapterNbJoueurs"><span class="type-signature"></span>adapterNbJoueurs<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -726,7 +396,8 @@ s'occupe aussi d'envoyer les données vers la page de jeux
 
 
 <div class="description">
-    Méthode qui récupère la position de la dernière tâche traitée
+    Méthode qui adapte le nombre de joueurs de la partie. Si le nombre est invalide
+alors, on sauvegarde 2 joueurs. Sauvegarde la valeur dans le 'session storage'.
 </div>
 
 
@@ -770,7 +441,7 @@ s'occupe aussi d'envoyer les données vers la page de jeux
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="main.js.html">main.js</a>, <a href="main.js.html#line41">line 41</a>
+        <a href="main.js.html">main.js</a>, <a href="main.js.html#line73">line 73</a>
     </li></ul></dd>
     
 
@@ -795,28 +466,95 @@ s'occupe aussi d'envoyer les données vers la page de jeux
 
 
 
-<h5>Returns:</h5>
+
+
+
+
 
         
-<div class="param-desc">
-    - promesse (asychrone) qui contient l'indice de la dernière tâche traitée
+            
+
+    
+
+    
+    <h4 class="name" id="adapterNomJoueurs"><span class="type-signature"></span>adapterNomJoueurs<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Méthode qui adapte la liste avec les noms des joueurs de la partie. Si cette liste est vide, elle est invalide
+et alors, on attribue une liste avec 2 noms de joueurs. Sauvegarde la valeur dans le 'session storage'.
 </div>
 
 
 
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Promise.&lt;unknown></span>
 
 
-    </dd>
-</dl>
+
+
+
+
+
+
+
+
+<dl class="details">
 
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="main.js.html">main.js</a>, <a href="main.js.html#line85">line 85</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -838,13 +576,13 @@ s'occupe aussi d'envoyer les données vers la page de jeux
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Adaptateur.html">Adaptateur</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Modes">Modes</a></li><li><a href="global.html#_">_</a></li><li><a href="global.html#afficherJoueur">afficherJoueur</a></li><li><a href="global.html#afficherMenu">afficherMenu</a></li><li><a href="global.html#afficherRegleMode">afficherRegleMode</a></li><li><a href="global.html#afficherRegles">afficherRegles</a></li><li><a href="global.html#changeButton">changeButton</a></li><li><a href="global.html#chargerPartie">chargerPartie</a></li><li><a href="global.html#create">create</a></li><li><a href="global.html#endTask">endTask</a></li><li><a href="global.html#fInit">fInit</a></li><li><a href="global.html#get">get</a></li><li><a href="global.html#getData">getData</a></li><li><a href="global.html#initialiserPartie">initialiserPartie</a></li><li><a href="global.html#listeTaches">listeTaches</a></li><li><a href="global.html#loadCartes">loadCartes</a></li><li><a href="global.html#masquerRegles">masquerRegles</a></li><li><a href="global.html#nettoyerMenu">nettoyerMenu</a></li><li><a href="global.html#nextTask">nextTask</a></li><li><a href="global.html#nextTurn">nextTurn</a></li><li><a href="global.html#printCarte">printCarte</a></li><li><a href="global.html#reloadCartes">reloadCartes</a></li><li><a href="global.html#saveData">saveData</a></li><li><a href="global.html#saveGame">saveGame</a></li><li><a href="global.html#validerChoix">validerChoix</a></li><li><a href="global.html#validerFormulaire">validerFormulaire</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Adaptateur.html">Adaptateur</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Modes">Modes</a></li><li><a href="global.html#_">_</a></li><li><a href="global.html#afficherJoueur">afficherJoueur</a></li><li><a href="global.html#afficherMenu">afficherMenu</a></li><li><a href="global.html#afficherRegles">afficherRegles</a></li><li><a href="global.html#afficherReglesMode">afficherReglesMode</a></li><li><a href="global.html#changeButton">changeButton</a></li><li><a href="global.html#chargerPartie">chargerPartie</a></li><li><a href="global.html#create">create</a></li><li><a href="global.html#endTask">endTask</a></li><li><a href="global.html#get">get</a></li><li><a href="global.html#getData">getData</a></li><li><a href="global.html#initialiserPartie">initialiserPartie</a></li><li><a href="global.html#listeTaches">listeTaches</a></li><li><a href="global.html#loadCartes">loadCartes</a></li><li><a href="global.html#masquerRegles">masquerRegles</a></li><li><a href="global.html#nettoyerMenu">nettoyerMenu</a></li><li><a href="global.html#nextTask">nextTask</a></li><li><a href="global.html#nextTurn">nextTurn</a></li><li><a href="global.html#printCarte">printCarte</a></li><li><a href="global.html#reloadCartes">reloadCartes</a></li><li><a href="global.html#sauvegarderPartie">sauvegarderPartie</a></li><li><a href="global.html#saveData">saveData</a></li><li><a href="global.html#validerChoix">validerChoix</a></li><li><a href="global.html#validerFormulaire">validerFormulaire</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Fri Dec 08 2023 16:11:52 GMT+0000 (Coordinated Universal Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue Dec 12 2023 13:58:59 GMT+0000 (Coordinated Universal Time)
 </footer>
 
 <script> prettyPrint(); </script>
