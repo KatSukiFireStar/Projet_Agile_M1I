@@ -9,7 +9,7 @@ Application Web qui permet à une équipe en charge du développement d'un logic
 de faire une partie de Planning Poker pour déterminer la difficulté des différentes 
 tâches du projet.
 
-Le Planning Poker se déroulera en fonction des règles de jeu étudiées en cours
+Le Planning Poker se déroulera en fonction des règles de jeu étudiées en cours.
 
 ## Utilisation de l'application
 
