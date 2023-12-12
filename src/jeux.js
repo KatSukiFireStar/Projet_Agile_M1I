@@ -2,7 +2,7 @@ const listeCartes = ["0", "1", "2", "3", "5", "8", "13", "20", "40", "100", "caf
 let timer = 30;
 let maPartie, iterateur, joueurCourant, numeroTache = -1;
 let tourCourant = 1;
-
+let tacheCourrante = ""
 let carteSelectionnee = {};
 //let valeurCarte = {};
 
@@ -272,8 +272,8 @@ function sauvegarderDifficulte(difficulte = ""){
     if(difficulte==="interro")
         difficulte = "?"
     sauvegarde.liste_tache.push({
-        nom_tache: maPartie.fichierJson['liste_tache'][numeroTache-1]['nom_tache'],
-        details: maPartie.fichierJson['liste_tache'][numeroTache-1]['details'],
+        nom_tache: tacheCourrante['nom_tache'],
+        details: tacheCourrante['details'],
         difficulte: difficulte
     });
 }
@@ -342,7 +342,7 @@ function nextTask(){
     numeroTache++;
 
     let it = iterateur.next();
-    let tache = it.value;
+    tacheCourrante = it.value;
 
     if (it.done) {
         console.log("On a fini !");
@@ -353,11 +353,11 @@ function nextTask(){
     let div_info = get("info");
 
     let h_tache = get("titre_tache");
-    h_tache.innerHTML = "Tâche actuelle : " + tache['nom_tache'];
+    h_tache.innerHTML = "Tâche actuelle : " + tacheCourrante['nom_tache'];
     div_info.appendChild(h_tache);
 
     let p_details = get("details_tache");
-    p_details.innerHTML = "Détails : " + tache['details'];
+    p_details.innerHTML = "Détails : " + tacheCourrante['details'];
     div_info.appendChild(p_details);
 }
 

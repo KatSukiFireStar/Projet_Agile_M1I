@@ -36,8 +36,10 @@ Mais d'autres outils fonctionneront tout aussi bien.
 Ensuite, il faut faire un clone du projet sur 
 son poste de travail avec la commande suivante :
 ```php
-// clone en https, les autres méthodes fonctionnent aussi
-git clone [NomProjetGit]
+// clone en https
+git clone https://github.com/KatSukiFireStar/Projet_Agile_M1I.git
+// clone en ssh
+git clone git@github.com:KatSukiFireStar/Projet_Agile_M1I.git
 ```
 
 Dans le répertoire du projet, il vous faut installer les dépendances avec 
