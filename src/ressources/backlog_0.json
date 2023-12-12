@@ -3,7 +3,7 @@
   "liste_tache": [
     {
       "nom_tache": "Connaître les effectifs de la société",
-      "details": "Voir les identités des collaborateurs sur une page d’acceuil"
+      "details": "Voir les identités des collaborateurs sur une page d’accueil"
     },
     {
       "nom_tache": "Mettre à jour le trombinoscope",
@@ -11,7 +11,7 @@
     },
     {
       "nom_tache": "Le rendre reconnaissable de tous",
-      "details": "Pouvoir insérer une photo de la personne dans son profi"
+      "details": "Pouvoir insérer une photo de la personne dans son profil"
     },
     {
       "nom_tache": "Mettre à jour le trombinoscope",
@@ -27,7 +27,7 @@
     },
     {
       "nom_tache": "Trouver le profil de la personne recherchée",
-      "details": "Pouvoir faire une recherce à partir du nom, du prénom ou d’une partie de l’un ou l’autre"
+      "details": "Pouvoir faire une recherche à partir du nom, du prénom ou d’une partie de l’un ou l’autre"
     },
     {
       "nom_tache": "Rendre l’affichage plus clair",

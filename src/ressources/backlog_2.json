@@ -1,45 +1,29 @@
 {
-  "nom_projet": "nomProjet 2",
+  "nom_projet": "Construction d'un Lego City",
   "liste_tache": [
     {
-      "nom_tache": "...1",
-      "details": "...2"
+      "nom_tache": "Préparer l'espace pour construire le lego.",
+      "details": "Il faut préparer un espace sur une table."
     },
     {
-      "nom_tache": "...2",
-      "details": "...2"
+      "nom_tache": "Ouvrir la boite et trier les pièces de lego",
+      "details": "D'abord, ouvrir la boite puis tout les différents sachets, trier les pièces de façon à faciliter la construction."
     },
     {
-      "nom_tache": "...3",
-      "details": "...3"
+      "nom_tache": "Vérification de l'état et du nombre de pièce.",
+      "details": "Ouvrir la notice vers les dernières pages, contrôler le bon nombre de pièce."
     },
     {
-      "nom_tache": "...4",
-      "details": "...4"
+      "nom_tache": "Première lecture de la notice.",
+      "details": "on va lire une première fois la notice, ça permet d'avoir un perçu de ce qui nous attend."
     },
     {
-      "nom_tache": "...5",
-      "details": "...5"
+      "nom_tache": "Construction du lego",
+      "details": "Il faut faire le lego, lire chaque page et suivre les instructions"
     },
     {
-      "nom_tache": "...6",
-      "details": "...6"
-    },
-    {
-      "nom_tache": "...7",
-      "details": "...7"
-    },
-    {
-      "nom_tache": "...8",
-      "details": "...8"
-    },
-    {
-      "nom_tache": "...9",
-      "details": "...9"
-    },
-    {
-      "nom_tache": "...10",
-      "details": "...10"
+      "nom_tache": "Prendre plaisir avec son lego",
+      "details":"S'amuser, le mettre dans une belle vitrine avec toute sa collection"
     }
   ]
 }

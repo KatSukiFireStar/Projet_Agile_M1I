@@ -1,0 +1,38 @@
+{
+  "mode": "strict",
+  "nb_joueurs": 4,
+  "liste_joueurs":[
+    "Léonardo",
+    "Raphaël",
+    "Donatello",
+    "Michelangelo"
+  ],
+  "nom_projet": "Dérober la pizza aux 99 fromages de Jules Pognante",
+  "liste_tache": [
+    {
+      "nom_tache": "Se renseigner sur la légende de cette pizza",
+      "details": "Maître Splinter nous à raconter la légende de la pizza aux 99 Fromages, est-ce vrai ? Comment est-ce possible !?",
+      "difficulte": "5"
+    },
+    {
+      "nom_tache": "Parvenir à localiser le repère de Jules",
+      "details": "Cette pizza existe bel et bien, elle se trouve dans le repère de Jules Pognante, il faut le trouver !",
+      "difficulte": "100"
+    },
+    {
+      "nom_tache": "S'infiltrer dans le repère de Jules",
+      "details": "Son repère est très bien garder, comment allons-nous entrer dans sa demeure",
+      "difficulte": ""
+    },
+    {
+      "nom_tache": "Faire face à Jules Pognante et récupérer la pizza aux 99 fromages",
+      "details": "Nous sommes face aux frigos de Jules, dedans, la pizza est conservée... Mais Jules n'est pas prêt de la partager ... Il va falloir l'affronter",
+      "difficulte": ""
+    },
+    {
+      "nom_tache": "Mission accompli, c'est l'heure de la dégustation !",
+      "details": "La folie fromagère de Jules Pognante à eu raison de lui, nous l'avons vaincu ! il est temps de profiter de la victoire !",
+      "difficulte": ""
+    }
+  ]
+}

@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
         <meta http-equiv="Content-Type" content="text/html;charset=utf8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="author" content="Guillaume Hostache, Flavien Gonin">
         <meta name="description" content="M1 Informatique - Conception agile de projets informatiques">
-      
-        <script src="https://kit.fontawesome.com/cb25104232.js" crossorigin="anonymous"></script>
-        <script type="text/javascript" src="./utilitaire.js"></script>
+
+        <script type="text/javascript" src="utils.js"></script>
         <script type="text/javascript" src="main.js"></script>
+        <script src="https://kit.fontawesome.com/cb25104232.js" crossorigin="anonymous"></script>
 
         <link rel="stylesheet" href="./style-index.css">
         <link rel="icon" type="image/x-icon" href="./ressources/favicon.ico">
 
-        <title>Planning Poker</title>
+        <title>Planning Poker - Accueil</title>
     </head>
 
     <body>
@@ -30,8 +30,8 @@
             
             <div class="selection-mode">
                 <h4>Sélectionner le mode de jeu :</h4>
-                <input type="radio" name="mode" id="r1" value=Modes.Strict onclick="afficherRegleMode(0)" checked><label for="r1">Strict</label>
-                <input type="radio" name="mode" id="r2" value=Modes.Moyenne onclick="afficherRegleMode(1)"><label for="r2">Moyenne</label>
+                <input type="radio" name="mode" id="r1" value="strict" onclick="afficherReglesMode(0)" checked><label for="r1">Strict</label>
+                <input type="radio" name="mode" id="r2" value="moyenne" onclick="afficherReglesMode(1)"><label for="r2">Moyenne</label>
             </div>
 
             <p id="regleStrict">Tant que tous les joueurs ne sont pas en accord, le tour recommence</p>
@@ -46,6 +46,7 @@
                 <input type="radio" name="nbJoueurs" id="j4" value="4" onclick="afficherJoueur(this.value)"><label for="j4">4</label>
             </div>
 
+            <!-- Contiendra les saisies de texte pour les noms des joueurs -->
             <div id="selection-nom-joueurs"></div>
             
             <br>

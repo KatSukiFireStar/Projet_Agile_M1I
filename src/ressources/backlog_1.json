@@ -1,25 +1,37 @@
 {
-  "nom_projet": "nom projet n°1",
+  "nom_projet": "Logiciel de validation de formation professionnelle",
   "liste_tache": [
     {
-      "nom_tache": "tache n°1",
-      "details": "...1"
+      "nom_tache": "analyser le cahier des charges, s'entretenir avec le client",
+      "details": "Il nous a fourni un cahier des charges bien précis, mais nous avons besoin de connaître ses besoins, ses priorités. Nous avons un entretien prévu la semaine prochaine, il faut se mettre d'accord et posez un maximum de question"
     },
     {
-      "nom_tache": "tache n°2",
-      "details": "...2"
+      "nom_tache": "Développement de la v1.0 - traitement d'une formation (Architectes)",
+      "details": "Après l'entretien, on sait ce qu'on doit faire ! Il faut que l'on s'occupe de valider les formations d'architectes, on sait qu'il faut que la personne ait un certains nombres d'heures valides, ne doit pas avoir étudié certains choses..."
     },
     {
-      "nom_tache": "tache n°3",
-      "details": "...3"
+      "nom_tache": "Développement de la v2.0 - ajout classe mère formation - formation géologues, psychologues, architectes",
+      "details": "On a réussi la première partie, il nous faut maintenant intégré d'autres types de profil. Le client veut aussi que l'on ajoute des critères comme le cycle (année d'étude). Ce cycle impactera l'analyse des formations pour les psychologues."
     },
     {
-      "nom_tache": "tache n°4",
-      "details": "...4"
+      "nom_tache": "Développement v2.1 - numéro permis - nouveaux cours dans les formations",
+      "details": "Le client nous informe en cours de développement que l'on doit intégré un numéro de permis dans le fichier d'entrée. Il faudra s'assurer que ce numéro soit conformes au type de la formation. De plus, il nous ajoute une liste de nouveaux cours qui seraient disponibles pour toutes les formations."
     },
     {
-      "nom_tache": "tache n°5",
-      "details": "...5"
+      "nom_tache": "Réalisation de la documentation",
+      "details": "Le client veut une doc clair, simple et efficace, mais bien sûr !"
+    },
+    {
+      "nom_tache": "Réalisation des tests unitaires",
+      "details": "Avant de livrer, assurons nous du bon fonctionnement du logiciel avec des tests"
+    },
+    {
+      "nom_tache": "On va déployer l'application avec GitHub Actions",
+      "details": "Il faut faire l'intégration Continue maintenant, un volontaire ?"
+    },
+    {
+      "nom_tache": "Livraison du logiciel, démonstration avec le client",
+      "details": "Réunion à planifier, c'est l'heure de tout montrer !"
     }
   ]
 }

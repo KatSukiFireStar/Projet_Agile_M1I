@@ -1,12 +1,11 @@
 const assert = require('assert');
 const { describe, it } = require('mocha');
 const fs = require("fs");
-const { listeTaches } = require('../src/partie.js');
+const { listeTaches, chargerPartie } = require('../src/jeux.js');
 
-describe('Tests unitaires - iterateur listeTaches', function () {
-    let err, data;
+describe('Tests Unitaires - fonction itérateur listesTaches', function () {
     it('Devrait avoir le meme nombre d\'objet', function () {
-        fs.readFile("src/ressources/backlog_1.json", (err, data) => {
+        fs.readFile("src/ressources/backlog_test.json", (err, data) => {
             let fichierJson = JSON.parse(data.toString());
             let iterator = listeTaches(fichierJson);
             let resultat = iterator.next();
@@ -20,7 +19,7 @@ describe('Tests unitaires - iterateur listeTaches', function () {
     });
 
     it('Devrait avoir les memes noms et details de taches', function () {
-        fs.readFile("src/ressources/backlog_1.json", (err, data) => {
+        fs.readFile("src/ressources/backlog_test.json", (err, data) => {
             let fichierJson = JSON.parse(data.toString());
             let iterator = listeTaches(fichierJson);
             for (let i = 0; i < fichierJson['liste_tache'].length; i++) {
@@ -32,7 +31,7 @@ describe('Tests unitaires - iterateur listeTaches', function () {
     });
 
     it('Devrait avoir done == false sauf pour le dernier', function () {
-        fs.readFile("src/ressources/backlog_1.json", (err, data) => {
+        fs.readFile("src/ressources/backlog_test.json", (err, data) => {
             let fichierJson = JSON.parse(data.toString());
             let iterator = listeTaches(fichierJson);
             for (let i = 0; i < fichierJson['liste_tache'].length; i++) {

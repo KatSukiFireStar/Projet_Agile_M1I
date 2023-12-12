@@ -1,36 +1,41 @@
 {
     "mode": "moyenne",
-    "nbJoueurs": 3, 
+    "nb_joueurs": 3,
     "liste_joueurs":[
         "Mendoza", 
         "Sancho", 
         "Pedro"
     ],
-    "nom_projet": "construction de la cité d'or",
+    "nom_projet": "Découverte des mystérieuses cités d'or",
     "liste_tache": [
       {
-        "nom_tache": "tache n°1",
-        "details": "...1",
-        "difficulte": "8"
+        "nom_tache": "Découvrir la première cité d'or",
+        "details": "C'est le début de l'aventure ...",
+        "difficulte": "3"
       },
       {
-        "nom_tache": "tache n°2",
-        "details": "...2",
+        "nom_tache": "Faire face à Zarès et s'enfuir",
+        "details": "Zarès veut aussi les cités d'or, il nous attaque par surprise en Italie, il faut s'enfuir !",
         "difficulte": "20"
       },
       {
-        "nom_tache": "tache n°3",
-        "details": "...3",
-        "difficulte": "?"
+        "nom_tache": "En route vers les autres cités d'or",
+        "details": "On se met en route vers l'Amérique et le japon pour découvrir les autres cités d'or",
+        "difficulte": "13"
       },
       {
-        "nom_tache": "tache n°4",
-        "details": "...4",
+        "nom_tache": "Zarès nous suit de près, mais qui est-il !?",
+        "details": "Il faut démasquer Zarès et le vaincre",
         "difficulte": ""
       },
       {
-        "nom_tache": "tache n°5",
-        "details": "...5",
+        "nom_tache": "Direction la chine pour une autre cité d'or",
+        "details": "Prochaine piste, en chine ! Mais cette cité d'or à l'air plus compliqué à trouver",
+        "difficulte": ""
+      },
+      {
+        "nom_tache": "Affronter Zarès",
+        "details": "arrivé aux portes de la 4e cité d'or, Zarès nous attend ...",
         "difficulte": ""
       }
     ]
