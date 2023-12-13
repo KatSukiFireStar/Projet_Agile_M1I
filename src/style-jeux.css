@@ -7,7 +7,7 @@ body {
     text-align: left;
     margin: 0;
     padding: 0;
-    background-color: #cedfd4;
+    background-color: #f4efef;
 }
 
 #info {
@@ -23,37 +23,63 @@ body {
 #table {
     display: flex;
     flex-direction: row;
-    justify-content: center;
-
-    text-align: center;
+    align-items: center;
+    background-color: #cedfd4;
     width: 95%;
     height: 180px;
-    background-color: red;
-    border: 1px solid #cedfd4;
+
     margin: 10px 5px;
     padding: 10px;
+    border: 2px solid #368E55;
     border-radius: 12px;
 }
 
 #table_informations {
-    background-color: blue;
+    color: #545353;
+    border-right: 5px solid #368E55;
+    text-align: left;
+    margin: 10px 65px 0 115px;
+    padding-right: 65px;
 }
 
 #table img {
     margin-top: 10px;
-    margin-right: 10px;
+    margin-right: 15px;
+}
+
+#table h3{
+    margin-top:0;
+    margin-bottom:20px;
+    padding:0;
+    font-size: 20pt;
+}
+
+#table h4#phrase{
+    margin-top:5px;
+    margin-bottom:10px;
+    padding:0;
+    font-size: 16pt;
+    font-style: italic;
+}
+
+#table h4#timer {
+    margin-top:5px;
+    margin-bottom:10px;
+    padding:0;
+    font-size: 16pt;
 }
 
 #joueur {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center; /* Ajoutez cette ligne pour centrer les éléments horizontalement */
+    align-items: center;
     background-color: #cedfd4;
     width: 95%;
     color: #ffffff;
     margin: 10px 5px;
     padding: 10px;
+    border: 2px solid #368E55;
     border-radius: 12px;
 }
 
@@ -67,7 +93,6 @@ body {
     color: #545353;
     text-align: left;
     font-size: 20pt;
-    /* Ajoutez cette règle pour éliminer la marge par défaut */
     margin: 0;
 }
 
@@ -94,9 +119,9 @@ body {
 }
 
 #validerBouton {
-    background-color: #4CAF50;
+    background-color: #368E55;
     color: white;
-    border: solid 1px blue;
+    border: none;
     padding: 10px 20px;
     text-align: center;
     text-decoration: none;
@@ -104,7 +129,7 @@ body {
     font-size: 16px;
     margin-top: 10px;
     margin-left: 15px;
-    border-radius: 8px;
+    border-radius: 4px;
     cursor: pointer;
 }
 
@@ -114,7 +139,7 @@ body {
 }
 
 #validerBouton:hover {
-    background-color: #45a049;
+    background-color: #98c09c;
 }
 
 

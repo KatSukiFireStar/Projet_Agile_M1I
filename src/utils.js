@@ -52,6 +52,9 @@ function getData(name){
     return sessionStorage.getItem(name);
 }
 
+/**
+ * Nettoie le sessionStorage
+ */
 function clearStorage(){
     sessionStorage.clear();
 }
