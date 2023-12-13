@@ -21,7 +21,7 @@ let sauvegarde = {
 /**
  * Itérateur de la liste de tâche d'un fichier json
  * @param fichierJson - fichier json contenant les tâches
- * @returns {{next: ((function(): ({value: *, done: boolean}))|*)}}
+ * @returns {{next: (function(): ({value: *, done: boolean}))}}
  */
 function listeTaches(fichierJson) {
     let indexTache = 0;
@@ -59,13 +59,13 @@ function gestionTimer(){
             let carteBool = false;
             let indice = 0;
             for (let j = 0; j < listeCartes.length; j++) {
-                if (get("carte_" + j).classList.contains(".carteSelectionnee")) {
+                if (get("carte_" + j).classList.contains("carteSelectionnee")) {
                     carteBool = true;
                     indice = j;
                 }
             }
             if (!carteBool) {
-                get("carte_" + (listeCartes.length - 2).toString()).classList.add(".carteSelectionnee");
+                get("carte_" + (listeCartes.length - 2).toString()).classList.add("carteSelectionnee");
                 indice = listeCartes.length - 2;
             }
             carteSelectionnee[joueurCourant] = listeCartes[indice];
