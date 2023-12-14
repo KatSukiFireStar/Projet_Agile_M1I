@@ -7,7 +7,10 @@ let tacheCourrante = ""
 let carteSelectionnee = {};
 
 
-// Formats du fichier de sauvegarde Json ...
+/**
+ * Formats du fichier de sauvegarde Json
+ * @type {{mode: string, liste_tache: string[], nb_joueurs: number, nom_projet: string, liste_joueurs: string[]}}
+ */
 let sauvegarde = {
     mode: '',
     nb_joueurs: 0,
@@ -55,7 +58,6 @@ function gestionTimer(){
         } else if (0 < timer.time) {
             icone = "<i class='fa-solid fa-hourglass-end'</i>";
         } else {
-            //TODO : il faut tester cette partie, je crois qu'il y a un soucis
             let carteBool = false;
             let indice = 0;
             for (let j = 0; j < listeCartes.length; j++) {
