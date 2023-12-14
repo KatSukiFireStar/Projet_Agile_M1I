@@ -103,8 +103,151 @@
 
 
 
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><a href="Object.html">Object</a></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>Strict</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Object.html">Object</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Moyenne</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Object.html">Object</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils.js.html">utils.js</a>, <a href="utils.js.html#line6">line 6</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="sauvegarde"><span class="type-signature"></span>sauvegarde<span class="type-signature"> :<a href="Object.html">Object</a></span></h4>
+
+
+
+
 <div class="description">
-    Classe énumeration des modes de jeu
+    Formats du fichier de sauvegarde Json
 </div>
 
 
@@ -152,7 +295,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils.js.html">utils.js</a>, <a href="utils.js.html#line5">line 5</a>
+        <a href="jeux.js.html">jeux.js</a>, <a href="jeux.js.html#line14">line 14</a>
     </li></ul></dd>
     
 
@@ -277,7 +420,7 @@ Permet de récupérer le premier élément du DOM en fonction du sélecteur donn
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils.js.html">utils.js</a>, <a href="utils.js.html#line22">line 22</a>
+        <a href="utils.js.html">utils.js</a>, <a href="utils.js.html#line23">line 23</a>
     </li></ul></dd>
     
 
@@ -414,7 +557,7 @@ Permet de récupérer le premier élément du DOM en fonction du sélecteur donn
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="main.js.html">main.js</a>, <a href="main.js.html#line188">line 188</a>
+        <a href="main.js.html">main.js</a>, <a href="main.js.html#line194">line 194</a>
     </li></ul></dd>
     
 
@@ -555,7 +698,7 @@ Veille à afficher les menus avec les valeurs par défauts
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="main.js.html">main.js</a>, <a href="main.js.html#line119">line 119</a>
+        <a href="main.js.html">main.js</a>, <a href="main.js.html#line125">line 125</a>
     </li></ul></dd>
     
 
@@ -644,7 +787,7 @@ Cette fonction va afficher les règles si les règles étaient masquées et va l
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="main.js.html">main.js</a>, <a href="main.js.html#line104">line 104</a>
+        <a href="main.js.html">main.js</a>, <a href="main.js.html#line110">line 110</a>
     </li></ul></dd>
     
 
@@ -785,7 +928,7 @@ Les règles affichées sont différentes en fonction du bouton sur lequel l'util
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="main.js.html">main.js</a>, <a href="main.js.html#line140">line 140</a>
+        <a href="main.js.html">main.js</a>, <a href="main.js.html#line146">line 146</a>
     </li></ul></dd>
     
 
@@ -821,7 +964,7 @@ Les règles affichées sont différentes en fonction du bouton sur lequel l'util
     
 
     
-    <h4 class="name" id="changeButton"><span class="type-signature"></span>changeButton<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="calculerMoyenne"><span class="type-signature"></span>calculerMoyenne<span class="signature">()</span><span class="type-signature"> &rarr; {number}</span></h4>
     
 
     
@@ -829,9 +972,7 @@ Les règles affichées sont différentes en fonction du bouton sur lequel l'util
 
 
 <div class="description">
-    Fonction qui change le bouton de validation de carte en fonction de la situation.
-Si l'on est au début d'un tour, on garde le comportement simple (valider le choix)
-Sinon, on marque la fin du tour ou de la tâche
+    Fonction qui calcule la moyenne des cartes qui ont été jouées dans le tour.
 </div>
 
 
@@ -875,7 +1016,121 @@ Sinon, on marque la fin du tour ou de la tâche
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="jeux.js.html">jeux.js</a>, <a href="jeux.js.html#line215">line 215</a>
+        <a href="jeux.js.html">jeux.js</a>, <a href="jeux.js.html#line346">line 346</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    - retourne la moyenne qui a été trouvée
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">number</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="changeButton"><span class="type-signature"></span>changeButton<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Fonction qui change le bouton de validation de carte en fonction de la situation.
+Si l'on est au début d'un tour, on garde le comportement simple (valider le choix)
+Sinon, on marque la fin du tour ou de la tâche
+
+Permet aussi d'adapter la phrase dans la partie table
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="jeux.js.html">jeux.js</a>, <a href="jeux.js.html#line294">line 294</a>
     </li></ul></dd>
     
 
@@ -964,7 +1219,7 @@ Initialise également la sauvegarde, avec les premières informations simples
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="jeux.js.html">jeux.js</a>, <a href="jeux.js.html#line43">line 43</a>
+        <a href="jeux.js.html">jeux.js</a>, <a href="jeux.js.html#line95">line 95</a>
     </li></ul></dd>
     
 
@@ -1011,6 +1266,94 @@ Initialise également la sauvegarde, avec les premières informations simples
 </dl>
 
     
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="clearStorage"><span class="type-signature"></span>clearStorage<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Nettoie le sessionStorage
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils.js.html">utils.js</a>, <a href="utils.js.html#line58">line 58</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1119,7 +1462,7 @@ Créer un élément dont le nom est passé en paramètre
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils.js.html">utils.js</a>, <a href="utils.js.html#line32">line 32</a>
+        <a href="utils.js.html">utils.js</a>, <a href="utils.js.html#line33">line 33</a>
     </li></ul></dd>
     
 
@@ -1230,7 +1573,7 @@ et des cartes sélectionnées.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="jeux.js.html">jeux.js</a>, <a href="jeux.js.html#line329">line 329</a>
+        <a href="jeux.js.html">jeux.js</a>, <a href="jeux.js.html#line480">line 480</a>
     </li></ul></dd>
     
 
@@ -1277,6 +1620,96 @@ et des cartes sélectionnées.
 </dl>
 
     
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="gestionTimer"><span class="type-signature"></span>gestionTimer<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Gere l'affichage et les actions du timer.
+Selon la situation, soit il change de joueurs, soit
+il change de tours en prenant en compte si le joueur a pu jouer.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="jeux.js.html">jeux.js</a>, <a href="jeux.js.html#line49">line 49</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1385,7 +1818,7 @@ Permet de récupérer un élément du DOM en fonction de son id
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils.js.html">utils.js</a>, <a href="utils.js.html#line14">line 14</a>
+        <a href="utils.js.html">utils.js</a>, <a href="utils.js.html#line15">line 15</a>
     </li></ul></dd>
     
 
@@ -1517,7 +1950,7 @@ Permet de récupérer un élément du DOM en fonction de son id
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils.js.html">utils.js</a>, <a href="utils.js.html#line50">line 50</a>
+        <a href="utils.js.html">utils.js</a>, <a href="utils.js.html#line51">line 51</a>
     </li></ul></dd>
     
 
@@ -1624,7 +2057,7 @@ les informations de partie. Cette fonction est appelé en début de partie
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="jeux.js.html">jeux.js</a>, <a href="jeux.js.html#line78">line 78</a>
+        <a href="jeux.js.html">jeux.js</a>, <a href="jeux.js.html#line130">line 130</a>
     </li></ul></dd>
     
 
@@ -1756,7 +2189,7 @@ les informations de partie. Cette fonction est appelé en début de partie
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="jeux.js.html">jeux.js</a>, <a href="jeux.js.html#line24">line 24</a>
+        <a href="jeux.js.html">jeux.js</a>, <a href="jeux.js.html#line29">line 29</a>
     </li></ul></dd>
     
 
@@ -1906,7 +2339,7 @@ les informations de partie. Cette fonction est appelé en début de partie
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="jeux.js.html">jeux.js</a>, <a href="jeux.js.html#line124">line 124</a>
+        <a href="jeux.js.html">jeux.js</a>, <a href="jeux.js.html#line182">line 182</a>
     </li></ul></dd>
     
 
@@ -1994,7 +2427,7 @@ les informations de partie. Cette fonction est appelé en début de partie
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="main.js.html">main.js</a>, <a href="main.js.html#line110">line 110</a>
+        <a href="main.js.html">main.js</a>, <a href="main.js.html#line116">line 116</a>
     </li></ul></dd>
     
 
@@ -2127,7 +2560,7 @@ On fait appel à cette fonction à chaque fois que l'on change/quitte le menu
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="main.js.html">main.js</a>, <a href="main.js.html#line159">line 159</a>
+        <a href="main.js.html">main.js</a>, <a href="main.js.html#line165">line 165</a>
     </li></ul></dd>
     
 
@@ -2216,7 +2649,7 @@ Si l'on était sûr la dernière tâche, alors, on sauvegarde la partie.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="jeux.js.html">jeux.js</a>, <a href="jeux.js.html#line300">line 300</a>
+        <a href="jeux.js.html">jeux.js</a>, <a href="jeux.js.html#line449">line 449</a>
     </li></ul></dd>
     
 
@@ -2306,7 +2739,7 @@ ou sauvegarder la partie
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="jeux.js.html">jeux.js</a>, <a href="jeux.js.html#line245">line 245</a>
+        <a href="jeux.js.html">jeux.js</a>, <a href="jeux.js.html#line392">line 392</a>
     </li></ul></dd>
     
 
@@ -2394,7 +2827,7 @@ ou sauvegarder la partie
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="jeux.js.html">jeux.js</a>, <a href="jeux.js.html#line197">line 197</a>
+        <a href="jeux.js.html">jeux.js</a>, <a href="jeux.js.html#line276">line 276</a>
     </li></ul></dd>
     
 
@@ -2482,7 +2915,140 @@ ou sauvegarder la partie
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="jeux.js.html">jeux.js</a>, <a href="jeux.js.html#line186">line 186</a>
+        <a href="jeux.js.html">jeux.js</a>, <a href="jeux.js.html#line262">line 262</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="sauvegarderDifficulte"><span class="type-signature"></span>sauvegarderDifficulte<span class="signature">(difficulte)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Sauvegarde la difficulté pour la tache courante dans une liste
+par défaut, la difficulté est "".
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>difficulte</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Difficulté à sauvegarder</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="jeux.js.html">jeux.js</a>, <a href="jeux.js.html#line330">line 330</a>
     </li></ul></dd>
     
 
@@ -2527,6 +3093,7 @@ ou sauvegarder la partie
 
 <div class="description">
     Fonction qui sauvegarde la partie et retourne à la page d'accueil index.html
+Sauvegarde aussi les tâches qui n'ont pas encore été traitées
 écrit le contenu de sauvegarde dans un fichier .json et lance le téléchargement de celui-ci.
 </div>
 
@@ -2571,7 +3138,7 @@ ou sauvegarder la partie
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="jeux.js.html">jeux.js</a>, <a href="jeux.js.html#line352">line 352</a>
+        <a href="jeux.js.html">jeux.js</a>, <a href="jeux.js.html#line498">line 498</a>
     </li></ul></dd>
     
 
@@ -2721,7 +3288,7 @@ ou sauvegarder la partie
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils.js.html">utils.js</a>, <a href="utils.js.html#line41">line 41</a>
+        <a href="utils.js.html">utils.js</a>, <a href="utils.js.html#line42">line 42</a>
     </li></ul></dd>
     
 
@@ -2746,6 +3313,116 @@ ou sauvegarder la partie
 
 
 
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="validerCafe"><span class="type-signature"></span>validerCafe<span class="signature">()</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Fonction qui détecte si tous les joueurs veulent une pause café ou non
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="jeux.js.html">jeux.js</a>, <a href="jeux.js.html#line377">line 377</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    - retourne true si oui et false sinon
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -2810,7 +3487,7 @@ Si c'est le dernier joueur qui a joué, marque la fin du tour en révélant les 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="jeux.js.html">jeux.js</a>, <a href="jeux.js.html#line153">line 153</a>
+        <a href="jeux.js.html">jeux.js</a>, <a href="jeux.js.html#line228">line 228</a>
     </li></ul></dd>
     
 
@@ -2951,7 +3628,7 @@ Récupère toutes les données et utilise ensuite la classe Adaptateur qui va se
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="main.js.html">main.js</a>, <a href="main.js.html#line227">line 227</a>
+        <a href="main.js.html">main.js</a>, <a href="main.js.html#line233">line 233</a>
     </li></ul></dd>
     
 
@@ -2982,6 +3659,117 @@ Récupère toutes les données et utilise ensuite la classe Adaptateur qui va se
 
 
         
+            
+
+    
+
+    
+    <h4 class="name" id="validerInterro"><span class="type-signature"></span>validerInterro<span class="signature">()</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Fonction qui détecte si tous les joueurs assignent la difficulté "?" à une tâche...
+Cas particulier, car l'on ne peut pas calculer la moyenne ...
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="jeux.js.html">jeux.js</a>, <a href="jeux.js.html#line363">line 363</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    - retourne true si oui et false sinon
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
     
 
     
@@ -2997,13 +3785,13 @@ Récupère toutes les données et utilise ensuite la classe Adaptateur qui va se
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Adaptateur.html">Adaptateur</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Modes">Modes</a></li><li><a href="global.html#_">_</a></li><li><a href="global.html#afficherJoueur">afficherJoueur</a></li><li><a href="global.html#afficherMenu">afficherMenu</a></li><li><a href="global.html#afficherRegles">afficherRegles</a></li><li><a href="global.html#afficherReglesMode">afficherReglesMode</a></li><li><a href="global.html#changeButton">changeButton</a></li><li><a href="global.html#chargerPartie">chargerPartie</a></li><li><a href="global.html#create">create</a></li><li><a href="global.html#endTask">endTask</a></li><li><a href="global.html#get">get</a></li><li><a href="global.html#getData">getData</a></li><li><a href="global.html#initialiserPartie">initialiserPartie</a></li><li><a href="global.html#listeTaches">listeTaches</a></li><li><a href="global.html#loadCartes">loadCartes</a></li><li><a href="global.html#masquerRegles">masquerRegles</a></li><li><a href="global.html#nettoyerMenu">nettoyerMenu</a></li><li><a href="global.html#nextTask">nextTask</a></li><li><a href="global.html#nextTurn">nextTurn</a></li><li><a href="global.html#printCarte">printCarte</a></li><li><a href="global.html#reloadCartes">reloadCartes</a></li><li><a href="global.html#sauvegarderPartie">sauvegarderPartie</a></li><li><a href="global.html#saveData">saveData</a></li><li><a href="global.html#validerChoix">validerChoix</a></li><li><a href="global.html#validerFormulaire">validerFormulaire</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Adaptateur.html">Adaptateur</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Modes">Modes</a></li><li><a href="global.html#_">_</a></li><li><a href="global.html#afficherJoueur">afficherJoueur</a></li><li><a href="global.html#afficherMenu">afficherMenu</a></li><li><a href="global.html#afficherRegles">afficherRegles</a></li><li><a href="global.html#afficherReglesMode">afficherReglesMode</a></li><li><a href="global.html#calculerMoyenne">calculerMoyenne</a></li><li><a href="global.html#changeButton">changeButton</a></li><li><a href="global.html#chargerPartie">chargerPartie</a></li><li><a href="global.html#clearStorage">clearStorage</a></li><li><a href="global.html#create">create</a></li><li><a href="global.html#endTask">endTask</a></li><li><a href="global.html#gestionTimer">gestionTimer</a></li><li><a href="global.html#get">get</a></li><li><a href="global.html#getData">getData</a></li><li><a href="global.html#initialiserPartie">initialiserPartie</a></li><li><a href="global.html#listeTaches">listeTaches</a></li><li><a href="global.html#loadCartes">loadCartes</a></li><li><a href="global.html#masquerRegles">masquerRegles</a></li><li><a href="global.html#nettoyerMenu">nettoyerMenu</a></li><li><a href="global.html#nextTask">nextTask</a></li><li><a href="global.html#nextTurn">nextTurn</a></li><li><a href="global.html#printCarte">printCarte</a></li><li><a href="global.html#reloadCartes">reloadCartes</a></li><li><a href="global.html#sauvegarde">sauvegarde</a></li><li><a href="global.html#sauvegarderDifficulte">sauvegarderDifficulte</a></li><li><a href="global.html#sauvegarderPartie">sauvegarderPartie</a></li><li><a href="global.html#saveData">saveData</a></li><li><a href="global.html#validerCafe">validerCafe</a></li><li><a href="global.html#validerChoix">validerChoix</a></li><li><a href="global.html#validerFormulaire">validerFormulaire</a></li><li><a href="global.html#validerInterro">validerInterro</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue Dec 12 2023 13:58:59 GMT+0000 (Coordinated Universal Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu Dec 14 2023 09:30:22 GMT+0000 (Coordinated Universal Time)
 </footer>
 
 <script> prettyPrint(); </script>
