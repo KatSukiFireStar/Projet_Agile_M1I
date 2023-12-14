@@ -19,13 +19,23 @@
     <body>
         <div id="info"></div>
 
-        <!-- Il y aura toutes les cartes que les joueurs auront choisies-->
-        <div id="apercu"></div>
+        <div id="table">
+            <div id="table_informations">
+                <h3 id="table_titre">Table des cartes - Tour n° <span id="tourNumero"></span></h3>
+                <h4 id="timer"></h4>
+                <h4 id="phrase"></h4>
+            </div>
+            <!-- Les cartes sélectionnées apparaîtront juste là -->
+
+        </div>
 
         <div id="joueur">
             <h4 id="name"></h4>
-            <div id="cartes"></div>
-            <button id="validerBouton" onclick="validerChoix()">Valider votre Carte</button>
+
+            <div id="cartes_bouton">
+                <div id="cartes"></div>
+                <button id="validerBouton" onclick="validerChoix()">Valider votre Carte</button>
+            </div>
         </div>
     </body>
 </html>

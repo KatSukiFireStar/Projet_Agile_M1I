@@ -3,67 +3,144 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
     font-family: 'Arial', sans-serif;
     text-align: left;
-
     margin: 0;
     padding: 0;
-
     background-color: #f4efef;
 }
 
 #info {
-    text-align: left;
-
-    margin: 10px 5px 10px 5px; /*margin: top right bottom left;*/
-    padding: 10px;
-    width: 85%;
+    width: 80%;
     background-color: #368E55;
-    border-radius: 12px;
     border: 1px solid #368E55;
     color: #ffffff;
+    margin: 10px 5px;
+    padding: 10px;
+    border-radius: 12px;
 }
 
-#apercu {
-    text-align: left;
-    width: 95%;
+#table {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     background-color: #cedfd4;
-    border: 1px solid #cedfd4;
+    width: 95%;
+    height: 180px;
 
-    margin: 5px;
-    padding: 2px;
+    margin: 10px 5px;
+    padding: 10px;
+    border: 2px solid #368E55;
+    border-radius: 12px;
+}
+
+#table_informations {
+    color: #545353;
+    border-right: 5px solid #368E55;
+    text-align: left;
+    margin: 10px 65px 0 115px;
+    padding-right: 65px;
+}
+
+#table img {
+    margin-top: 10px;
+    margin-right: 15px;
+}
+
+#table h3{
+    margin-top:0;
+    margin-bottom:20px;
+    padding:0;
+    font-size: 20pt;
+}
+
+#table h4#phrase{
+    margin-top:5px;
+    margin-bottom:10px;
+    padding:0;
+    font-size: 16pt;
+    font-style: italic;
+}
+
+#table h4#timer {
+    margin-top:5px;
+    margin-bottom:10px;
+    padding:0;
+    font-size: 16pt;
 }
 
 #joueur {
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #cedfd4;
+    width: 95%;
+    color: #ffffff;
+    margin: 10px 5px;
+    padding: 10px;
+    border: 2px solid #368E55;
+    border-radius: 12px;
+}
+
+#cartes_bouton {
+    display:flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+}
 
-    margin: 10px 5px 10px 5px; /*margin: top right bottom left;*/
-    padding: 10px;
-
-    background-color: #368E55;
-    border-radius: 12px;
-    border: 1px solid #368E55;
-    width: 85%;
+#joueur h4#name {
+    color: #545353;
     text-align: left;
-    color: #ffffff;
+    font-size: 20pt;
+    margin: 0;
 }
 
 #cartes {
-    background-color: white;
-    border: solid 1px red;
-
-    margin: 5px;
-    padding: 2px;
+    margin-left:0;
+    margin-right: 15px;
+    padding-left:0;
 }
 
-#bouton {
-    background-color: white;
-    border: solid 1px red;
-
-    margin: 5px;
-    padding: 2px;
+#cartes img{
+    margin-top: 10px;
+    margin-right: 10px;
 }
+
+/* Gestion de la sélection des cartes du joueur*/
+#cartes img.carteSelectionnee {
+    border: solid 2px black;
+    filter: brightness(60%);
+}
+
+#cartes img.carteNonSelectionnee {
+    border: solid 2px transparent;
+    filter:none;
+}
+
+#validerBouton {
+    background-color: #368E55;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 10px;
+    margin-left: 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#validerBouton:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+#validerBouton:hover {
+    background-color: #98c09c;
+}
+
+
+

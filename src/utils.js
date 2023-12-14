@@ -1,4 +1,5 @@
 /**
+ * @enum
  * Classe énumeration des modes de jeu
  * @type {{Strict: string, Moyenne: string}}
  */
@@ -51,6 +52,9 @@ function getData(name){
     return sessionStorage.getItem(name);
 }
 
+/**
+ * Nettoie le sessionStorage
+ */
 function clearStorage(){
     sessionStorage.clear();
 }
