@@ -1,7 +1,7 @@
 const assert = require('assert');
 const { describe, it } = require('mocha');
 const fs = require("fs");
-const { listeTaches, chargerPartie } = require('../src/jeux.js');
+const { listeTaches } = require('../src/jeux.js');
 
 describe('Tests Unitaires - fonction itérateur listesTaches', function () {
     it('Devrait avoir le meme nombre d\'objet. Il y a 5 objets et un vide pour le done == true.', function () {
@@ -24,7 +24,7 @@ describe('Tests Unitaires - fonction itérateur listesTaches', function () {
             let iterator = listeTaches(fichierJson);
             for (let i = 0; i < fichierJson['liste_tache'].length; i++) {
                 let resultat = iterator.next();
-                if(!resultat.done){
+                if (!resultat.done) {
                     assert.equal(resultat.value['nom_tache'], "tache n°" + (i + 1));
                     assert.equal(resultat.value['details'], "..." + (i + 1))
                 }
