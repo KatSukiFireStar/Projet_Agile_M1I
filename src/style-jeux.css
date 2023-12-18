@@ -138,6 +138,11 @@ body {
     cursor: not-allowed;
 }
 
+#validerBouton:hover:disabled{
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
 #validerBouton:hover {
     background-color: #98c09c;
 }

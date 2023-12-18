@@ -33,6 +33,12 @@ class Adaptateur {
                     try {
                         let fichierJson = JSON.parse(evt.target.result);
 
+                        if(option === 1 && !(('mode' in fichierJson) && ('nbJoueurs' in fichierJson) && ('liste_joueurs' in fichierJson))){
+                            alert("Votre fichier JSON n'est pas un fichier sauvegarder! Si vous voulez l'utilisez, lancer une nouvelle partie a la place!");
+                            console.error("Vous tentez de reprendre une partie avec un fichier qui ne contient pas assez d'informations !");
+                            reject(-1);
+                        }
+
                         if ('liste_tache' in fichierJson) {
                             if (option === 1) {
                                 let position = 0;
@@ -52,6 +58,7 @@ class Adaptateur {
                             resolve(0);
 
                         } else {
+                            alert("Votre fichier JSON ne contient pas de liste de taches");
                             console.error("Erreur - Le fichier JSON ne contient pas la clé 'liste_tache' !");
                             reject(-1);
                         }

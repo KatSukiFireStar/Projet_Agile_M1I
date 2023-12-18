@@ -114,7 +114,7 @@ function chargerPartie() {
     }
 
     sauvegarde.mode = partie.mode;
-    sauvegarde.nb_joueurs = partie.nbJoueurs;
+    sauvegarde.nb_joueurs = parseInt(partie.nbJoueurs);
     sauvegarde.liste_joueurs = partie.nomJoueurs;
     sauvegarde.nom_projet = partie.fichierJson['nom_projet'];
 
