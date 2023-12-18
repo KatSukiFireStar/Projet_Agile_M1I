@@ -14,7 +14,6 @@ class Adaptateur {
             this.adapterNbJoueurs();
             this.adapterNomJoueurs();
         }
-        this.adapterFichierJson(option);
     }
 
     /** Méthode qui adapte le fichier dans les deux cas.
@@ -23,35 +22,51 @@ class Adaptateur {
      * on va aussi récupérer la position de la tache sur laquelle les joueurs s'étaient arrêtés.
      */
     adapterFichierJson(option) {
-        let base = (option === 0) ? get('jsonFileLancer') : get('jsonFileReprendre');
-        if (base.files.length > 0) {
-            let fichier = base.files[0];
-            let lecteur = new FileReader();
+        return new Promise((resolve, reject) => {
+            let base = (option === 0) ? get('jsonFileLancer') : get('jsonFileReprendre');
 
-            lecteur.onload = function (evt) {
-                let fichierJson = JSON.parse(evt.target.result);
-                if (option === 1) {
-                    let position = 0;
-                    let liste = fichierJson['liste_tache'];
+            if (base.files.length > 0) {
+                let fichier = base.files[0];
+                let lecteur = new FileReader();
 
-                    for(let i=0; i<liste.length; i++) {
-                        let maTache = fichierJson['liste_tache'][i];
-                        if (maTache['difficulte'] !== "") {
-                            position += 1;
+                lecteur.onload = function (evt) {
+                    try {
+                        let fichierJson = JSON.parse(evt.target.result);
+
+                        if ('liste_tache' in fichierJson) {
+                            if (option === 1) {
+                                let position = 0;
+                                let liste = fichierJson['liste_tache'];
+
+                                for (let i = 0; i < liste.length; i++) {
+                                    let maTache = fichierJson['liste_tache'][i];
+                                    if (maTache['difficulte'] !== "") {
+                                        position += 1;
+                                    }
+                                }
+
+                                saveData('position', (position !== 0) ? position : null);
+                            }
+
+                            saveData('fichierJson', JSON.stringify(fichierJson));
+                            resolve(0);
+
+                        } else {
+                            console.error("Erreur - Le fichier JSON ne contient pas la clé 'liste_tache' !");
+                            reject(-1);
                         }
+                    } catch (error) {
+                        console.error("Erreur - Le fichier n'est pas un JSON valide !");
+                        reject(-1);
                     }
-                    if(position !== 0)
-                        saveData('position', position);
-                    else
-                        saveData('position', null);
-                }
-                saveData('fichierJson', JSON.stringify(fichierJson));
-            };
+                };
 
-            lecteur.readAsText(fichier);
-        } else {
-            console.error("erreur - aucun fichier n'est sélectionné !");
-        }
+                lecteur.readAsText(fichier);
+            } else {
+                console.error("Erreur - Aucun fichier n'est sélectionné !");
+                reject(-1);
+            }
+        });
     }
 
     /** Méthode qui adapte le mode de jeux dans tous les cas. Si le mode sélectionné par les joueurs est invalide
@@ -233,10 +248,19 @@ function afficherJoueur(nbJoueur) {
 function validerFormulaire(option) {
     let saisie = (option === 0) ? get('jsonFileLancer') : get('jsonFileReprendre');
     if (saisie.files.length !== 0) {
-        new Adaptateur(option);
-        window.location.href = 'jeux.html';
+        let adaptateur = new Adaptateur(option);
+        // réception d'une promesse
+        adaptateur.adapterFichierJson(option)
+            .then(() => {
+                // tout se passe bien, aucune erreur reçue
+                window.location.href = 'jeux.html';
+            })
+            .catch((erreur) => {
+                // On a reçu une erreur, il y a eu un soucis
+                console.error("Erreur ("+erreur+") - On ne peux pas traiter le fichier Json sélectionné !");
+                nettoyerMenu(option);
+            });
     }
-
 }
 
 if (typeof window == 'object') {
