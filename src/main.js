@@ -33,9 +33,8 @@ class Adaptateur {
                     try {
                         let fichierJson = JSON.parse(evt.target.result);
 
-                        if(option === 1 && !(('mode' in fichierJson) && ('nbJoueurs' in fichierJson) && ('liste_joueurs' in fichierJson))){
-                            alert("Votre fichier JSON n'est pas un fichier sauvegarder! Si vous voulez l'utilisez, lancer une nouvelle partie a la place!");
-                            console.error("Vous tentez de reprendre une partie avec un fichier qui ne contient pas assez d'informations !");
+                        if (option === 1 && !(('mode' in fichierJson) && ('nb_joueurs' in fichierJson) && ('liste_joueurs' in fichierJson))) {
+                            console.error("Erreur - Vous tentez de reprendre une partie avec un fichier qui ne contient pas assez d'informations !");
                             reject(-1);
                         }
 
@@ -58,7 +57,6 @@ class Adaptateur {
                             resolve(0);
 
                         } else {
-                            alert("Votre fichier JSON ne contient pas de liste de taches");
                             console.error("Erreur - Le fichier JSON ne contient pas la clé 'liste_tache' !");
                             reject(-1);
                         }
@@ -264,6 +262,7 @@ function validerFormulaire(option) {
             })
             .catch((erreur) => {
                 // On a reçu une erreur, il y a eu un soucis
+                alert("Erreur - Le fichier fourni est incompatible avec l'application ! ");
                 console.error("Erreur ("+erreur+") - On ne peux pas traiter le fichier Json sélectionné !");
                 nettoyerMenu(option);
             });
