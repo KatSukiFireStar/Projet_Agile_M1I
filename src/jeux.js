@@ -1,11 +1,9 @@
 const listeCartes = ["0", "1", "2", "3", "5", "8", "13", "20", "40", "100", "interro", "cafe"];
 let timer = {time:30, option:'choix'};
-//TODO : 3e patterns designs, rendre le code plus propre ? ...
 let maPartie, iterateur, joueurCourant, numeroTache = -1;
 let tourCourant = 1;
-let tacheCourrante = ""
+let tacheCourante = ""
 let carteSelectionnee = {};
-
 
 /**
  * Formats du fichier de sauvegarde Json
@@ -116,7 +114,7 @@ function chargerPartie() {
     }
 
     sauvegarde.mode = partie.mode;
-    sauvegarde.nb_joueurs = partie.nbJoueurs;
+    sauvegarde.nb_joueurs = parseInt(partie.nbJoueurs);
     sauvegarde.liste_joueurs = partie.nomJoueurs;
     sauvegarde.nom_projet = partie.fichierJson['nom_projet'];
 
@@ -246,12 +244,12 @@ function validerChoix() {
             h4.innerHTML = "C'est à ton tour : " + maPartie.nomJoueurs[joueurCourant];
             timer.time = 30;
             timer.option = 'choix';
-        }else { // le tour semble être terminé
+        }else {
             joueurCourant = 0;
             timer.time = 60;
             timer.option = 'debat';
-            printCarte(); // On révèle les cartes
-            changeButton('finTour'); // On adapte le bouton
+            printCarte();
+            changeButton('finTour');
         }
     }
 }
@@ -333,8 +331,8 @@ function sauvegarderDifficulte(difficulte = ""){
     }
 
     sauvegarde.liste_tache.push({
-        nom_tache: tacheCourrante['nom_tache'],
-        details: tacheCourrante['details'],
+        nom_tache: tacheCourante['nom_tache'],
+        details: tacheCourante['details'],
         difficulte: difficulte
     });
 }
@@ -450,7 +448,7 @@ function nextTask(){
     numeroTache++;
 
     let it = iterateur.next();
-    tacheCourrante = it.value;
+    tacheCourante = it.value;
 
     if (it.done) {
         // On re-vérifie le cas "cafe" pour éviter le double téléchargement
@@ -464,11 +462,11 @@ function nextTask(){
     let div_info = get("info");
 
     let h_tache = get("titre_tache");
-    h_tache.innerHTML = "Tâche actuelle : " + tacheCourrante['nom_tache'];
+    h_tache.innerHTML = "Tâche actuelle : " + tacheCourante['nom_tache'];
     div_info.appendChild(h_tache);
 
     let p_details = get("details_tache");
-    p_details.innerHTML = "Détails : " + tacheCourrante['details'];
+    p_details.innerHTML = "Détails : " + tacheCourante['details'];
     div_info.appendChild(p_details);
 }
 
@@ -485,7 +483,7 @@ function endTask(){
             }
         }
         return true;
-    } else if(maPartie.mode === Modes.Moyenne) {
+    } else if (maPartie.mode === Modes.Moyenne) {
         return true;
     }
 }
@@ -516,7 +514,6 @@ function sauvegarderPartie(){
     document.body.appendChild(downloadLink);
     downloadLink.click();
 
-    // On pense à supprimer le lien une fois le téléchargement fini
     document.body.removeChild(downloadLink);
     URL.revokeObjectURL(blobURL);
 
@@ -531,5 +528,5 @@ if (typeof window == 'object') {
 
 // Provoque une erreur - logique, on est dans un fichier text/javascript et non un module...
 module.exports = {
-  listeTaches, chargerPartie
+  listeTaches
 };
